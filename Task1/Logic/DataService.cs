@@ -8,8 +8,17 @@ using Data;
 
 namespace Logic
 {
-    class DataService
+    public class DataService
     {
-        static void Main(string[] args) {}
+        private DataRepository _repository;
+
+        public DataService(DataRepository repository)
+        {
+            this._repository = repository;
+        }
+
+        public static void Main(string[] args) {}
+
+
     }
 }
