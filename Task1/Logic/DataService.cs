@@ -17,8 +17,8 @@ namespace Logic
             this._repository = repository;
         }
 
-        public static void Main(string[] args) {}
+        //public static void Main(string[] args) {}
 
-
+        
     }
 }
