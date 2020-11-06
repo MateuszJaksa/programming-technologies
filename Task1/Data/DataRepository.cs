@@ -10,7 +10,7 @@ namespace Data
     {
         private DataContext _context;
 
-        DataRepository(DataContext context)
+        public DataRepository(DataContext context)
         {
             this._context = context;
         }
@@ -50,6 +50,10 @@ namespace Data
             }
             return null;
         }
+        public List<Catalog> GetAllCatalogs()
+        {
+            return new List<Catalog>(_context.catalogs);
+        }
 
         public void AddEvent(DateTime time, State state, User user)
         {
@@ -85,6 +89,11 @@ namespace Data
                 }
             }
             return null;
+        }
+
+        public List<Event> GetAllEvents()
+        {
+            return new List<Event>(_context.events);
         }
 
         public void AddState(Catalog catalog, string title)
@@ -123,6 +132,10 @@ namespace Data
             return null;
         }
 
+        public List<State> GetAllStates()
+        {
+            return new List<State>(_context.states);
+        }
         public void AddUser(string userName)
         {
             if (GetUser(userName) == null)
@@ -157,6 +170,11 @@ namespace Data
                 }
             }
             return null;
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return new List<User>(_context.users);
         }
     }
 }
