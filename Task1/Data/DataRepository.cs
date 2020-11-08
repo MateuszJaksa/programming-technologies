@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
@@ -57,7 +55,7 @@ namespace Data
 
         public void AddEvent(State state, User user, DateTime time)
         {
-            if (GetEvent(time, user.UserName) == null)
+            if (GetEvent(time, user.Username) == null)
             {
                 _context.events.Add(new Event(state, user, time));
             }
@@ -67,7 +65,7 @@ namespace Data
         {
             foreach (Event currentEvent in _context.events.ToList())
             {
-                if (currentEvent.Time == time && currentEvent.User.UserName == eventUsername)
+                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
                 {
                     _context.events.Remove(currentEvent);
                 }
@@ -83,7 +81,7 @@ namespace Data
         {
             foreach (Event currentEvent in _context.events)
             {
-                if (currentEvent.Time == time && currentEvent.User.UserName == eventUsername)
+                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
                 {
                     return currentEvent;
                 }
@@ -148,7 +146,7 @@ namespace Data
         {
             foreach (User user in _context.users.ToList())
             {
-                if (user.UserName == userName)
+                if (user.Username == userName)
                 {
                     _context.users.Remove(user);
                 }
@@ -164,7 +162,7 @@ namespace Data
         {
             foreach (User user in _context.users)
             {
-                if (user.UserName == userName)
+                if (user.Username == userName)
                 {
                     return user;
                 }

@@ -1,37 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data
+﻿namespace Data
 {
     public class State
     {
-        private Catalog _catalog;
-        private string _title;
-
         public State(Catalog catalog, string title)
         {
-            this._catalog = catalog;
-            this._title = title;
+            Catalog = catalog;
+            Title = title;
         }
 
         public Catalog Catalog
-        {
-            get => _catalog;
-            set => this._catalog = value;
-        }
+        { get; set; }
 
         public string Title
-        {
-            get => _title;
-            set => this._title = value;
-        }
+        { get; set; }
 
         public override string ToString()
         {
-            return _title + " which is " + _catalog.ToString();
+            return Title + " which is " + Catalog.ToString();
         }
     }
 }

@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
     public class User
     {
-        private string _userName;
-
         public User(string userName)
         {
-            this._userName = userName;
+            Username = userName;
         }
 
-        public string UserName
-        {
-            get => _userName;
-            set => this._userName = value;
-        }
+        public string Username
+        { get; set; }
 
         public override string ToString()
         {
-            return "Our user " + _userName;
+            return "Our user " + Username;
         }
     }
 }
