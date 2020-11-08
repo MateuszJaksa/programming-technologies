@@ -12,11 +12,11 @@ namespace Data
         private User _user;
         private DateTime _time;
 
-        public Event(State state, User user)
+        public Event(State state, User user, DateTime time)
         {
             this._state = state;
             this._user = user;
-            this._time = DateTime.Now;
+            this._time = time;
         }
 
         public State State

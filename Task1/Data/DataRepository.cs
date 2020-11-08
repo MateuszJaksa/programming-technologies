@@ -25,7 +25,7 @@ namespace Data
 
         public void RemoveCatalog(string author, string genre)
         {
-            foreach (Catalog catalog in _context.catalogs)
+            foreach (Catalog catalog in _context.catalogs.ToList())
             {
                 if (catalog.Author == author && catalog.Genre == genre)
                 {
@@ -55,19 +55,19 @@ namespace Data
             return new List<Catalog>(_context.catalogs);
         }
 
-        public void AddEvent(DateTime time, State state, User user)
+        public void AddEvent(State state, User user, DateTime time)
         {
-            if (GetEvent(time) == null)
+            if (GetEvent(time, user.UserName) == null)
             {
-                _context.events.Add(new Event(state, user));
+                _context.events.Add(new Event(state, user, time));
             }
         }
 
-        public void RemoveEvent(DateTime time)
+        public void RemoveEvent(DateTime time, string eventUsername)
         {
-            foreach (Event currentEvent in _context.events)
+            foreach (Event currentEvent in _context.events.ToList())
             {
-                if (currentEvent.Time == time)
+                if (currentEvent.Time == time && currentEvent.User.UserName == eventUsername)
                 {
                     _context.events.Remove(currentEvent);
                 }
@@ -79,11 +79,11 @@ namespace Data
             _context.events.Clear();
         }
 
-        public Event GetEvent(DateTime time)
+        public Event GetEvent(DateTime time, string eventUsername)
         {
             foreach (Event currentEvent in _context.events)
             {
-                if (currentEvent.Time == time)
+                if (currentEvent.Time == time && currentEvent.User.UserName == eventUsername)
                 {
                     return currentEvent;
                 }
@@ -106,7 +106,7 @@ namespace Data
 
         public void RemoveState(string title)
         {
-            foreach (State state in _context.states)
+            foreach (State state in _context.states.ToList())
             {
                 if (state.Title == title)
                 {
@@ -146,7 +146,7 @@ namespace Data
 
         public void RemoveUser(string userName)
         {
-            foreach (User user in _context.users)
+            foreach (User user in _context.users.ToList())
             {
                 if (user.UserName == userName)
                 {
