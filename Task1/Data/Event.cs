@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -20,9 +21,19 @@ namespace Data
         public DateTime Time
         { get; set; }
 
-        public override string ToString()
+        public override bool Equals(object obj)
         {
-            return User.ToString() + " borrowed " + State.ToString() + " on " + Time;
+            return obj is Event currentEvent &&
+                   this.User.Username == currentEvent.User.Username &&
+                   this.Time == currentEvent.Time;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1820166108;
+            hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(User);
+            hashCode = hashCode * -1521134295 + Time.GetHashCode();
+            return hashCode;
         }
     }
 }

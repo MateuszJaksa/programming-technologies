@@ -1,4 +1,6 @@
-﻿namespace Data
+﻿using System.Collections.Generic;
+
+namespace Data
 {
     public class State
     {
@@ -14,9 +16,15 @@
         public string Title
         { get; set; }
 
-        public override string ToString()
+        public override bool Equals(object obj)
         {
-            return Title + " which is " + Catalog.ToString();
+            return obj is State state &&
+                   this.Title == state.Title;
+        }
+
+        public override int GetHashCode()
+        {
+            return 434131217 + EqualityComparer<string>.Default.GetHashCode(Title);
         }
     }
 }

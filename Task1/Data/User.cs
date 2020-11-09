@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Data
 {
@@ -12,9 +12,15 @@ namespace Data
         public string Username
         { get; set; }
 
-        public override string ToString()
+        public override bool Equals(object obj)
         {
-            return "Our user " + Username;
+            return obj is User user &&
+                   this.Username == user.Username;
+        }
+
+        public override int GetHashCode()
+        {
+            return 404878561 + EqualityComparer<string>.Default.GetHashCode(Username);
         }
     }
 }

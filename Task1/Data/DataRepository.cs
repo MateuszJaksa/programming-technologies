@@ -6,7 +6,7 @@ namespace Data
 {
     public class DataRepository
     {
-        private DataContext _context;
+        private readonly DataContext _context;
 
         public DataRepository(DataContext context)
         {
@@ -23,9 +23,10 @@ namespace Data
 
         public void RemoveCatalog(string author, string genre)
         {
+            Catalog testCatalog = new Catalog(author, genre);
             foreach (Catalog catalog in _context.catalogs.ToList())
             {
-                if (catalog.Author == author && catalog.Genre == genre)
+                if (testCatalog.Equals(catalog))
                 {
                     _context.catalogs.Remove(catalog);
                 }
@@ -39,9 +40,10 @@ namespace Data
 
         public Catalog GetCatalog(string author, string genre)
         {
-            foreach (Catalog catalog in _context.catalogs)
+            Catalog testCatalog = new Catalog(author, genre);
+            foreach (Catalog catalog in _context.catalogs.ToList())
             {
-                if (catalog.Author == author && catalog.Genre == genre)
+                if (testCatalog.Equals(catalog))
                 {
                     return catalog;
                 }
@@ -63,9 +65,10 @@ namespace Data
 
         public void RemoveEvent(DateTime time, string eventUsername)
         {
+            Event testEvent = new Event(new State(new Catalog(null, null), null), new User(eventUsername), time);
             foreach (Event currentEvent in _context.events.ToList())
             {
-                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
+                if (testEvent.Equals(currentEvent))
                 {
                     _context.events.Remove(currentEvent);
                 }
@@ -79,9 +82,10 @@ namespace Data
 
         public Event GetEvent(DateTime time, string eventUsername)
         {
-            foreach (Event currentEvent in _context.events)
+            Event testEvent = new Event(new State(new Catalog(null, null), null), new User(eventUsername), time);
+            foreach (Event currentEvent in _context.events.ToList())
             {
-                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
+                if (testEvent.Equals(currentEvent))
                 {
                     return currentEvent;
                 }
@@ -104,9 +108,10 @@ namespace Data
 
         public void RemoveState(string title)
         {
+            State testState = new State(new Catalog(null, null), title);
             foreach (State state in _context.states.ToList())
             {
-                if (state.Title == title)
+                if (testState.Equals(state))
                 {
                     _context.states.Remove(state);
                 }
@@ -120,9 +125,10 @@ namespace Data
 
         public State GetState(string title)
         {
-            foreach (State state in _context.states)
+            State testState = new State(new Catalog(null, null), title);
+            foreach (State state in _context.states.ToList())
             {
-                if (state.Title == title)
+                if (testState.Equals(state))
                 {
                     return state;
                 }
@@ -144,9 +150,10 @@ namespace Data
 
         public void RemoveUser(string userName)
         {
+            User testUser = new User(userName);
             foreach (User user in _context.users.ToList())
             {
-                if (user.Username == userName)
+                if (testUser.Equals(user))
                 {
                     _context.users.Remove(user);
                 }
@@ -160,9 +167,10 @@ namespace Data
 
         public User GetUser(string userName)
         {
-            foreach (User user in _context.users)
+            User testUser = new User(userName);
+            foreach (User user in _context.users.ToList())
             {
-                if (user.Username == userName)
+                if (testUser.Equals(user))
                 {
                     return user;
                 }
