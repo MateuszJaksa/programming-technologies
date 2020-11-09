@@ -338,7 +338,7 @@ namespace Tests
             User existUser = repository.GetUser("John Smith");
             User nonExistUser = repository.GetUser("James Martinez");
             Assert.IsNotNull(existUser);
-            Assert.AreEqual(existUser.UserName, "John Smith");
+            Assert.AreEqual(existUser.Username, "John Smith");
             Assert.IsNull(nonExistUser);
         }
 
@@ -390,9 +390,9 @@ namespace Tests
             List<User> users = repository.GetAllUsers();
             Assert.AreEqual(context.users.Count, 3);
             Assert.AreEqual(users.Count, 3);
-            Assert.AreEqual(users[0].UserName, "John Smith");
-            Assert.AreEqual(users[1].UserName, "Michael Johnson");
-            Assert.AreEqual(users[2].UserName, "James Martinez");
+            Assert.AreEqual(users[0].Username, "John Smith");
+            Assert.AreEqual(users[1].Username, "Michael Johnson");
+            Assert.AreEqual(users[2].Username, "James Martinez");
         }
     }
 }
