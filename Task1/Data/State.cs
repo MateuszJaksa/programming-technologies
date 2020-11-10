@@ -26,5 +26,10 @@ namespace Data
         {
             return 434131217 + EqualityComparer<string>.Default.GetHashCode(Title);
         }
+
+        public override string ToString()
+        {
+            return $"The state is connected to the book titled {Title}";
+        }
     }
 }

@@ -4,9 +4,9 @@ namespace Data
 {
     public class User
     {
-        public User(string userName)
+        public User(string username)
         {
-            Username = userName;
+            Username = username;
         }
 
         public string Username
@@ -21,6 +21,11 @@ namespace Data
         public override int GetHashCode()
         {
             return 404878561 + EqualityComparer<string>.Default.GetHashCode(Username);
+        }
+
+        public override string ToString()
+        {
+            return $"The user is named {Username}";
         }
     }
 }

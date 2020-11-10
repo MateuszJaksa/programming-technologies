@@ -30,5 +30,10 @@ namespace Data
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Genre);
             return hashCode;
         }
+
+        public override string ToString()
+        {
+            return $"The catalog consists of {Genre} written by {Author}";
+        }
     }
 }

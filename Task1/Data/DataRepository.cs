@@ -21,16 +21,9 @@ namespace Data
             }
         }
 
-        public void RemoveCatalog(string author, string genre)
+        public void RemoveCatalog(Catalog catalog)
         {
-            Catalog testCatalog = new Catalog(author, genre);
-            foreach (Catalog catalog in _context.catalogs.ToList())
-            {
-                if (testCatalog.Equals(catalog))
-                {
-                    _context.catalogs.Remove(catalog);
-                }
-            }
+            _context.catalogs.Remove(catalog);
         }
 
         public void RemoveAllCatalogs()
@@ -63,16 +56,9 @@ namespace Data
             }
         }
 
-        public void RemoveEvent(DateTime time, string eventUsername)
+        public void RemoveEvent(Event removedEvent)
         {
-            Event testEvent = new Event(new State(new Catalog(null, null), null), new User(eventUsername), time);
-            foreach (Event currentEvent in _context.events.ToList())
-            {
-                if (testEvent.Equals(currentEvent))
-                {
-                    _context.events.Remove(currentEvent);
-                }
-            }
+            _context.events.Remove(removedEvent);
         }
 
         public void RemoveAllEvents()
@@ -106,16 +92,9 @@ namespace Data
             }
         }
 
-        public void RemoveState(string title)
+        public void RemoveState(State state)
         {
-            State testState = new State(new Catalog(null, null), title);
-            foreach (State state in _context.states.ToList())
-            {
-                if (testState.Equals(state))
-                {
-                    _context.states.Remove(state);
-                }
-            }
+            _context.states.Remove(state);
         }
 
         public void RemoveAllStates()
@@ -140,24 +119,17 @@ namespace Data
         {
             return new List<State>(_context.states);
         }
-        public void AddUser(string userName)
+        public void AddUser(string username)
         {
-            if (GetUser(userName) == null)
+            if (GetUser(username) == null)
             {
-                _context.users.Add(new User(userName));
+                _context.users.Add(new User(username));
             }
         }
 
-        public void RemoveUser(string userName)
+        public void RemoveUser(User user)
         {
-            User testUser = new User(userName);
-            foreach (User user in _context.users.ToList())
-            {
-                if (testUser.Equals(user))
-                {
-                    _context.users.Remove(user);
-                }
-            }
+            _context.users.Remove(user);
         }
 
         public void RemoveAllUsers()
@@ -165,9 +137,9 @@ namespace Data
             _context.users.Clear();
         }
 
-        public User GetUser(string userName)
+        public User GetUser(string username)
         {
-            User testUser = new User(userName);
+            User testUser = new User(username);
             foreach (User user in _context.users.ToList())
             {
                 if (testUser.Equals(user))

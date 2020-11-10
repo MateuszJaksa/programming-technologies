@@ -35,5 +35,10 @@ namespace Data
             hashCode = hashCode * -1521134295 + Time.GetHashCode();
             return hashCode;
         }
+
+        public override string ToString()
+        {
+            return $"The event happened on {Time.Day}.{Time.Month} at {Time.Hour}:{Time.Minute}:{Time.Second}";
+        }
     }
 }
