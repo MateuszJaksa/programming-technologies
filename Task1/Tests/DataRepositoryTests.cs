@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Tests
 {
     [TestClass]
-    public class DataUnitTests
+    public class DataRepositoryTests
     {
         private DataContext context;
         private DataRepository repository;

@@ -49,8 +49,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataUnitTests.cs" />
+    <Compile Include="DataRepositoryTests.cs" />
+    <Compile Include="EmptyGeneration.cs" />
+    <Compile Include="FixedGeneration.cs" />
+    <Compile Include="IGeneration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomGeneration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

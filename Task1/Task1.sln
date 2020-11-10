@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{A8F62E2F-070C-419B-B736-04102DA95857}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests.csproj", "{91772539-F5B2-43C9-B7E5-B2DB450B5A96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTests", "Tests\DataTests.csproj", "{91772539-F5B2-43C9-B7E5-B2DB450B5A96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{835C0282-F368-4CD9-BA8C-CF30ED4B70B3}"
 	ProjectSection(SolutionItems) = preProject
