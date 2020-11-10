@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Tests
 {
     [TestClass]
-    public class DataRepositoryTest
+    public class DataRepositoryTests
     {
         private DataContext context;
         private DataRepository repository;
@@ -19,8 +19,8 @@ namespace Tests
             repository.AddCatalog("Frank Herbert", "Science Fiction");
             repository.AddCatalog("Szczepan Twardoch", "Novel");
             Assert.AreEqual(context.catalogs.Count, 2);
-            repository.RemoveCatalog("Frank Herbert", "Science Fiction");
-            repository.RemoveCatalog("Szczepan Twardoch", "Novel");
+            repository.RemoveCatalog(repository.GetCatalog("Frank Herbert", "Science Fiction"));
+            repository.RemoveCatalog(repository.GetCatalog("Szczepan Twardoch", "Novel"));
             Assert.AreEqual(context.catalogs.Count, 0);
         }
 
@@ -59,7 +59,7 @@ namespace Tests
             repository.AddCatalog("Frank Herbert", "Science Fiction");
             repository.AddCatalog("Szczepan Twardoch", "Novel");
             Assert.AreEqual(context.catalogs.Count, 2);
-            repository.RemoveCatalog("Michel Houellebecq", "Novel");
+            repository.RemoveCatalog(repository.GetCatalog("Michel Houellebecq", "Novel"));
             Assert.AreEqual(context.catalogs.Count, 2);
         }
 
@@ -109,8 +109,8 @@ namespace Tests
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(context.events.Count, 2);
-            repository.RemoveEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith");
-            repository.RemoveEvent(new DateTime(2020, 11, 08, 12, 1, 0), "Michael Johnson");
+            repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith"));
+            repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 1, 0), "Michael Johnson"));
             Assert.AreEqual(context.events.Count, 0);
         }
 
@@ -156,7 +156,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void RemoveNonExistingtEventTest()
+        public void RemoveNonExistingEventTest()
         {
             context = new Data.DataContext();
             repository = new Data.DataRepository(context);
@@ -169,7 +169,7 @@ namespace Tests
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(context.events.Count, 2);
-            repository.RemoveEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq");
+            repository.RemoveEvent(repository.GetEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq"));
             Assert.AreEqual(context.events.Count, 2);
         }
 
@@ -230,8 +230,8 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
             repository.AddState(catalog2, "Krol");
             Assert.AreEqual(context.states.Count, 2);
-            repository.RemoveState("Dune");
-            repository.RemoveState("Krol");
+            repository.RemoveState(repository.GetState("Dune"));
+            repository.RemoveState(repository.GetState("Krol"));
             Assert.AreEqual(context.states.Count, 0);
         }
 
@@ -267,7 +267,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void RemoveNonExistingtStateTest()
+        public void RemoveNonExistingStateTest()
         {
             context = new Data.DataContext();
             repository = new Data.DataRepository(context);
@@ -276,7 +276,7 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
             repository.AddState(catalog2, "Krol");
             Assert.AreEqual(context.states.Count, 2);
-            repository.RemoveState("Serotonin");
+            repository.RemoveState(repository.GetState("Serotonin"));
             Assert.AreEqual(context.states.Count, 2);
         }
 
@@ -323,8 +323,8 @@ namespace Tests
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             Assert.AreEqual(context.users.Count, 2);
-            repository.RemoveUser("John Smith");
-            repository.RemoveUser("Michael Johnson");
+            repository.RemoveUser(repository.GetUser("John Smith"));
+            repository.RemoveUser(repository.GetUser("Michael Johnson"));
             Assert.AreEqual(context.users.Count, 0);
         }
 
@@ -362,7 +362,7 @@ namespace Tests
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             Assert.AreEqual(context.users.Count, 2);
-            repository.RemoveUser("James Martinez");
+            repository.RemoveUser(repository.GetUser("James Martinez"));
             Assert.AreEqual(context.users.Count, 2);
         }
 

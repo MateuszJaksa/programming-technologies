@@ -6,7 +6,7 @@ namespace Data
 {
     public class DataRepository
     {
-        private DataContext _context;
+        private readonly DataContext _context;
 
         public DataRepository(DataContext context)
         {
@@ -21,15 +21,9 @@ namespace Data
             }
         }
 
-        public void RemoveCatalog(string author, string genre)
+        public void RemoveCatalog(Catalog catalog)
         {
-            foreach (Catalog catalog in _context.catalogs.ToList())
-            {
-                if (catalog.Author == author && catalog.Genre == genre)
-                {
-                    _context.catalogs.Remove(catalog);
-                }
-            }
+            _context.catalogs.Remove(catalog);
         }
 
         public void RemoveAllCatalogs()
@@ -39,9 +33,10 @@ namespace Data
 
         public Catalog GetCatalog(string author, string genre)
         {
-            foreach (Catalog catalog in _context.catalogs)
+            Catalog testCatalog = new Catalog(author, genre);
+            foreach (Catalog catalog in _context.catalogs.ToList())
             {
-                if (catalog.Author == author && catalog.Genre == genre)
+                if (testCatalog.Equals(catalog))
                 {
                     return catalog;
                 }
@@ -61,15 +56,9 @@ namespace Data
             }
         }
 
-        public void RemoveEvent(DateTime time, string eventUsername)
+        public void RemoveEvent(Event removedEvent)
         {
-            foreach (Event currentEvent in _context.events.ToList())
-            {
-                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
-                {
-                    _context.events.Remove(currentEvent);
-                }
-            }
+            _context.events.Remove(removedEvent);
         }
 
         public void RemoveAllEvents()
@@ -79,9 +68,10 @@ namespace Data
 
         public Event GetEvent(DateTime time, string eventUsername)
         {
-            foreach (Event currentEvent in _context.events)
+            Event testEvent = new Event(new State(new Catalog(null, null), null), new User(eventUsername), time);
+            foreach (Event currentEvent in _context.events.ToList())
             {
-                if (currentEvent.Time == time && currentEvent.User.Username == eventUsername)
+                if (testEvent.Equals(currentEvent))
                 {
                     return currentEvent;
                 }
@@ -102,15 +92,9 @@ namespace Data
             }
         }
 
-        public void RemoveState(string title)
+        public void RemoveState(State state)
         {
-            foreach (State state in _context.states.ToList())
-            {
-                if (state.Title == title)
-                {
-                    _context.states.Remove(state);
-                }
-            }
+            _context.states.Remove(state);
         }
 
         public void RemoveAllStates()
@@ -120,9 +104,10 @@ namespace Data
 
         public State GetState(string title)
         {
-            foreach (State state in _context.states)
+            State testState = new State(new Catalog(null, null), title);
+            foreach (State state in _context.states.ToList())
             {
-                if (state.Title == title)
+                if (testState.Equals(state))
                 {
                     return state;
                 }
@@ -134,23 +119,17 @@ namespace Data
         {
             return new List<State>(_context.states);
         }
-        public void AddUser(string userName)
+        public void AddUser(string username)
         {
-            if (GetUser(userName) == null)
+            if (GetUser(username) == null)
             {
-                _context.users.Add(new User(userName));
+                _context.users.Add(new User(username));
             }
         }
 
-        public void RemoveUser(string userName)
+        public void RemoveUser(User user)
         {
-            foreach (User user in _context.users.ToList())
-            {
-                if (user.Username == userName)
-                {
-                    _context.users.Remove(user);
-                }
-            }
+            _context.users.Remove(user);
         }
 
         public void RemoveAllUsers()
@@ -158,11 +137,12 @@ namespace Data
             _context.users.Clear();
         }
 
-        public User GetUser(string userName)
+        public User GetUser(string username)
         {
-            foreach (User user in _context.users)
+            User testUser = new User(username);
+            foreach (User user in _context.users.ToList())
             {
-                if (user.Username == userName)
+                if (testUser.Equals(user))
                 {
                     return user;
                 }
