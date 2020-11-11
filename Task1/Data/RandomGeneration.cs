@@ -10,8 +10,7 @@ namespace Tests
         private static readonly int FILLING_DEPTH = 8;
         private static readonly int USERNAME_LENGTH = 12;
         private static readonly int TITLE_LENGTH = 12;
-        private static readonly int AUTHOR_LENGTH = 8;
-        private static readonly int GENRE_LENGTH = 12;
+        private static readonly int AUTHOR_LENGTH = 12;
 
         RandomGeneration() { }
 
@@ -28,7 +27,7 @@ namespace Tests
             {
                 User tempUser = new User(GetRandomString(USERNAME_LENGTH));
                 context.users.Add(tempUser);
-                Catalog tempCatalog = new Catalog(GetRandomString(AUTHOR_LENGTH), GetRandomString(GENRE_LENGTH));
+                Catalog tempCatalog = new Catalog(GetRandomString(AUTHOR_LENGTH));
                 context.catalogs.Add(tempCatalog);
                 State tempState = new State(tempCatalog, GetRandomString(TITLE_LENGTH));
                 context.states.Add(tempState);

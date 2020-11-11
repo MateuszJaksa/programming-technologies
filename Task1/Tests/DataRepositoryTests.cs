@@ -8,121 +8,108 @@ namespace Tests
     [TestClass]
     public class DataRepositoryTests
     {
-        private DataContext context;
         private DataRepository repository;
 
         [TestMethod]
         public void AddAndRemoveCatalogTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            Assert.AreEqual(context.catalogs.Count, 2);
-            repository.RemoveCatalog(repository.GetCatalog("Frank Herbert", "Science Fiction"));
-            repository.RemoveCatalog(repository.GetCatalog("Szczepan Twardoch", "Novel"));
-            Assert.AreEqual(context.catalogs.Count, 0);
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            Assert.AreEqual(repository.GetCatalogsNumber(), 2);
+            repository.RemoveCatalog(repository.GetCatalog("Frank Herbert"));
+            repository.RemoveCatalog(repository.GetCatalog("Szczepan Twardoch"));
+            Assert.AreEqual(repository.GetCatalogsNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingCatalogTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            Catalog existCatalog = repository.GetCatalog("Frank Herbert", "Science Fiction");
-            Catalog nonExistCatalog = repository.GetCatalog("Michel Houellebecq", "Novel");
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            Catalog existCatalog = repository.GetCatalog("Frank Herbert");
+            Catalog nonExistCatalog = repository.GetCatalog("Michel Houellebecq");
             Assert.IsNotNull(existCatalog);
             Assert.AreEqual(existCatalog.Author, "Frank Herbert");
-            Assert.AreEqual(existCatalog.Genre, "Science Fiction");
             Assert.IsNull(nonExistCatalog);
         }
 
         [TestMethod]
         public void AddAlreadyExistingCatalogTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            Assert.AreEqual(context.catalogs.Count, 2);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            Assert.AreEqual(context.catalogs.Count, 2);
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            Assert.AreEqual(repository.GetCatalogsNumber(), 2);
+            repository.AddCatalog("Frank Herbert");
+            Assert.AreEqual(repository.GetCatalogsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingCatalogTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            Assert.AreEqual(context.catalogs.Count, 2);
-            repository.RemoveCatalog(repository.GetCatalog("Michel Houellebecq", "Novel"));
-            Assert.AreEqual(context.catalogs.Count, 2);
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            Assert.AreEqual(repository.GetCatalogsNumber(), 2);
+            repository.RemoveCatalog(repository.GetCatalog("Michel Houellebecq"));
+            Assert.AreEqual(repository.GetCatalogsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllCatalogsTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            repository.AddCatalog("Michel Houellebecq", "Novel");
-            Assert.AreEqual(context.catalogs.Count, 3);
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            repository.AddCatalog("Michel Houellebecq");
+            Assert.AreEqual(repository.GetCatalogsNumber(), 3);
             repository.RemoveAllCatalogs();
-            Assert.AreEqual(context.catalogs.Count, 0);
+            Assert.AreEqual(repository.GetCatalogsNumber(), 0);
         }
 
         [TestMethod]
         public void GetAllCatalogsTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            repository.AddCatalog("Frank Herbert", "Science Fiction");
-            repository.AddCatalog("Szczepan Twardoch", "Novel");
-            repository.AddCatalog("Michel Houellebecq", "Novel");
+            repository = new Data.DataRepository();
+            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Szczepan Twardoch");
+            repository.AddCatalog("Michel Houellebecq");
             List<Catalog> catalogs = repository.GetAllCatalogs();
-            Assert.AreEqual(context.catalogs.Count, 3);
+            Assert.AreEqual(repository.GetCatalogsNumber(), 3);
             Assert.AreEqual(catalogs.Count, 3);
             Assert.AreEqual(catalogs[0].Author, "Frank Herbert");
             Assert.AreEqual(catalogs[1].Author, "Szczepan Twardoch");
             Assert.AreEqual(catalogs[2].Author, "Michel Houellebecq");
-            Assert.AreEqual(catalogs[0].Genre, "Science Fiction");
-            Assert.AreEqual(catalogs[1].Genre, "Novel");
-            Assert.AreEqual(catalogs[2].Genre, "Novel");
         }
 
         [TestMethod]
         public void AddAndRemoveEventTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            Assert.AreEqual(context.events.Count, 2);
+            Assert.AreEqual(repository.GetEventsNumber(), 2);
             repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith"));
             repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 1, 0), "Michael Johnson"));
-            Assert.AreEqual(context.events.Count, 0);
+            Assert.AreEqual(repository.GetEventsNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingEventTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
@@ -137,83 +124,79 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingEventTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            Assert.AreEqual(context.events.Count, 2);
-            Catalog catalog3 = new Catalog("Frank Herbert", "Science Fiction");
+            Assert.AreEqual(repository.GetEventsNumber(), 2);
+            Catalog catalog3 = new Catalog("Frank Herbert");
             State state3 = new State(catalog3, "Dune");
             User user3 = new User("John Smith");
             repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 0, 0));
-            Assert.AreEqual(context.events.Count, 2);
+            Assert.AreEqual(repository.GetEventsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingEventTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            Assert.AreEqual(context.events.Count, 2);
+            Assert.AreEqual(repository.GetEventsNumber(), 2);
             repository.RemoveEvent(repository.GetEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq"));
-            Assert.AreEqual(context.events.Count, 2);
+            Assert.AreEqual(repository.GetEventsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllEventsTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            Catalog catalog3 = new Catalog("Michel Houellebecq", "Novel");
+            Catalog catalog3 = new Catalog("Michel Houellebecq");
             State state3 = new State(catalog3, "Serotonin");
             User user3 = new User("James Martinez");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
-            Assert.AreEqual(context.events.Count, 3);
+            Assert.AreEqual(repository.GetEventsNumber(), 3);
             repository.RemoveAllEvents();
-            Assert.AreEqual(context.events.Count, 0);
+            Assert.AreEqual(repository.GetEventsNumber(), 0);
         }
 
         [TestMethod]
         public void GetAllEventsTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            Catalog catalog3 = new Catalog("Michel Houellebecq", "Novel");
+            Catalog catalog3 = new Catalog("Michel Houellebecq");
             State state3 = new State(catalog3, "Serotonin");
             User user3 = new User("James Martinez");
             repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
             List<Event> events = repository.GetAllEvents();
-            Assert.AreEqual(context.events.Count, 3);
+            Assert.AreEqual(repository.GetEventsNumber(), 3);
             Assert.AreEqual(events.Count, 3);
             Assert.AreEqual(events[0].Time, new DateTime(2020, 11, 08, 12, 0, 0));
             Assert.AreEqual(events[1].Time, new DateTime(2020, 11, 08, 12, 1, 0));
@@ -223,26 +206,24 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveStateTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
-            Assert.AreEqual(context.states.Count, 2);
+            Assert.AreEqual(repository.GetStatesNumber(), 2);
             repository.RemoveState(repository.GetState("Dune"));
             repository.RemoveState(repository.GetState("Krol"));
-            Assert.AreEqual(context.states.Count, 0);
+            Assert.AreEqual(repository.GetStatesNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingStateTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
             State existState = repository.GetState("Dune");
             State nonExistState = repository.GetState("Serotonin");
@@ -254,61 +235,57 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingStateTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
-            Assert.AreEqual(context.states.Count, 2);
-            Catalog catalog3 = new Catalog("Frank Herbert", "Science Fiction");
+            Assert.AreEqual(repository.GetStatesNumber(), 2);
+            Catalog catalog3 = new Catalog("Frank Herbert");
             repository.AddState(catalog3, "Dune");
-            Assert.AreEqual(context.states.Count, 2);
+            Assert.AreEqual(repository.GetStatesNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingStateTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
-            Assert.AreEqual(context.states.Count, 2);
+            Assert.AreEqual(repository.GetStatesNumber(), 2);
             repository.RemoveState(repository.GetState("Serotonin"));
-            Assert.AreEqual(context.states.Count, 2);
+            Assert.AreEqual(repository.GetStatesNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllStatesTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
-            Catalog catalog3 = new Catalog("Michel Houellebecq", "Novel");
+            Catalog catalog3 = new Catalog("Michel Houellebecq");
             repository.AddState(catalog3, "Serotonin");
-            Assert.AreEqual(context.states.Count, 3);
+            Assert.AreEqual(repository.GetStatesNumber(), 3);
             repository.RemoveAllStates();
-            Assert.AreEqual(context.states.Count, 0);
+            Assert.AreEqual(repository.GetStatesNumber(), 0);
         }
 
         [TestMethod]
         public void GetAllStatesTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
-            Catalog catalog1 = new Catalog("Frank Herbert", "Science Fiction");
+            repository = new Data.DataRepository();
+            Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch", "Novel");
+            Catalog catalog2 = new Catalog("Szczepan Twardoch");
             repository.AddState(catalog2, "Krol");
-            Catalog catalog3 = new Catalog("Michel Houellebecq", "Novel");
+            Catalog catalog3 = new Catalog("Michel Houellebecq");
             repository.AddState(catalog3, "Serotonin");
             List<State> states = repository.GetAllStates();
-            Assert.AreEqual(context.states.Count, 3);
+            Assert.AreEqual(repository.GetStatesNumber(), 3);
             Assert.AreEqual(states.Count, 3);
             Assert.AreEqual(states[0].Title, "Dune");
             Assert.AreEqual(states[1].Title, "Krol");
@@ -318,21 +295,19 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveUserTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
-            Assert.AreEqual(context.users.Count, 2);
+            Assert.AreEqual(repository.GetUsersNumber(), 2);
             repository.RemoveUser(repository.GetUser("John Smith"));
             repository.RemoveUser(repository.GetUser("Michael Johnson"));
-            Assert.AreEqual(context.users.Count, 0);
+            Assert.AreEqual(repository.GetUsersNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingUserTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             User existUser = repository.GetUser("John Smith");
@@ -345,50 +320,46 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingUserTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
-            Assert.AreEqual(context.users.Count, 2);
+            Assert.AreEqual(repository.GetUsersNumber(), 2);
             repository.AddUser("John Smith");
-            Assert.AreEqual(context.users.Count, 2);
+            Assert.AreEqual(repository.GetUsersNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingUserTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
-            Assert.AreEqual(context.users.Count, 2);
+            Assert.AreEqual(repository.GetUsersNumber(), 2);
             repository.RemoveUser(repository.GetUser("James Martinez"));
-            Assert.AreEqual(context.users.Count, 2);
+            Assert.AreEqual(repository.GetUsersNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllUsersTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             repository.AddUser("James Martinez");
-            Assert.AreEqual(context.users.Count, 3);
+            Assert.AreEqual(repository.GetUsersNumber(), 3);
             repository.RemoveAllUsers();
-            Assert.AreEqual(context.users.Count, 0);
+            Assert.AreEqual(repository.GetUsersNumber(), 0);
         }
 
         [TestMethod]
         public void GetAllUsersTest()
         {
-            context = new Data.DataContext();
-            repository = new Data.DataRepository(context);
+            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             repository.AddUser("James Martinez");
             List<User> users = repository.GetAllUsers();
-            Assert.AreEqual(context.users.Count, 3);
+            Assert.AreEqual(repository.GetUsersNumber(), 3);
             Assert.AreEqual(users.Count, 3);
             Assert.AreEqual(users[0].Username, "John Smith");
             Assert.AreEqual(users[1].Username, "Michael Johnson");
