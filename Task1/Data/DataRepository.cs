@@ -1,14 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using Tests;
 
 namespace Data
 {
-    public class DataRepository
+    public class DataRepository : IDataRepository
     {
         private readonly DataContext _context = new DataContext();
+        private readonly IGeneration _generation;
 
-        public DataRepository() { }
+        //public DataRepository(IGeneration generation)
+        //{
+        //    _generation = generation;
+        //}
+
+        public void Fill()
+        {
+            //_generation.Fill(_context);
+        }
 
         public void AddCatalog(string author)
         {
@@ -42,7 +53,11 @@ namespace Data
         }
         public List<Catalog> GetAllCatalogs()
         {
-            return new List<Catalog>(_context.catalogs);
+            if (GetCatalogsNumber() != 0)
+            {
+                return new List<Catalog>(_context.catalogs);
+            }
+            return null;
         }
 
         public int GetCatalogsNumber()
@@ -83,7 +98,11 @@ namespace Data
 
         public List<Event> GetAllEvents()
         {
-            return new List<Event>(_context.events);
+            if (GetEventsNumber() != 0)
+            {
+                return new List<Event>(_context.events);
+            }
+            return null;
         }
 
         public int GetEventsNumber()
@@ -124,7 +143,11 @@ namespace Data
 
         public List<State> GetAllStates()
         {
-            return new List<State>(_context.states);
+            if (GetStatesNumber() != 0)
+            {
+                return new List<State>(_context.states);
+            }
+            return null;
         }
 
         public int GetStatesNumber()
@@ -165,7 +188,11 @@ namespace Data
 
         public List<User> GetAllUsers()
         {
-            return new List<User>(_context.users);
+            if (GetUsersNumber() != 0)
+            {
+                return new List<User>(_context.users);
+            }
+            return null;
         }
 
         public int GetUsersNumber()

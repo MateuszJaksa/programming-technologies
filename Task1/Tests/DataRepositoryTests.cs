@@ -8,7 +8,7 @@ namespace Tests
     [TestClass]
     public class DataRepositoryTests
     {
-        private DataRepository repository;
+        private IDataRepository repository;
 
         [TestMethod]
         public void AddAndRemoveCatalogTest()
