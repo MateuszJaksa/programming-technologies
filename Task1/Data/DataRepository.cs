@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Tests;
 
@@ -11,14 +10,16 @@ namespace Data
         private readonly DataContext _context = new DataContext();
         private readonly IGeneration _generation;
 
-        //public DataRepository(IGeneration generation)
-        //{
-        //    _generation = generation;
-        //}
+        public DataRepository() { }
+
+        public DataRepository(IGeneration generation)
+        {
+            _generation = generation;
+        }
 
         public void Fill()
         {
-            //_generation.Fill(_context);
+            _generation.Fill(_context);
         }
 
         public void AddCatalog(string author)

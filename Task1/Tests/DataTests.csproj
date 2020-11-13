@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepositoryTests.cs" />
+    <Compile Include="EmptyGenTests.cs" />
+    <Compile Include="FixedGenTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomGenTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,7 +4,7 @@ using Data;
 
 namespace Tests
 {
-    class RandomGeneration : IGeneration
+    public class RandomGeneration : IGeneration
     {
         private static readonly Random RANDOM = new Random();
         private static readonly int FILLING_DEPTH = 8;
@@ -12,7 +12,7 @@ namespace Tests
         private static readonly int TITLE_LENGTH = 12;
         private static readonly int AUTHOR_LENGTH = 12;
 
-        RandomGeneration() { }
+        public RandomGeneration() { }
 
         private static string GetRandomString(int stringLength)
         {

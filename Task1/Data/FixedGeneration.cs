@@ -3,9 +3,9 @@ using Data;
 
 namespace Tests
 {
-    class FixedGeneration : IGeneration
+    public class FixedGeneration : IGeneration
     {
-        FixedGeneration() { }
+        public FixedGeneration() { }
 
         public void Fill(DataContext context)
         {

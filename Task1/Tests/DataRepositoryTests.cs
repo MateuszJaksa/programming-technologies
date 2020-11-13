@@ -10,10 +10,15 @@ namespace Tests
     {
         private IDataRepository repository;
 
+        [TestInitialize]
+        public void Initialize()
+        {
+            repository = new DataRepository();
+        }
+
         [TestMethod]
         public void AddAndRemoveCatalogTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
@@ -25,7 +30,6 @@ namespace Tests
         [TestMethod]
         public void GetExistingAndNonExistingCatalogTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             Catalog existCatalog = repository.GetCatalog("Frank Herbert");
@@ -38,7 +42,6 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingCatalogTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
@@ -49,7 +52,6 @@ namespace Tests
         [TestMethod]
         public void RemoveNonExistingCatalogTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
@@ -60,7 +62,6 @@ namespace Tests
         [TestMethod]
         public void RemoveAllCatalogsTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             repository.AddCatalog("Michel Houellebecq");
@@ -72,7 +73,6 @@ namespace Tests
         [TestMethod]
         public void GetAllCatalogsTest()
         {
-            repository = new Data.DataRepository();
             repository.AddCatalog("Frank Herbert");
             repository.AddCatalog("Szczepan Twardoch");
             repository.AddCatalog("Michel Houellebecq");
@@ -87,7 +87,6 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveEventTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -105,7 +104,6 @@ namespace Tests
         [TestMethod]
         public void GetExistingAndNonExistingEventTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -124,7 +122,6 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingEventTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -144,7 +141,6 @@ namespace Tests
         [TestMethod]
         public void RemoveNonExistingEventTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -161,7 +157,6 @@ namespace Tests
         [TestMethod]
         public void RemoveAllEventsTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -182,7 +177,6 @@ namespace Tests
         [TestMethod]
         public void GetAllEventsTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             State state1 = new State(catalog1, "Dune");
             User user1 = new User("John Smith");
@@ -206,7 +200,6 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveStateTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -220,7 +213,6 @@ namespace Tests
         [TestMethod]
         public void GetExistingAndNonExistingStateTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -235,7 +227,6 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingStateTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -249,7 +240,6 @@ namespace Tests
         [TestMethod]
         public void RemoveNonExistingStateTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -262,7 +252,6 @@ namespace Tests
         [TestMethod]
         public void RemoveAllStatesTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -277,7 +266,6 @@ namespace Tests
         [TestMethod]
         public void GetAllStatesTest()
         {
-            repository = new Data.DataRepository();
             Catalog catalog1 = new Catalog("Frank Herbert");
             repository.AddState(catalog1, "Dune");
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
@@ -295,7 +283,6 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveUserTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             Assert.AreEqual(repository.GetUsersNumber(), 2);
@@ -307,7 +294,6 @@ namespace Tests
         [TestMethod]
         public void GetExistingAndNonExistingUserTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             User existUser = repository.GetUser("John Smith");
@@ -320,7 +306,6 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingUserTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             Assert.AreEqual(repository.GetUsersNumber(), 2);
@@ -331,7 +316,6 @@ namespace Tests
         [TestMethod]
         public void RemoveNonExistingUserTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             Assert.AreEqual(repository.GetUsersNumber(), 2);
@@ -342,7 +326,6 @@ namespace Tests
         [TestMethod]
         public void RemoveAllUsersTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             repository.AddUser("James Martinez");
@@ -354,7 +337,6 @@ namespace Tests
         [TestMethod]
         public void GetAllUsersTest()
         {
-            repository = new Data.DataRepository();
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             repository.AddUser("James Martinez");
