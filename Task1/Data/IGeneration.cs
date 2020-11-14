@@ -2,7 +2,7 @@
 
 namespace Tests
 {
-    interface IGeneration
+    public interface IGeneration
     {
         void Fill(DataContext context);
     }

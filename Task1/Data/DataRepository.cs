@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tests;
 
 namespace Data
 {
-    public class DataRepository
+    public class DataRepository : IDataRepository
     {
-        private readonly DataContext _context;
+        private readonly DataContext _context = new DataContext();
+        private readonly IGeneration _generation;
 
-        public DataRepository(DataContext context)
+        public DataRepository() { }
+
+        public DataRepository(IGeneration generation)
         {
-            this._context = context;
+            _generation = generation;
         }
 
-        public void AddCatalog(string author, string genre)
+        public void Fill()
         {
-            if (GetCatalog(author, genre) == null)
+            _generation.Fill(_context);
+        }
+
+        public void AddCatalog(string author)
+        {
+            if (GetCatalog(author) == null)
             {
-                _context.catalogs.Add(new Catalog(author, genre));
+                _context.catalogs.Add(new Catalog(author));
             }
         }
 
@@ -31,9 +40,9 @@ namespace Data
             _context.catalogs.Clear();
         }
 
-        public Catalog GetCatalog(string author, string genre)
+        public Catalog GetCatalog(string author)
         {
-            Catalog testCatalog = new Catalog(author, genre);
+            Catalog testCatalog = new Catalog(author);
             foreach (Catalog catalog in _context.catalogs.ToList())
             {
                 if (testCatalog.Equals(catalog))
@@ -45,7 +54,16 @@ namespace Data
         }
         public List<Catalog> GetAllCatalogs()
         {
-            return new List<Catalog>(_context.catalogs);
+            if (GetCatalogsNumber() != 0)
+            {
+                return new List<Catalog>(_context.catalogs);
+            }
+            return null;
+        }
+
+        public int GetCatalogsNumber()
+        {
+            return _context.catalogs.Count();
         }
 
         public void AddEvent(State state, User user, DateTime time)
@@ -68,7 +86,7 @@ namespace Data
 
         public Event GetEvent(DateTime time, string eventUsername)
         {
-            Event testEvent = new Event(new State(new Catalog(null, null), null), new User(eventUsername), time);
+            Event testEvent = new Event(new State(new Catalog(null), null), new User(eventUsername), time);
             foreach (Event currentEvent in _context.events.ToList())
             {
                 if (testEvent.Equals(currentEvent))
@@ -81,7 +99,16 @@ namespace Data
 
         public List<Event> GetAllEvents()
         {
-            return new List<Event>(_context.events);
+            if (GetEventsNumber() != 0)
+            {
+                return new List<Event>(_context.events);
+            }
+            return null;
+        }
+
+        public int GetEventsNumber()
+        {
+            return _context.events.Count();
         }
 
         public void AddState(Catalog catalog, string title)
@@ -104,7 +131,7 @@ namespace Data
 
         public State GetState(string title)
         {
-            State testState = new State(new Catalog(null, null), title);
+            State testState = new State(new Catalog(null), title);
             foreach (State state in _context.states.ToList())
             {
                 if (testState.Equals(state))
@@ -117,8 +144,18 @@ namespace Data
 
         public List<State> GetAllStates()
         {
-            return new List<State>(_context.states);
+            if (GetStatesNumber() != 0)
+            {
+                return new List<State>(_context.states);
+            }
+            return null;
         }
+
+        public int GetStatesNumber()
+        {
+            return _context.states.Count();
+        }
+
         public void AddUser(string username)
         {
             if (GetUser(username) == null)
@@ -152,7 +189,16 @@ namespace Data
 
         public List<User> GetAllUsers()
         {
-            return new List<User>(_context.users);
+            if (GetUsersNumber() != 0)
+            {
+                return new List<User>(_context.users);
+            }
+            return null;
+        }
+
+        public int GetUsersNumber()
+        {
+            return _context.users.Count();
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Tests
 {
-    class EmptyGeneration : IGeneration
+    public class EmptyGeneration : IGeneration
     {
 
-        EmptyGeneration() { }
+        public EmptyGeneration() { }
 
         public void Fill(DataContext context)
         { }

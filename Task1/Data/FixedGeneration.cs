@@ -3,9 +3,9 @@ using Data;
 
 namespace Tests
 {
-    class FixedGeneration : IGeneration
+    public class FixedGeneration : IGeneration
     {
-        FixedGeneration() { }
+        public FixedGeneration() { }
 
         public void Fill(DataContext context)
         {
@@ -18,10 +18,10 @@ namespace Tests
             context.users.Add(tempUser2);
             context.users.Add(tempUser3);
 
-            Catalog tempCatalog0 = new Catalog("Victor Hugo", "Novel");
-            Catalog tempCatalog1 = new Catalog("Ryszard Kapuscinski", "Reportage");
-            Catalog tempCatalog2 = new Catalog("Isaac Asimov", "Science Fiction");
-            Catalog tempCatalog3 = new Catalog("Howard Philips Lovecraft", "Horror");
+            Catalog tempCatalog0 = new Catalog("Victor Hugo");
+            Catalog tempCatalog1 = new Catalog("Ryszard Kapuscinski");
+            Catalog tempCatalog2 = new Catalog("Isaac Asimov");
+            Catalog tempCatalog3 = new Catalog("Howard Philips Lovecraft");
             context.catalogs.Add(tempCatalog0);
             context.catalogs.Add(tempCatalog1);
             context.catalogs.Add(tempCatalog2);

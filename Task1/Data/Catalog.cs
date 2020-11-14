@@ -4,36 +4,29 @@ namespace Data
 {
     public class Catalog
     {
-        public Catalog(string author, string genre)
+        public Catalog(string author)
         {
             Author = author;
-            Genre = genre;
         }
 
         public string Author
         { get; set; }
 
-        public string Genre
-        { get; set; }
-
         public override bool Equals(object obj)
         {
             return obj is Catalog catalog &&
-                   this.Author == catalog.Author &&
-                   this.Genre == catalog.Genre;
+                   this.Author == catalog.Author;
         }
 
         public override int GetHashCode()
         {
-            int hashCode = -1994181324;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Author);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Genre);
-            return hashCode;
+            int initialSeed = -1994181324;
+            return initialSeed * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Author);
         }
 
         public override string ToString()
         {
-            return $"The catalog consists of {Genre} written by {Author}";
+            return $"The catalog is connected to {Author}";
         }
     }
 }
