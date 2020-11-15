@@ -31,7 +31,7 @@ namespace Tests
                 context.catalogs.Add(tempCatalog);
                 State tempState = new State(tempCatalog, GetRandomString(TITLE_LENGTH));
                 context.states.Add(tempState);
-                context.events.Add(new Event(tempState, tempUser, DateTime.Now));
+                context.events.Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
             }
         }
     }

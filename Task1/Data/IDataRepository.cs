@@ -22,15 +22,16 @@ namespace Data
 
         int GetCatalogsNumber();
 
-        void AddEvent(State state, User user, DateTime time);
+        void AddBorrowEvent(State state, User user, DateTime time);
+        void AddReturnEvent(State state, User user, DateTime time);
 
-        void RemoveEvent(Event removedEvent);
+        void RemoveEvent(AbstractEvent removedEvent);
 
         void RemoveAllEvents();
 
-        Event GetEvent(DateTime time, string eventUsername);
+        AbstractEvent GetEvent(DateTime time, string eventUsername);
 
-        List<Event> GetAllEvents();
+        List<AbstractEvent> GetAllEvents();
 
         int GetEventsNumber();
 

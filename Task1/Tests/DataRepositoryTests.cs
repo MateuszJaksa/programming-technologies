@@ -79,9 +79,10 @@ namespace Tests
             List<Catalog> catalogs = repository.GetAllCatalogs();
             Assert.AreEqual(repository.GetCatalogsNumber(), 3);
             Assert.AreEqual(catalogs.Count, 3);
-            Assert.AreEqual(catalogs[0].Author, "Frank Herbert");
-            Assert.AreEqual(catalogs[1].Author, "Szczepan Twardoch");
-            Assert.AreEqual(catalogs[2].Author, "Michel Houellebecq");
+            Assert.IsTrue(catalogs.Exists(n => n.Author == "Frank Herbert"));
+            Assert.IsTrue(catalogs.Exists(n => n.Author == "Szczepan Twardoch"));
+            Assert.IsTrue(catalogs.Exists(n => n.Author == "Michel Houellebecq"));
+            Assert.IsFalse(catalogs.Exists(n => n.Author == "Donald Trump"));
         }
 
         [TestMethod]
@@ -93,8 +94,8 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
             repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith"));
             repository.RemoveEvent(repository.GetEvent(new DateTime(2020, 11, 08, 12, 1, 0), "Michael Johnson"));
@@ -110,10 +111,10 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            Event existEvent = repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith");
-            Event nonExistEvent = repository.GetEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq");
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            AbstractEvent existEvent = repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith");
+            AbstractEvent nonExistEvent = repository.GetEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq");
             Assert.IsNotNull(existEvent);
             Assert.AreEqual(existEvent.Time, new DateTime(2020, 11, 08, 12, 0, 0));
             Assert.IsNull(nonExistEvent);
@@ -128,13 +129,13 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
             Catalog catalog3 = new Catalog("Frank Herbert");
             State state3 = new State(catalog3, "Dune");
             User user3 = new User("John Smith");
-            repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 0, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
         }
 
@@ -147,8 +148,8 @@ namespace Tests
             Catalog catalog2 = new Catalog("Szczepan Twardoch");
             State state2 = new State(catalog2, "Krol");
             User user2 = new User("Michael Johnson");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
             repository.RemoveEvent(repository.GetEvent(new DateTime(2021, 11, 08, 12, 0, 0), "Michel Houellebecq"));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
@@ -166,9 +167,9 @@ namespace Tests
             Catalog catalog3 = new Catalog("Michel Houellebecq");
             State state3 = new State(catalog3, "Serotonin");
             User user3 = new User("James Martinez");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 3);
             repository.RemoveAllEvents();
             Assert.AreEqual(repository.GetEventsNumber(), 0);
@@ -186,15 +187,30 @@ namespace Tests
             Catalog catalog3 = new Catalog("Michel Houellebecq");
             State state3 = new State(catalog3, "Serotonin");
             User user3 = new User("James Martinez");
-            repository.AddEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            repository.AddEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
-            List<Event> events = repository.GetAllEvents();
+            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
+            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
+            repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
+            List<AbstractEvent> events = repository.GetAllEvents();
             Assert.AreEqual(repository.GetEventsNumber(), 3);
             Assert.AreEqual(events.Count, 3);
-            Assert.AreEqual(events[0].Time, new DateTime(2020, 11, 08, 12, 0, 0));
-            Assert.AreEqual(events[1].Time, new DateTime(2020, 11, 08, 12, 1, 0));
-            Assert.AreEqual(events[2].Time, new DateTime(2020, 11, 08, 12, 2, 0));
+            Assert.IsTrue(events.Exists(n => n.Time == new DateTime(2020, 11, 08, 12, 0, 0)));
+            Assert.IsTrue(events.Exists(n => n.Time == new DateTime(2020, 11, 08, 12, 1, 0)));
+            Assert.IsTrue(events.Exists(n => n.Time == new DateTime(2020, 11, 08, 12, 2, 0)));
+            Assert.IsFalse(events.Exists(n => n.Time == new DateTime(2021, 11, 08, 12, 2, 0)));
+        }
+
+        [TestMethod]
+        public void CheckBorrowAndReturnEventsTest()
+        {
+            Catalog catalog1 = new Catalog("Frank Herbert");
+            State state1 = new State(catalog1, "Dune");
+            User user1 = new User("John Smith");
+            Assert.IsFalse(state1.IsBorrowed);
+            repository.AddBorrowEvent(state1, user1, DateTime.Now);
+            Assert.IsTrue(state1.IsBorrowed);
+            repository.AddReturnEvent(state1, user1, DateTime.Now);
+            Assert.IsFalse(state1.IsBorrowed);
+
         }
 
         [TestMethod]
@@ -275,9 +291,10 @@ namespace Tests
             List<State> states = repository.GetAllStates();
             Assert.AreEqual(repository.GetStatesNumber(), 3);
             Assert.AreEqual(states.Count, 3);
-            Assert.AreEqual(states[0].Title, "Dune");
-            Assert.AreEqual(states[1].Title, "Krol");
-            Assert.AreEqual(states[2].Title, "Serotonin");
+            Assert.IsTrue(states.Exists(n => n.Title == "Dune"));
+            Assert.IsTrue(states.Exists(n => n.Title == "Krol"));
+            Assert.IsTrue(states.Exists(n => n.Title == "Serotonin"));
+            Assert.IsFalse(states.Exists(n => n.Title == "Art of the Deal"));
         }
 
         [TestMethod]
@@ -343,9 +360,10 @@ namespace Tests
             List<User> users = repository.GetAllUsers();
             Assert.AreEqual(repository.GetUsersNumber(), 3);
             Assert.AreEqual(users.Count, 3);
-            Assert.AreEqual(users[0].Username, "John Smith");
-            Assert.AreEqual(users[1].Username, "Michael Johnson");
-            Assert.AreEqual(users[2].Username, "James Martinez");
+            Assert.IsTrue(users.Exists(n => n.Username == "John Smith"));
+            Assert.IsTrue(users.Exists(n => n.Username == "Michael Johnson"));
+            Assert.IsTrue(users.Exists(n => n.Username == "James Martinez"));
+            Assert.IsFalse(users.Exists(n => n.Username == "Edward Ochab"));
         }
     }
 }

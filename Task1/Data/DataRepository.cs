@@ -66,15 +66,23 @@ namespace Data
             return _context.catalogs.Count();
         }
 
-        public void AddEvent(State state, User user, DateTime time)
+        public void AddBorrowEvent(State state, User user, DateTime time)
         {
             if (GetEvent(time, user.Username) == null)
             {
-                _context.events.Add(new Event(state, user, time));
+                _context.events.Add(new BorrowEvent(state, user, time));
             }
         }
 
-        public void RemoveEvent(Event removedEvent)
+        public void AddReturnEvent(State state, User user, DateTime time)
+        {
+            if (GetEvent(time, user.Username) == null)
+            {
+                _context.events.Add(new ReturnEvent(state, user, time));
+            }
+        }
+
+        public void RemoveEvent(AbstractEvent removedEvent)
         {
             _context.events.Remove(removedEvent);
         }
@@ -84,12 +92,11 @@ namespace Data
             _context.events.Clear();
         }
 
-        public Event GetEvent(DateTime time, string eventUsername)
+        public AbstractEvent GetEvent(DateTime time, string eventUsername)
         {
-            Event testEvent = new Event(new State(new Catalog(null), null), new User(eventUsername), time);
-            foreach (Event currentEvent in _context.events.ToList())
+            foreach (AbstractEvent currentEvent in _context.events.ToList())
             {
-                if (testEvent.Equals(currentEvent))
+                if (currentEvent.Time == time && currentEvent.User.Username ==  eventUsername)
                 {
                     return currentEvent;
                 }
@@ -97,11 +104,11 @@ namespace Data
             return null;
         }
 
-        public List<Event> GetAllEvents()
+        public List<AbstractEvent> GetAllEvents()
         {
             if (GetEventsNumber() != 0)
             {
-                return new List<Event>(_context.events);
+                return new List<AbstractEvent>(_context.events);
             }
             return null;
         }

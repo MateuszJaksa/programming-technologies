@@ -6,7 +6,7 @@ namespace Logic
 {
     public class DataService
     {
-        private DataRepository _repository;
+        private readonly DataRepository _repository;
 
         public DataService(DataRepository repository)
         {
@@ -14,7 +14,7 @@ namespace Logic
         }
 
         #region Catalog
-        public void AddCatalog(string author, string genre) => _repository.AddCatalog(author, genre);
+        public void AddCatalog(string author) => _repository.AddCatalog(author);
 
         public List<Catalog> GetCatalogs() => _repository.GetAllCatalogs();
 
@@ -22,15 +22,15 @@ namespace Logic
         #endregion
 
         #region Event
-        public void AddEvent(State state, User user, DateTime time) => _repository.AddEvent(state, user, time);
+        
 
-        public List<Event> GetEvents() => _repository.GetAllEvents();
+        public List<AbstractEvent> GetEvents() => _repository.GetAllEvents();
 
-        public List<Event> GetEvents(User user)
+        public List<AbstractEvent> GetEvents(User user)
         {
-            List<Event> events = _repository.GetAllEvents();
-            List<Event> returnedEvents = new List<Event>();
-            foreach (Event currentEvent in events)
+            List<AbstractEvent> events = _repository.GetAllEvents();
+            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            foreach (AbstractEvent currentEvent in events)
             {
                 if (currentEvent.User == user)
                     returnedEvents.Add(currentEvent);
@@ -38,11 +38,11 @@ namespace Logic
             return returnedEvents;
         }
 
-        public List<Event> GetEvents(State state)
+        public List<AbstractEvent> GetEvents(State state)
         {
-            List<Event> events = _repository.GetAllEvents();
-            List<Event> returnedEvents = new List<Event>();
-            foreach (Event currentEvent in events)
+            List<AbstractEvent> events = _repository.GetAllEvents();
+            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            foreach (AbstractEvent currentEvent in events)
             {
                 if (currentEvent.State == state)
                     returnedEvents.Add(currentEvent);
@@ -50,11 +50,11 @@ namespace Logic
             return returnedEvents;
         }
 
-        public List<Event> GetEventsByTime(DateTime time)
+        public List<AbstractEvent> GetEventsByTime(DateTime time)
         {
-            List<Event> events = _repository.GetAllEvents();
-            List<Event> returnedEvents = new List<Event>();
-            foreach (Event currentEvent in events)
+            List<AbstractEvent> events = _repository.GetAllEvents();
+            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            foreach (AbstractEvent currentEvent in events)
             {
                 if (currentEvent.Time == time)
                     returnedEvents.Add(currentEvent);
@@ -62,11 +62,11 @@ namespace Logic
             return returnedEvents;
         }
 
-        public List<Event> GetEventsByTime(DateTime startTime, DateTime endTime)
+        public List<AbstractEvent> GetEventsByTime(DateTime startTime, DateTime endTime)
         {
-            List<Event> events = _repository.GetAllEvents();
-            List<Event> returnedEvents = new List<Event>();
-            foreach (Event currentEvent in events)
+            List<AbstractEvent> events = _repository.GetAllEvents();
+            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            foreach (AbstractEvent currentEvent in events)
             {
                 if (startTime < currentEvent.Time && currentEvent.Time < endTime)
                     returnedEvents.Add(currentEvent);
@@ -74,7 +74,7 @@ namespace Logic
             return returnedEvents;
         }
 
-        public void RemoveEvent(Event E) => _repository.RemoveEvent(E);
+        public void RemoveEvent(AbstractEvent E) => _repository.RemoveEvent(E);
         #endregion
 
         #region State

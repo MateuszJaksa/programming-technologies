@@ -36,7 +36,7 @@ namespace Tests
             Assert.IsNull(repository.GetCatalog("Donald Trump"));
             Assert.IsNotNull(repository.GetCatalog("Victor Hugo"));
             Assert.IsNull(repository.GetEvent(new DateTime(2021, 01, 01, 12, 0, 0), "Edward Ochab"));
-            Assert.IsNotNull(repository.GetEvent(new DateTime(2020, 10, 11, 12, 0, 0), "Janusz Domaniewski"));
+            Assert.IsNotNull(repository.GetEvent(new DateTime(2020, 10, 11, 12, 0, 0), "Tadeusz Chrostowski"));
             Assert.IsNull(repository.GetState("Art of the Deal"));
             Assert.IsNotNull(repository.GetState("The Emperor"));
             Assert.IsNull(repository.GetUser("Marian Spychalski"));

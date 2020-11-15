@@ -8,6 +8,7 @@ namespace Data
         {
             Catalog = catalog;
             Title = title;
+            IsBorrowed = false;
         }
 
         public Catalog Catalog
@@ -16,15 +17,22 @@ namespace Data
         public string Title
         { get; set; }
 
+        public bool IsBorrowed
+        { get; set; }
+
         public override bool Equals(object obj)
         {
             return obj is State state &&
-                   this.Title == state.Title;
+                   Title == state.Title &&
+                   IsBorrowed == state.IsBorrowed;
         }
 
         public override int GetHashCode()
         {
-            return 434131217 + EqualityComparer<string>.Default.GetHashCode(Title);
+            int hashCode = -1443766054;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+            hashCode = hashCode * -1521134295 + IsBorrowed.GetHashCode();
+            return hashCode;
         }
 
         public override string ToString()

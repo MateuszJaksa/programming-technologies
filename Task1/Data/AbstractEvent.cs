@@ -3,14 +3,16 @@ using System.Collections.Generic;
 
 namespace Data
 {
-    public class Event
+    public abstract class AbstractEvent
     {
-        public Event(State state, User user, DateTime time)
+        public AbstractEvent(State state, User user, DateTime time)
         {
             State = state;
             User = user;
             Time = time;
         }
+
+        public abstract void Perform();
 
         public State State
         { get; set; }
@@ -23,7 +25,7 @@ namespace Data
 
         public override bool Equals(object obj)
         {
-            return obj is Event currentEvent &&
+            return obj is AbstractEvent currentEvent &&
                    this.User.Username == currentEvent.User.Username &&
                    this.Time == currentEvent.Time;
         }
