@@ -6,9 +6,9 @@ namespace Logic
 {
     public class DataService
     {
-        private readonly DataRepository _repository;
+        private readonly IDataRepository _repository;
 
-        public DataService(DataRepository repository)
+        public DataService(IDataRepository repository)
         {
             this._repository = repository;
         }
@@ -16,20 +16,35 @@ namespace Logic
         #region Catalog
         public void AddCatalog(string author) => _repository.AddCatalog(author);
 
-        public List<Catalog> GetCatalogs() => _repository.GetAllCatalogs();
+        public IList<Catalog> GetCatalogs() => _repository.GetAllCatalogs();
+
+        public IList<Catalog> GetCatalogs(string author)
+        {
+            IList<Catalog> catalogs = _repository.GetAllCatalogs();
+            IList<Catalog> returnedCatalogs = new List<Catalog>();
+            foreach (Catalog currentCatalog in catalogs)
+            {
+                if (currentCatalog.Author?.IndexOf(author, StringComparison.OrdinalIgnoreCase) >= 0)
+                    returnedCatalogs.Add(currentCatalog);
+            }
+            return returnedCatalogs;
+        }
 
         public void RemoveCatalog(Catalog C) => _repository.RemoveCatalog(C);
         #endregion
 
-        #region Event
-        
+        #region Event  
 
-        public List<AbstractEvent> GetEvents() => _repository.GetAllEvents();
+        public void Borrow(State state, User user) => _repository.AddBorrowEvent(state, user, DateTime.Now);
 
-        public List<AbstractEvent> GetEvents(User user)
+        public void Return(State state, User user) => _repository.AddReturnEvent(state, user, DateTime.Now);
+
+        public IList<AbstractEvent> GetEvents() => _repository.GetAllEvents();
+
+        public IList<AbstractEvent> GetEvents(User user)
         {
-            List<AbstractEvent> events = _repository.GetAllEvents();
-            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            IList<AbstractEvent> events = _repository.GetAllEvents();
+            IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
             foreach (AbstractEvent currentEvent in events)
             {
                 if (currentEvent.User == user)
@@ -38,10 +53,10 @@ namespace Logic
             return returnedEvents;
         }
 
-        public List<AbstractEvent> GetEvents(State state)
+        public IList<AbstractEvent> GetEvents(State state)
         {
-            List<AbstractEvent> events = _repository.GetAllEvents();
-            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            IList<AbstractEvent> events = _repository.GetAllEvents();
+            IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
             foreach (AbstractEvent currentEvent in events)
             {
                 if (currentEvent.State == state)
@@ -50,22 +65,10 @@ namespace Logic
             return returnedEvents;
         }
 
-        public List<AbstractEvent> GetEventsByTime(DateTime time)
+        public IList<AbstractEvent> GetEventsByTime(DateTime startTime, DateTime endTime)
         {
-            List<AbstractEvent> events = _repository.GetAllEvents();
-            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
-            foreach (AbstractEvent currentEvent in events)
-            {
-                if (currentEvent.Time == time)
-                    returnedEvents.Add(currentEvent);
-            }
-            return returnedEvents;
-        }
-
-        public List<AbstractEvent> GetEventsByTime(DateTime startTime, DateTime endTime)
-        {
-            List<AbstractEvent> events = _repository.GetAllEvents();
-            List<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            IList<AbstractEvent> events = _repository.GetAllEvents();
+            IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
             foreach (AbstractEvent currentEvent in events)
             {
                 if (startTime < currentEvent.Time && currentEvent.Time < endTime)
@@ -74,18 +77,41 @@ namespace Logic
             return returnedEvents;
         }
 
-        public void RemoveEvent(AbstractEvent E) => _repository.RemoveEvent(E);
+        public IList<AbstractEvent> GetEventsByTime(State state, DateTime startTime, DateTime endTime)
+        {
+            IList<AbstractEvent> events = _repository.GetAllEvents();
+            IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
+            foreach (AbstractEvent currentEvent in events)
+            {
+                if (startTime < currentEvent.Time && currentEvent.Time < endTime  && currentEvent.State == state)
+                    returnedEvents.Add(currentEvent);
+            }
+            return returnedEvents;
+        }
+
         #endregion
 
         #region State
         public void AddState(Catalog catalog, string title) => _repository.AddState(catalog, title);
 
-        public List<State> GetStates() => _repository.GetAllStates();
+        public IList<State> GetStates() => _repository.GetAllStates();
 
-        public List<State> GetStatesByAuthor(string author)
+        public IList<State> GetStates(string title)
         {
-            List<State> states = _repository.GetAllStates();
-            List<State> returnedStates = new List<State>();
+            IList<State> states = _repository.GetAllStates();
+            IList<State> returnedStates = new List<State>();
+            foreach (State currentState in states)
+            {
+                if (currentState.Title?.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)
+                    returnedStates.Add(currentState);
+            }
+            return returnedStates;
+        }
+
+        public IList<State> SearchStatesByAuthor(string author)
+        {
+            IList<State> states = _repository.GetAllStates();
+            IList<State> returnedStates = new List<State>();
             foreach (State currentState in states)
             {
                 if (currentState.Catalog.Author?.IndexOf(author, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -94,13 +120,13 @@ namespace Logic
             return returnedStates;
         }
 
-        public List<State> GetStatesByGenre(string genre)
+        public IList<State> GetAvailableStates()
         {
-            List<State> states = _repository.GetAllStates();
-            List<State> returnedStates = new List<State>();
+            IList<State> states = _repository.GetAllStates();
+            IList<State> returnedStates = new List<State>();
             foreach (State currentState in states)
             {
-                if (currentState.Catalog.Author?.IndexOf(genre, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (!currentState.IsBorrowed)
                     returnedStates.Add(currentState);
             }
             return returnedStates;
@@ -112,7 +138,19 @@ namespace Logic
         #region User
         public void AddUser(string username) => _repository.AddUser(username);
 
-        public List<User> GetUsers() => _repository.GetAllUsers();
+        public IList<User> GetUsers() => _repository.GetAllUsers();
+
+        public IList<User> GetUsers(string username)
+        {
+            IList<User> users = _repository.GetAllUsers();
+            IList<User> returnedUsers = new List<User>();
+            foreach (User currentUser in users)
+            {
+                if (currentUser.Username?.IndexOf(username, StringComparison.OrdinalIgnoreCase) >= 0)
+                    returnedUsers.Add(currentUser);
+            }
+            return returnedUsers;
+        }
 
         public void RemoveUser(User U) => _repository.RemoveUser(U);
         #endregion
