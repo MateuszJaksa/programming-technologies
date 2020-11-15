@@ -40,16 +40,14 @@ namespace Tests
 
             AbstractEvent tempEvent0 = new BorrowEvent(tempState0, tempUser0, DateTime.Now);
             AbstractEvent tempEvent1 = new BorrowEvent(tempState1, tempUser1, DateTime.Now);
-            AbstractEvent tempEvent2 = new BorrowEvent(tempState2, tempUser2, DateTime.Now);
-            AbstractEvent tempEvent3 = new ReturnEvent(tempState3, tempUser3, DateTime.Now);
-            AbstractEvent tempEvent4 = new ReturnEvent(tempState4, tempUser0, new DateTime(2020, 10, 11, 12, 0, 0));
-            AbstractEvent tempEvent5 = new ReturnEvent(tempState0, tempUser1, new DateTime(2020, 10, 11, 12, 0, 0));
+            AbstractEvent tempEvent2 = new BorrowEvent(tempState2, tempUser0, new DateTime(2020, 10, 11, 12, 0, 0));
+            AbstractEvent tempEvent3 = new BorrowEvent(tempState3, tempUser1, new DateTime(2020, 10, 11, 12, 0, 0));
+            AbstractEvent tempEvent4 = new ReturnEvent(tempState0, tempUser0, DateTime.Now);
             context.events.Add(tempEvent0);
             context.events.Add(tempEvent1);
             context.events.Add(tempEvent2);
             context.events.Add(tempEvent3);
             context.events.Add(tempEvent4);
-            context.events.Add(tempEvent5);
         }
     }
 }

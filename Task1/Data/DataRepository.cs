@@ -138,10 +138,9 @@ namespace Data
 
         public State GetState(string title)
         {
-            State testState = new State(new Catalog(null), title);
             foreach (State state in _context.states.ToList())
             {
-                if (testState.Equals(state))
+                if (state.Title == title)
                 {
                     return state;
                 }
