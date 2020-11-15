@@ -1,7 +1,7 @@
 ﻿using System;
 using Data;
 
-namespace Tests
+namespace Generation
 {
     public class FixedGeneration : IGeneration
     {

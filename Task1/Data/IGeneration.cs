@@ -1,6 +1,6 @@
 ﻿using Data;
 
-namespace Tests
+namespace Generation
 {
     public interface IGeneration
     {

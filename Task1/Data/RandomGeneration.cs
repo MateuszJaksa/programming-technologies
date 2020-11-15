@@ -2,7 +2,7 @@
 using System.Linq;
 using Data;
 
-namespace Tests
+namespace Generation
 {
     public class RandomGeneration : IGeneration
     {

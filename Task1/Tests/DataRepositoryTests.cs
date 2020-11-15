@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Data;
+using Generation;
 using System.Collections.Generic;
 
 namespace Tests
@@ -13,7 +14,7 @@ namespace Tests
         [TestInitialize]
         public void Initialize()
         {
-            repository = new DataRepository();
+            repository = new DataRepository(new EmptyGeneration());
         }
 
         [TestMethod]
@@ -118,25 +119,6 @@ namespace Tests
             Assert.IsNotNull(existEvent);
             Assert.AreEqual(existEvent.Time, new DateTime(2020, 11, 08, 12, 0, 0));
             Assert.IsNull(nonExistEvent);
-        }
-
-        [TestMethod]
-        public void AddAlreadyExistingEventTest()
-        {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
-            repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
-            repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
-            Assert.AreEqual(repository.GetEventsNumber(), 2);
-            Catalog catalog3 = new Catalog("Frank Herbert");
-            State state3 = new State(catalog3, "Dune");
-            User user3 = new User("John Smith");
-            repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 0, 0));
-            Assert.AreEqual(repository.GetEventsNumber(), 2);
         }
 
         [TestMethod]

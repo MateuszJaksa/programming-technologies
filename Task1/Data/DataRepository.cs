@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tests;
+using Generation;
 
 namespace Data
 {
@@ -9,8 +9,6 @@ namespace Data
     {
         private readonly DataContext _context = new DataContext();
         private readonly IGeneration _generation;
-
-        public DataRepository() { }
 
         public DataRepository(IGeneration generation)
         {
@@ -68,18 +66,12 @@ namespace Data
 
         public void AddBorrowEvent(State state, User user, DateTime time)
         {
-            if (GetEvent(time, user.Username) == null)
-            {
-                _context.events.Add(new BorrowEvent(state, user, time));
-            }
+            _context.events.Add(new BorrowEvent(state, user, time));
         }
 
         public void AddReturnEvent(State state, User user, DateTime time)
         {
-            if (GetEvent(time, user.Username) == null)
-            {
-                _context.events.Add(new ReturnEvent(state, user, time));
-            }
+            _context.events.Add(new ReturnEvent(state, user, time));
         }
 
         public void RemoveEvent(AbstractEvent removedEvent)
