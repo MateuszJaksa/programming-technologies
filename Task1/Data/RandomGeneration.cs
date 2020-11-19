@@ -26,12 +26,12 @@ namespace Generation
             for (int i = 0; i < FILLING_DEPTH; i++)
             {
                 User tempUser = new User(GetRandomString(USERNAME_LENGTH));
-                context.GetUsers().Add(tempUser);
+                context.Users.Add(tempUser);
                 Catalog tempCatalog = new Catalog(GetRandomString(TITLE_LENGTH), GetRandomString(AUTHOR_LENGTH));
-                context.GetCatalogs().Add(tempCatalog);
+                context.Catalogs.Add(tempCatalog);
                 State tempState = new State(tempCatalog, RANDOM.Next());
-                context.GetStates().Add(tempState);
-                context.GetEvents().Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
+                context.States.Add(tempState);
+                context.Events.Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
             }
         }
     }

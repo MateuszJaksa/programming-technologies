@@ -4,12 +4,12 @@ namespace Data
 {
     public interface IDataContext
     {
-        IList<ICatalog> GetCatalogs();
+        IList<ICatalog> Catalogs { get; }
 
-        IList<AbstractEvent> GetEvents();
+        IList<AbstractEvent> Events { get; }
 
-        IList<IState> GetStates();
+        IList<IState> States { get; }
 
-        IList<IUser> GetUsers();
+        IList<IUser> Users { get; }
     }
 }

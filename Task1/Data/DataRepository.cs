@@ -24,23 +24,23 @@ namespace Data
         {
             if (GetCatalog(title, author) == null)
             {
-                _context.GetCatalogs().Add(new Catalog(title, author));
+                _context.Catalogs.Add(new Catalog(title, author));
             }
         }
 
         public void RemoveCatalog(ICatalog catalog)
         {
-            _context.GetCatalogs().Remove(catalog);
+            _context.Catalogs.Remove(catalog);
         }
 
         public void RemoveAllCatalogs()
         {
-            _context.GetCatalogs().Clear();
+            _context.Catalogs.Clear();
         }
 
         public ICatalog GetCatalog(string title, string author)
         {
-            foreach (ICatalog catalog in _context.GetCatalogs().ToList())
+            foreach (ICatalog catalog in _context.Catalogs.ToList())
             {
                 if (catalog.Title == title && catalog.Author == author)
                 {
@@ -53,39 +53,39 @@ namespace Data
         {
             if (GetCatalogsNumber() != 0)
             {
-                return new List<ICatalog>(_context.GetCatalogs());
+                return new List<ICatalog>(_context.Catalogs);
             }
             return null;
         }
 
         public int GetCatalogsNumber()
         {
-            return _context.GetCatalogs().Count();
+            return _context.Catalogs.Count();
         }
 
         public void AddBorrowEvent(IState state, IUser user, DateTime time)
         {
-            _context.GetEvents().Add(new BorrowEvent(state, user, time));
+            _context.Events.Add(new BorrowEvent(state, user, time));
         }
 
         public void AddReturnEvent(IState state, IUser user, DateTime time)
         {
-            _context.GetEvents().Add(new ReturnEvent(state, user, time));
+            _context.Events.Add(new ReturnEvent(state, user, time));
         }
 
         public void RemoveEvent(AbstractEvent removedEvent)
         {
-            _context.GetEvents().Remove(removedEvent);
+            _context.Events.Remove(removedEvent);
         }
 
         public void RemoveAllEvents()
         {
-            _context.GetEvents().Clear();
+            _context.Events.Clear();
         }
 
         public AbstractEvent GetEvent(DateTime time, string eventUsername)
         {
-            foreach (AbstractEvent currentEvent in _context.GetEvents().ToList())
+            foreach (AbstractEvent currentEvent in _context.Events.ToList())
             {
                 if (currentEvent.Time == time && currentEvent.User.Username ==  eventUsername)
                 {
@@ -99,37 +99,37 @@ namespace Data
         {
             if (GetEventsNumber() != 0)
             {
-                return new List<AbstractEvent>(_context.GetEvents());
+                return new List<AbstractEvent>(_context.Events);
             }
             return null;
         }
 
         public int GetEventsNumber()
         {
-            return _context.GetEvents().Count();
+            return _context.Events.Count();
         }
 
         public void AddState(ICatalog catalog, int id)
         {
             if (GetState(id) == null)
             {
-                _context.GetStates().Add(new State(catalog, id));
+                _context.States.Add(new State(catalog, id));
             }
         }
 
         public void RemoveState(IState state)
         {
-            _context.GetStates().Remove(state);
+            _context.States.Remove(state);
         }
 
         public void RemoveAllStates()
         {
-            _context.GetStates().Clear();
+            _context.States.Clear();
         }
 
         public IState GetState(int id)
         {
-            foreach (IState state in _context.GetStates().ToList())
+            foreach (IState state in _context.States.ToList())
             {
                 if (state.ID == id)
                 {
@@ -143,37 +143,37 @@ namespace Data
         {
             if (GetStatesNumber() != 0)
             {
-                return new List<IState>(_context.GetStates());
+                return new List<IState>(_context.States);
             }
             return null;
         }
 
         public int GetStatesNumber()
         {
-            return _context.GetStates().Count();
+            return _context.States.Count();
         }
 
         public void AddUser(string username)
         {
             if (GetUser(username) == null)
             {
-                _context.GetUsers().Add(new User(username));
+                _context.Users.Add(new User(username));
             }
         }
 
         public void RemoveUser(IUser user)
         {
-            _context.GetUsers().Remove(user);
+            _context.Users.Remove(user);
         }
 
         public void RemoveAllUsers()
         {
-            _context.GetUsers().Clear();
+            _context.Users.Clear();
         }
 
         public IUser GetUser(string username)
         {
-            foreach (IUser user in _context.GetUsers().ToList())
+            foreach (IUser user in _context.Users.ToList())
             {
                 if (user.Username == username)
                 {
@@ -187,14 +187,14 @@ namespace Data
         {
             if (GetUsersNumber() != 0)
             {
-                return new List<IUser>(_context.GetUsers());
+                return new List<IUser>(_context.Users);
             }
             return null;
         }
 
         public int GetUsersNumber()
         {
-            return _context.GetUsers().Count();
+            return _context.Users.Count();
         }
     }
 }

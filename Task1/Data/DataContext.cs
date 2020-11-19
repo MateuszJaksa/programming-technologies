@@ -4,31 +4,20 @@ namespace Data
 {
     public class DataContext : IDataContext
     {
-        private IList<ICatalog> catalogs = new List<ICatalog>();
-        private IList<AbstractEvent> events = new List<AbstractEvent>();
-        private IList<IState> states = new List<IState>();
-        private IList<IUser> users = new List<IUser>();
-
-        public DataContext() { }
-
-        public IList<ICatalog> GetCatalogs()
+        public DataContext()
         {
-            return catalogs;
-        }
+            Catalogs = new List<ICatalog>();
+            Events = new List<AbstractEvent>();
+            States = new List<IState>();
+            Users = new List<IUser>();
+    }
 
-        public IList<AbstractEvent> GetEvents()
-        {
-            return events;
-        }
+        public IList<ICatalog> Catalogs { get; }
 
-        public IList<IState> GetStates()
-        {
-            return states;
-        }
+        public IList<AbstractEvent> Events { get; }
 
-        public IList<IUser> GetUsers()
-        {
-            return users;
-        }
+        public IList<IState> States { get; }
+
+        public IList<IUser> Users { get; }
     }
 }
