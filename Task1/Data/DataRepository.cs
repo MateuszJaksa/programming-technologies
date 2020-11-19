@@ -7,7 +7,7 @@ namespace Data
 {
     public class DataRepository : IDataRepository
     {
-        private readonly DataContext _context = new DataContext();
+        private readonly IDataContext _context = new DataContext();
         private readonly IGeneration _generation;
 
         public DataRepository(IGeneration generation)
@@ -20,73 +20,72 @@ namespace Data
             _generation.Fill(_context);
         }
 
-        public void AddCatalog(string author)
+        public void AddCatalog(string title, string author)
         {
-            if (GetCatalog(author) == null)
+            if (GetCatalog(title, author) == null)
             {
-                _context.catalogs.Add(new Catalog(author));
+                _context.GetCatalogs().Add(new Catalog(title, author));
             }
         }
 
-        public void RemoveCatalog(Catalog catalog)
+        public void RemoveCatalog(ICatalog catalog)
         {
-            _context.catalogs.Remove(catalog);
+            _context.GetCatalogs().Remove(catalog);
         }
 
         public void RemoveAllCatalogs()
         {
-            _context.catalogs.Clear();
+            _context.GetCatalogs().Clear();
         }
 
-        public Catalog GetCatalog(string author)
+        public ICatalog GetCatalog(string title, string author)
         {
-            Catalog testCatalog = new Catalog(author);
-            foreach (Catalog catalog in _context.catalogs.ToList())
+            foreach (ICatalog catalog in _context.GetCatalogs().ToList())
             {
-                if (testCatalog.Equals(catalog))
+                if (catalog.Title == title && catalog.Author == author)
                 {
                     return catalog;
                 }
             }
             return null;
         }
-        public List<Catalog> GetAllCatalogs()
+        public List<ICatalog> GetAllCatalogs()
         {
             if (GetCatalogsNumber() != 0)
             {
-                return new List<Catalog>(_context.catalogs);
+                return new List<ICatalog>(_context.GetCatalogs());
             }
             return null;
         }
 
         public int GetCatalogsNumber()
         {
-            return _context.catalogs.Count();
+            return _context.GetCatalogs().Count();
         }
 
-        public void AddBorrowEvent(State state, User user, DateTime time)
+        public void AddBorrowEvent(IState state, IUser user, DateTime time)
         {
-            _context.events.Add(new BorrowEvent(state, user, time));
+            _context.GetEvents().Add(new BorrowEvent(state, user, time));
         }
 
-        public void AddReturnEvent(State state, User user, DateTime time)
+        public void AddReturnEvent(IState state, IUser user, DateTime time)
         {
-            _context.events.Add(new ReturnEvent(state, user, time));
+            _context.GetEvents().Add(new ReturnEvent(state, user, time));
         }
 
         public void RemoveEvent(AbstractEvent removedEvent)
         {
-            _context.events.Remove(removedEvent);
+            _context.GetEvents().Remove(removedEvent);
         }
 
         public void RemoveAllEvents()
         {
-            _context.events.Clear();
+            _context.GetEvents().Clear();
         }
 
         public AbstractEvent GetEvent(DateTime time, string eventUsername)
         {
-            foreach (AbstractEvent currentEvent in _context.events.ToList())
+            foreach (AbstractEvent currentEvent in _context.GetEvents().ToList())
             {
                 if (currentEvent.Time == time && currentEvent.User.Username ==  eventUsername)
                 {
@@ -100,39 +99,39 @@ namespace Data
         {
             if (GetEventsNumber() != 0)
             {
-                return new List<AbstractEvent>(_context.events);
+                return new List<AbstractEvent>(_context.GetEvents());
             }
             return null;
         }
 
         public int GetEventsNumber()
         {
-            return _context.events.Count();
+            return _context.GetEvents().Count();
         }
 
-        public void AddState(Catalog catalog, string title)
+        public void AddState(ICatalog catalog, int id)
         {
-            if (GetState(title) == null)
+            if (GetState(id) == null)
             {
-                _context.states.Add(new State(catalog, title));
+                _context.GetStates().Add(new State(catalog, id));
             }
         }
 
-        public void RemoveState(State state)
+        public void RemoveState(IState state)
         {
-            _context.states.Remove(state);
+            _context.GetStates().Remove(state);
         }
 
         public void RemoveAllStates()
         {
-            _context.states.Clear();
+            _context.GetStates().Clear();
         }
 
-        public State GetState(string title)
+        public IState GetState(int id)
         {
-            foreach (State state in _context.states.ToList())
+            foreach (IState state in _context.GetStates().ToList())
             {
-                if (state.Title == title)
+                if (state.ID == id)
                 {
                     return state;
                 }
@@ -140,44 +139,43 @@ namespace Data
             return null;
         }
 
-        public List<State> GetAllStates()
+        public List<IState> GetAllStates()
         {
             if (GetStatesNumber() != 0)
             {
-                return new List<State>(_context.states);
+                return new List<IState>(_context.GetStates());
             }
             return null;
         }
 
         public int GetStatesNumber()
         {
-            return _context.states.Count();
+            return _context.GetStates().Count();
         }
 
         public void AddUser(string username)
         {
             if (GetUser(username) == null)
             {
-                _context.users.Add(new User(username));
+                _context.GetUsers().Add(new User(username));
             }
         }
 
-        public void RemoveUser(User user)
+        public void RemoveUser(IUser user)
         {
-            _context.users.Remove(user);
+            _context.GetUsers().Remove(user);
         }
 
         public void RemoveAllUsers()
         {
-            _context.users.Clear();
+            _context.GetUsers().Clear();
         }
 
-        public User GetUser(string username)
+        public IUser GetUser(string username)
         {
-            User testUser = new User(username);
-            foreach (User user in _context.users.ToList())
+            foreach (IUser user in _context.GetUsers().ToList())
             {
-                if (testUser.Equals(user))
+                if (user.Username == username)
                 {
                     return user;
                 }
@@ -185,18 +183,18 @@ namespace Data
             return null;
         }
 
-        public List<User> GetAllUsers()
+        public List<IUser> GetAllUsers()
         {
             if (GetUsersNumber() != 0)
             {
-                return new List<User>(_context.users);
+                return new List<IUser>(_context.GetUsers());
             }
             return null;
         }
 
         public int GetUsersNumber()
         {
-            return _context.users.Count();
+            return _context.GetUsers().Count();
         }
     }
 }

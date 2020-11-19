@@ -20,21 +20,21 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveCatalogTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
-            repository.RemoveCatalog(repository.GetCatalog("Frank Herbert"));
-            repository.RemoveCatalog(repository.GetCatalog("Szczepan Twardoch"));
+            repository.RemoveCatalog(repository.GetCatalog("Dune", "Frank Herbert"));
+            repository.RemoveCatalog(repository.GetCatalog("Krol", "Szczepan Twardoch"));
             Assert.AreEqual(repository.GetCatalogsNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingCatalogTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
-            Catalog existCatalog = repository.GetCatalog("Frank Herbert");
-            Catalog nonExistCatalog = repository.GetCatalog("Michel Houellebecq");
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
+            ICatalog existCatalog = repository.GetCatalog("Dune", "Frank Herbert");
+            ICatalog nonExistCatalog = repository.GetCatalog("Serotonin", "Michel Houellebecq");
             Assert.IsNotNull(existCatalog);
             Assert.AreEqual(existCatalog.Author, "Frank Herbert");
             Assert.IsNull(nonExistCatalog);
@@ -43,29 +43,29 @@ namespace Tests
         [TestMethod]
         public void AddAlreadyExistingCatalogTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
-            repository.AddCatalog("Frank Herbert");
+            repository.AddCatalog("Dune", "Frank Herbert");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingCatalogTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
-            repository.RemoveCatalog(repository.GetCatalog("Michel Houellebecq"));
+            repository.RemoveCatalog(repository.GetCatalog("Serotonin", "Michel Houellebecq"));
             Assert.AreEqual(repository.GetCatalogsNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllCatalogsTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
-            repository.AddCatalog("Michel Houellebecq");
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
+            repository.AddCatalog("Serotonin", "Michel Houellebecq");
             Assert.AreEqual(repository.GetCatalogsNumber(), 3);
             repository.RemoveAllCatalogs();
             Assert.AreEqual(repository.GetCatalogsNumber(), 0);
@@ -74,10 +74,10 @@ namespace Tests
         [TestMethod]
         public void GetAllCatalogsTest()
         {
-            repository.AddCatalog("Frank Herbert");
-            repository.AddCatalog("Szczepan Twardoch");
-            repository.AddCatalog("Michel Houellebecq");
-            List<Catalog> catalogs = repository.GetAllCatalogs();
+            repository.AddCatalog("Dune", "Frank Herbert");
+            repository.AddCatalog("Krol", "Szczepan Twardoch");
+            repository.AddCatalog("Serotonin", "Michel Houellebecq");
+            List<ICatalog> catalogs = repository.GetAllCatalogs();
             Assert.AreEqual(repository.GetCatalogsNumber(), 3);
             Assert.AreEqual(catalogs.Count, 3);
             Assert.IsTrue(catalogs.Exists(n => n.Author == "Frank Herbert"));
@@ -89,12 +89,12 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveEventTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            IState state2 = new State(catalog2, 2);
+            IUser user2 = new User("Michael Johnson");
             repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
@@ -106,12 +106,12 @@ namespace Tests
         [TestMethod]
         public void GetExistingAndNonExistingEventTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            IState state2 = new State(catalog2, 2);
+            IUser user2 = new User("Michael Johnson");
             repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             AbstractEvent existEvent = repository.GetEvent(new DateTime(2020, 11, 08, 12, 0, 0), "John Smith");
@@ -124,12 +124,12 @@ namespace Tests
         [TestMethod]
         public void RemoveNonExistingEventTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            IState state2 = new State(catalog2, 2);
+            IUser user2 = new User("Michael Johnson");
             repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             Assert.AreEqual(repository.GetEventsNumber(), 2);
@@ -140,15 +140,15 @@ namespace Tests
         [TestMethod]
         public void RemoveAllEventsTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
-            Catalog catalog3 = new Catalog("Michel Houellebecq");
-            State state3 = new State(catalog3, "Serotonin");
-            User user3 = new User("James Martinez");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            IState state2 = new State(catalog2, 2);
+            IUser user2 = new User("Michael Johnson");
+            ICatalog catalog3 = new Catalog("Serotonin", "Michel Houellebecq");
+            IState state3 = new State(catalog3, 3);
+            IUser user3 = new User("James Martinez");
             repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
@@ -160,15 +160,15 @@ namespace Tests
         [TestMethod]
         public void GetAllEventsTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            State state2 = new State(catalog2, "Krol");
-            User user2 = new User("Michael Johnson");
-            Catalog catalog3 = new Catalog("Michel Houellebecq");
-            State state3 = new State(catalog3, "Serotonin");
-            User user3 = new User("James Martinez");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            IState state2 = new State(catalog2, 2);
+            IUser user2 = new User("Michael Johnson");
+            ICatalog catalog3 = new Catalog("Serotonin", "Michel Houellebecq");
+            IState state3 = new State(catalog3, 3);
+            IUser user3 = new User("James Martinez");
             repository.AddBorrowEvent(state1, user1, new DateTime(2020, 11, 08, 12, 0, 0));
             repository.AddBorrowEvent(state2, user2, new DateTime(2020, 11, 08, 12, 1, 0));
             repository.AddBorrowEvent(state3, user3, new DateTime(2020, 11, 08, 12, 2, 0));
@@ -184,9 +184,9 @@ namespace Tests
         [TestMethod]
         public void CheckBorrowAndReturnEventsTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            State state1 = new State(catalog1, "Dune");
-            User user1 = new User("John Smith");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            IState state1 = new State(catalog1, 1);
+            IUser user1 = new User("John Smith");
             Assert.IsFalse(state1.IsBorrowed);
             repository.AddBorrowEvent(state1, user1, DateTime.Now);
             Assert.IsTrue(state1.IsBorrowed);
@@ -198,64 +198,64 @@ namespace Tests
         [TestMethod]
         public void AddAndRemoveStateTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
             Assert.AreEqual(repository.GetStatesNumber(), 2);
-            repository.RemoveState(repository.GetState("Dune"));
-            repository.RemoveState(repository.GetState("Krol"));
+            repository.RemoveState(repository.GetState(1));
+            repository.RemoveState(repository.GetState(2));
             Assert.AreEqual(repository.GetStatesNumber(), 0);
         }
 
         [TestMethod]
         public void GetExistingAndNonExistingStateTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
-            State existState = repository.GetState("Dune");
-            State nonExistState = repository.GetState("Serotonin");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
+            IState existState = repository.GetState(1);
+            IState nonExistState = repository.GetState(3);
             Assert.IsNotNull(existState);
-            Assert.AreEqual(existState.Title, "Dune");
+            Assert.AreEqual(existState.ID, 1);
             Assert.IsNull(nonExistState);
         }
 
         [TestMethod]
         public void AddAlreadyExistingStateTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
             Assert.AreEqual(repository.GetStatesNumber(), 2);
-            Catalog catalog3 = new Catalog("Frank Herbert");
-            repository.AddState(catalog3, "Dune");
+            ICatalog catalog3 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog3, 1);
             Assert.AreEqual(repository.GetStatesNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveNonExistingStateTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
             Assert.AreEqual(repository.GetStatesNumber(), 2);
-            repository.RemoveState(repository.GetState("Serotonin"));
+            repository.RemoveState(repository.GetState(3));
             Assert.AreEqual(repository.GetStatesNumber(), 2);
         }
 
         [TestMethod]
         public void RemoveAllStatesTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
-            Catalog catalog3 = new Catalog("Michel Houellebecq");
-            repository.AddState(catalog3, "Serotonin");
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
+            ICatalog catalog3 = new Catalog("Serotonin", "Michel Houellebecq");
+            repository.AddState(catalog3, 3);
             Assert.AreEqual(repository.GetStatesNumber(), 3);
             repository.RemoveAllStates();
             Assert.AreEqual(repository.GetStatesNumber(), 0);
@@ -264,19 +264,19 @@ namespace Tests
         [TestMethod]
         public void GetAllStatesTest()
         {
-            Catalog catalog1 = new Catalog("Frank Herbert");
-            repository.AddState(catalog1, "Dune");
-            Catalog catalog2 = new Catalog("Szczepan Twardoch");
-            repository.AddState(catalog2, "Krol");
-            Catalog catalog3 = new Catalog("Michel Houellebecq");
-            repository.AddState(catalog3, "Serotonin");
-            List<State> states = repository.GetAllStates();
+            ICatalog catalog1 = new Catalog("Dune", "Frank Herbert");
+            repository.AddState(catalog1, 1);
+            ICatalog catalog2 = new Catalog("Krol", "Szczepan Twardoch");
+            repository.AddState(catalog2, 2);
+            ICatalog catalog3 = new Catalog("Serotonin", "Michel Houellebecq");
+            repository.AddState(catalog3, 3);
+            List<IState> states = repository.GetAllStates();
             Assert.AreEqual(repository.GetStatesNumber(), 3);
             Assert.AreEqual(states.Count, 3);
-            Assert.IsTrue(states.Exists(n => n.Title == "Dune"));
-            Assert.IsTrue(states.Exists(n => n.Title == "Krol"));
-            Assert.IsTrue(states.Exists(n => n.Title == "Serotonin"));
-            Assert.IsFalse(states.Exists(n => n.Title == "Art of the Deal"));
+            Assert.IsTrue(states.Exists(n => n.ID == 1));
+            Assert.IsTrue(states.Exists(n => n.ID == 2));
+            Assert.IsTrue(states.Exists(n => n.ID == 3));
+            Assert.IsFalse(states.Exists(n => n.ID == 4));
         }
 
         [TestMethod]
@@ -295,8 +295,8 @@ namespace Tests
         {
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
-            User existUser = repository.GetUser("John Smith");
-            User nonExistUser = repository.GetUser("James Martinez");
+            IUser existUser = repository.GetUser("John Smith");
+            IUser nonExistUser = repository.GetUser("James Martinez");
             Assert.IsNotNull(existUser);
             Assert.AreEqual(existUser.Username, "John Smith");
             Assert.IsNull(nonExistUser);
@@ -339,7 +339,7 @@ namespace Tests
             repository.AddUser("John Smith");
             repository.AddUser("Michael Johnson");
             repository.AddUser("James Martinez");
-            List<User> users = repository.GetAllUsers();
+            List<IUser> users = repository.GetAllUsers();
             Assert.AreEqual(repository.GetUsersNumber(), 3);
             Assert.AreEqual(users.Count, 3);
             Assert.IsTrue(users.Exists(n => n.Username == "John Smith"));

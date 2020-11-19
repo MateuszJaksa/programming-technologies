@@ -7,20 +7,20 @@ namespace Data
     {
         void Fill();
 
-        void AddCatalog(string author);
+        void AddCatalog(string title, string author);
 
-        void RemoveCatalog(Catalog catalog);
+        void RemoveCatalog(ICatalog catalog);
 
         void RemoveAllCatalogs();
 
-        Catalog GetCatalog(string author);
+        ICatalog GetCatalog(string title, string author);
 
-        List<Catalog> GetAllCatalogs();
+        List<ICatalog> GetAllCatalogs();
 
         int GetCatalogsNumber();
 
-        void AddBorrowEvent(State state, User user, DateTime time);
-        void AddReturnEvent(State state, User user, DateTime time);
+        void AddBorrowEvent(IState state, IUser user, DateTime time);
+        void AddReturnEvent(IState state, IUser user, DateTime time);
 
         void RemoveEvent(AbstractEvent removedEvent);
 
@@ -32,27 +32,27 @@ namespace Data
 
         int GetEventsNumber();
 
-        void AddState(Catalog catalog, string title);
+        void AddState(ICatalog catalog, int id);
 
-        void RemoveState(State state);
+        void RemoveState(IState state);
 
         void RemoveAllStates();
 
-        State GetState(string title);
+        IState GetState(int id);
 
-        List<State> GetAllStates();
+        List<IState> GetAllStates();
 
         int GetStatesNumber();
 
         void AddUser(string username);
 
-        void RemoveUser(User user);
+        void RemoveUser(IUser user);
 
         void RemoveAllUsers();
 
-        User GetUser(string username);
+        IUser GetUser(string username);
 
-        List<User> GetAllUsers();
+        List<IUser> GetAllUsers();
 
         int GetUsersNumber();
     }

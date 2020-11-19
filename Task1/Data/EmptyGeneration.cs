@@ -7,7 +7,7 @@ namespace Generation
 
         public EmptyGeneration() { }
 
-        public void Fill(DataContext context)
+        public void Fill(IDataContext context)
         { }
     }
 }

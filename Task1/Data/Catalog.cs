@@ -2,31 +2,38 @@
 
 namespace Data
 {
-    public class Catalog
+    public class Catalog : ICatalog
     {
-        public Catalog(string author)
+        public Catalog(string title, string author)
         {
+            Title = title;
             Author = author;
         }
 
         public string Author
         { get; set; }
 
+        public string Title
+        { get; set; }
+
         public override bool Equals(object obj)
         {
             return obj is Catalog catalog &&
-                   this.Author == catalog.Author;
+                   Author == catalog.Author &&
+                   Title == catalog.Title;
         }
 
         public override int GetHashCode()
         {
-            int initialSeed = -1994181324;
-            return initialSeed * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Author);
+            int hashCode = 507744655;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Author);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+            return hashCode;
         }
 
         public override string ToString()
         {
-            return $"The catalog is connected to {Author}";
+            return $"The catalog {Title} written by {Author}";
         }
     }
 }

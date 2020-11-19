@@ -21,17 +21,17 @@ namespace Generation
               .Select(s => s[RANDOM.Next(s.Length)]).ToArray());
         }
 
-        public void Fill(DataContext context)
+        public void Fill(IDataContext context)
         {
             for (int i = 0; i < FILLING_DEPTH; i++)
             {
                 User tempUser = new User(GetRandomString(USERNAME_LENGTH));
-                context.users.Add(tempUser);
-                Catalog tempCatalog = new Catalog(GetRandomString(AUTHOR_LENGTH));
-                context.catalogs.Add(tempCatalog);
-                State tempState = new State(tempCatalog, GetRandomString(TITLE_LENGTH));
-                context.states.Add(tempState);
-                context.events.Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
+                context.GetUsers().Add(tempUser);
+                Catalog tempCatalog = new Catalog(GetRandomString(TITLE_LENGTH), GetRandomString(AUTHOR_LENGTH));
+                context.GetCatalogs().Add(tempCatalog);
+                State tempState = new State(tempCatalog, RANDOM.Next());
+                context.GetStates().Add(tempState);
+                context.GetEvents().Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
             }
         }
     }
