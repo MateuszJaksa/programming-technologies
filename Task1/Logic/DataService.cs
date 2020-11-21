@@ -14,15 +14,15 @@ namespace Logic
         }
 
         #region Catalog
-        public void AddCatalog(string author) => _repository.AddCatalog(author);
+        public void AddCatalog(string title, string author) => _repository.AddCatalog(title, author);
 
-        public IList<Catalog> GetCatalogs() => _repository.GetAllCatalogs();
+        public IList<ICatalog> GetCatalogs() => _repository.GetAllCatalogs();
 
-        public IList<Catalog> GetCatalogs(string author)
+        public IList<ICatalog> GetCatalogs(string author)
         {
-            IList<Catalog> catalogs = _repository.GetAllCatalogs();
-            IList<Catalog> returnedCatalogs = new List<Catalog>();
-            foreach (Catalog currentCatalog in catalogs)
+            IList<ICatalog> catalogs = _repository.GetAllCatalogs();
+            IList<ICatalog> returnedCatalogs = new List<ICatalog>();
+            foreach (ICatalog currentCatalog in catalogs)
             {
                 if (currentCatalog.Author?.IndexOf(author, StringComparison.OrdinalIgnoreCase) >= 0)
                     returnedCatalogs.Add(currentCatalog);
@@ -30,18 +30,18 @@ namespace Logic
             return returnedCatalogs;
         }
 
-        public void RemoveCatalog(Catalog C) => _repository.RemoveCatalog(C);
+        public void RemoveCatalog(ICatalog C) => _repository.RemoveCatalog(C);
         #endregion
 
         #region Event  
 
-        public void Borrow(State state, User user) => _repository.AddBorrowEvent(state, user, DateTime.Now);
+        public void Borrow(IState state, IUser user) => _repository.AddBorrowEvent(state, user, DateTime.Now);
 
-        public void Return(State state, User user) => _repository.AddReturnEvent(state, user, DateTime.Now);
+        public void Return(IState state, IUser user) => _repository.AddReturnEvent(state, user, DateTime.Now);
 
         public IList<AbstractEvent> GetEvents() => _repository.GetAllEvents();
 
-        public IList<AbstractEvent> GetEvents(User user)
+        public IList<AbstractEvent> GetEvents(IUser user)
         {
             IList<AbstractEvent> events = _repository.GetAllEvents();
             IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
@@ -53,7 +53,7 @@ namespace Logic
             return returnedEvents;
         }
 
-        public IList<AbstractEvent> GetEvents(State state)
+        public IList<AbstractEvent> GetEvents(IState state)
         {
             IList<AbstractEvent> events = _repository.GetAllEvents();
             IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
@@ -77,7 +77,7 @@ namespace Logic
             return returnedEvents;
         }
 
-        public IList<AbstractEvent> GetEventsByTime(State state, DateTime startTime, DateTime endTime)
+        public IList<AbstractEvent> GetEventsByTime(IState state, DateTime startTime, DateTime endTime)
         {
             IList<AbstractEvent> events = _repository.GetAllEvents();
             IList<AbstractEvent> returnedEvents = new List<AbstractEvent>();
@@ -92,27 +92,27 @@ namespace Logic
         #endregion
 
         #region State
-        public void AddState(Catalog catalog, string title) => _repository.AddState(catalog, title);
+        public void AddState(ICatalog catalog, int id) => _repository.AddState(catalog, id);
 
-        public IList<State> GetStates() => _repository.GetAllStates();
+        public IList<IState> GetStates() => _repository.GetAllStates();
 
-        public IList<State> GetStates(string title)
+        public IList<IState> GetStates(int id)
         {
-            IList<State> states = _repository.GetAllStates();
-            IList<State> returnedStates = new List<State>();
-            foreach (State currentState in states)
+            IList<IState> states = _repository.GetAllStates();
+            IList<IState> returnedStates = new List<IState>();
+            foreach (IState currentState in states)
             {
-                if (currentState.Title?.IndexOf(title, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (currentState.ID == id)
                     returnedStates.Add(currentState);
             }
             return returnedStates;
         }
 
-        public IList<State> SearchStatesByAuthor(string author)
+        public IList<IState> SearchStatesByAuthor(string author)
         {
-            IList<State> states = _repository.GetAllStates();
-            IList<State> returnedStates = new List<State>();
-            foreach (State currentState in states)
+            IList<IState> states = _repository.GetAllStates();
+            IList<IState> returnedStates = new List<IState>();
+            foreach (IState currentState in states)
             {
                 if (currentState.Catalog.Author?.IndexOf(author, StringComparison.OrdinalIgnoreCase) >= 0)
                     returnedStates.Add(currentState);
@@ -120,11 +120,11 @@ namespace Logic
             return returnedStates;
         }
 
-        public IList<State> GetAvailableStates()
+        public IList<IState> GetAvailableStates()
         {
-            IList<State> states = _repository.GetAllStates();
-            IList<State> returnedStates = new List<State>();
-            foreach (State currentState in states)
+            IList<IState> states = _repository.GetAllStates();
+            IList<IState> returnedStates = new List<IState>();
+            foreach (IState currentState in states)
             {
                 if (!currentState.IsBorrowed)
                     returnedStates.Add(currentState);
@@ -132,19 +132,19 @@ namespace Logic
             return returnedStates;
         }
 
-        public void RemoveState(State S) => _repository.RemoveState(S);
+        public void RemoveState(IState S) => _repository.RemoveState(S);
         #endregion
 
         #region User
         public void AddUser(string username) => _repository.AddUser(username);
 
-        public IList<User> GetUsers() => _repository.GetAllUsers();
+        public IList<IUser> GetUsers() => _repository.GetAllUsers();
 
-        public IList<User> GetUsers(string username)
+        public IList<IUser> GetUsers(string username)
         {
-            IList<User> users = _repository.GetAllUsers();
-            IList<User> returnedUsers = new List<User>();
-            foreach (User currentUser in users)
+            IList<IUser> users = _repository.GetAllUsers();
+            IList<IUser> returnedUsers = new List<IUser>();
+            foreach (IUser currentUser in users)
             {
                 if (currentUser.Username?.IndexOf(username, StringComparison.OrdinalIgnoreCase) >= 0)
                     returnedUsers.Add(currentUser);
@@ -152,7 +152,7 @@ namespace Logic
             return returnedUsers;
         }
 
-        public void RemoveUser(User U) => _repository.RemoveUser(U);
+        public void RemoveUser(IUser U) => _repository.RemoveUser(U);
         #endregion
     }
 }

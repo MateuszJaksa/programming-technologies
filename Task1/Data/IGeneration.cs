@@ -4,6 +4,6 @@ namespace Generation
 {
     public interface IGeneration
     {
-        void Fill(DataContext context);
+        void Fill(IDataContext context);
     }
 }

@@ -4,7 +4,7 @@ namespace Data
 {
     public class ReturnEvent : AbstractEvent
     {
-        public ReturnEvent(State state, User user, DateTime time) : base(state, user, time)
+        public ReturnEvent(IState state, IUser user, DateTime time) : base(state, user, time)
         {
             State = state;
             User = user;
@@ -12,7 +12,7 @@ namespace Data
             Perform();
         }
 
-        public override void Perform()
+        protected override void Perform()
         {
             if (State.IsBorrowed)
             {

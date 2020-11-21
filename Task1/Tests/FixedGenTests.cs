@@ -30,12 +30,12 @@ namespace Tests
         [TestMethod]
         public void FixedGenerationElementsTest()
         {
-            Assert.IsNull(repository.GetCatalog("Donald Trump"));
-            Assert.IsNotNull(repository.GetCatalog("Victor Hugo"));
+            Assert.IsNull(repository.GetCatalog("Art of the Deal", "Donald Trump"));
+            Assert.IsNotNull(repository.GetCatalog("Les Miserables", "Victor Hugo"));
             Assert.IsNull(repository.GetEvent(new DateTime(2021, 01, 01, 12, 0, 0), "Edward Ochab"));
             Assert.IsNotNull(repository.GetEvent(new DateTime(2020, 10, 11, 12, 0, 0), "Tadeusz Chrostowski"));
-            Assert.IsNull(repository.GetState("Art of the Deal"));
-            Assert.IsNotNull(repository.GetState("The Call of Cthulhu"));
+            Assert.IsNull(repository.GetState(12));
+            Assert.IsNotNull(repository.GetState(11));
             Assert.IsNull(repository.GetUser("Marian Spychalski"));
             Assert.IsNotNull(repository.GetUser("Tadeusz Chrostowski"));
         }

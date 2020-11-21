@@ -2,13 +2,22 @@
 
 namespace Data
 {
-    public class DataContext
+    public class DataContext : IDataContext
     {
-        public IList<Catalog> catalogs = new List<Catalog>();
-        public IList<AbstractEvent> events = new List<AbstractEvent>();
-        public IList<State> states = new List<State>();
-        public IList<User> users = new List<User>();
+        public DataContext()
+        {
+            Catalogs = new List<ICatalog>();
+            Events = new List<AbstractEvent>();
+            States = new List<IState>();
+            Users = new List<IUser>();
+    }
 
-        public DataContext() { }
+        public IList<ICatalog> Catalogs { get; }
+
+        public IList<AbstractEvent> Events { get; }
+
+        public IList<IState> States { get; }
+
+        public IList<IUser> Users { get; }
     }
 }

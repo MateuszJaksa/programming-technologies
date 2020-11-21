@@ -2,19 +2,19 @@
 
 namespace Data
 {
-    public class State
+    public class State : IState
     {
-        public State(Catalog catalog, string title)
+        public State(ICatalog catalog, int id)
         {
             Catalog = catalog;
-            Title = title;
+            ID = id;
             IsBorrowed = false;
         }
 
-        public Catalog Catalog
+        public ICatalog Catalog
         { get; set; }
 
-        public string Title
+        public int ID
         { get; set; }
 
         public bool IsBorrowed
@@ -23,21 +23,23 @@ namespace Data
         public override bool Equals(object obj)
         {
             return obj is State state &&
-                   Title == state.Title &&
+                   EqualityComparer<ICatalog>.Default.Equals(Catalog, state.Catalog) &&
+                   ID == state.ID &&
                    IsBorrowed == state.IsBorrowed;
         }
 
         public override int GetHashCode()
         {
-            int hashCode = -1443766054;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+            int hashCode = -113272055;
+            hashCode = hashCode * -1521134295 + EqualityComparer<ICatalog>.Default.GetHashCode(Catalog);
+            hashCode = hashCode * -1521134295 + ID.GetHashCode();
             hashCode = hashCode * -1521134295 + IsBorrowed.GetHashCode();
             return hashCode;
         }
 
         public override string ToString()
         {
-            return $"The state is connected to the book titled {Title}";
+            return $"The state is connected to the book with an ID: {ID}";
         }
     }
 }
