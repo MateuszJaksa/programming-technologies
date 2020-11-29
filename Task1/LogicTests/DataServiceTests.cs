@@ -25,7 +25,7 @@ namespace LogicTests
         [TestMethod]
         public void TestAddCatalog()
         {
-            HashSet<ICatalog> oldSet = new HashSet<ICatalog>(service.GetCatalogs());
+            HashSet<ICatalog> oldSet = new HashSet<ICatalog>();
             ICatalog catalog = new Catalog(title, author);
             oldSet.Add(catalog);
             service.AddCatalog(title, author);
@@ -39,14 +39,16 @@ namespace LogicTests
         [TestMethod]
         public void TestRemoveCatalog()
         {
+            service.AddCatalog(title, author);
+            service.AddCatalog(title + " Plenus", author);
             IList<ICatalog> oldList = service.GetCatalogs();
+            Assert.IsTrue(oldList.Count == 2);
             ICatalog deletedCatalog = oldList[0];
             oldList.Remove(deletedCatalog);
             service.RemoveCatalog(deletedCatalog);
+            Assert.IsTrue(service.GetCatalogs().Count == 1);
             HashSet<ICatalog> newSet = new HashSet<ICatalog>(service.GetCatalogs());
             Assert.IsTrue(newSet.SetEquals(new HashSet<ICatalog>(oldList)));
-            IList<ICatalog> catalogs = service.GetCatalogs(deletedCatalog.Author);
-            Assert.IsTrue(catalogs.Count == 0);
         }
 
         [TestMethod]
@@ -54,6 +56,7 @@ namespace LogicTests
         {
             service.AddCatalog(title, author);
             ICatalog catalog = service.GetCatalogs(author)[0];
+            service.AddState(catalog, id + 1);
 
             HashSet<IState> oldStates = new HashSet<IState>(service.GetStates());
             IState state = new State(catalog, id);
@@ -67,6 +70,10 @@ namespace LogicTests
         [TestMethod]
         public void TestRemoveState()
         {
+            service.AddCatalog(title, author);
+            ICatalog catalog = service.GetCatalogs(author)[0];
+            service.AddState(catalog, id);
+            service.AddState(catalog, id + 1);
             IList<IState> oldList = service.GetStates();
             IState deletedState = oldList[0];
             oldList.Remove(deletedState);
@@ -91,28 +98,26 @@ namespace LogicTests
         [TestMethod]
         public void TestAddUser()
         {
+            service.AddUser(username + "1");
             HashSet<IUser> oldSet = new HashSet<IUser>(service.GetUsers());
             IUser user = new User(username);
             oldSet.Add(user);
             service.AddUser(username);
             HashSet<IUser> newSet = new HashSet<IUser>(service.GetUsers());
             Assert.IsTrue(newSet.SetEquals(oldSet));
-            IList<IUser> users = service.GetUsers(username);
-            Assert.IsTrue(users.Count == 1);
-            Assert.IsTrue(user.Equals(users[0]));
         }
 
         [TestMethod]
         public void TestRemoveUser()
         {
+            service.AddUser(username);
+            service.AddUser(username + "1");
             IList<IUser> oldList = service.GetUsers();
             IUser deletedUser = oldList[0];
             oldList.Remove(deletedUser);
             service.RemoveUser(deletedUser);
             HashSet<IUser> newSet = new HashSet<IUser>(service.GetUsers());
             Assert.IsTrue(newSet.SetEquals(new HashSet<IUser>(oldList)));
-            IList<IUser> users = service.GetUsers(deletedUser.Username);
-            Assert.IsTrue(users.Count == 0);
         }
 
         [TestMethod]
