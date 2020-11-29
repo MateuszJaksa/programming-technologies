@@ -5,8 +5,6 @@ namespace Data
 {
     public interface IDataRepository
     {
-        void Fill();
-
         void AddCatalog(string title, string author);
 
         void RemoveCatalog(ICatalog catalog);

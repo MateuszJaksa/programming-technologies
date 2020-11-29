@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Data;
-using Generation;
 using System.Collections.Generic;
 
 namespace Tests
@@ -14,7 +13,7 @@ namespace Tests
         [TestInitialize]
         public void Initialize()
         {
-            repository = new DataRepository(new EmptyGeneration());
+            repository = new DataRepository(new DataContext());
         }
 
         [TestMethod]

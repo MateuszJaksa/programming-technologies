@@ -50,9 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRepositoryTests.cs" />
+    <Compile Include="EmptyGeneration.cs" />
     <Compile Include="EmptyGenTests.cs" />
+    <Compile Include="FixedGeneration.cs" />
     <Compile Include="FixedGenTests.cs" />
+    <Compile Include="IGeneration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomGeneration.cs" />
     <Compile Include="RandomGenTests.cs" />
   </ItemGroup>
   <ItemGroup>

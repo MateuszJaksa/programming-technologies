@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Data;
-using Generation;
 using Logic;
 
 namespace LogicTests
@@ -10,7 +9,6 @@ namespace LogicTests
     [TestClass]
     public class DataServiceTests
     {
-
         private DataService service;
         private static readonly string lastName = "Agricola";
         private static readonly string author = "Georg " + lastName;
@@ -21,10 +19,7 @@ namespace LogicTests
         [TestInitialize]
         public void Initialize()
         {
-            IGeneration generation = new FixedGeneration();
-            IDataRepository repository = new DataRepository(generation);
-            repository.Fill();
-            service = new DataService(repository);
+            service = new DataService(new DataRepository(new DataContext()));
         }
 
         [TestMethod]

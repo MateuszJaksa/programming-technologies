@@ -2,7 +2,7 @@
 using System.Linq;
 using Data;
 
-namespace Generation
+namespace Tests
 {
     public class RandomGeneration : IGeneration
     {
@@ -21,7 +21,7 @@ namespace Generation
               .Select(s => s[RANDOM.Next(s.Length)]).ToArray());
         }
 
-        public void Fill(IDataContext context)
+        public static IDataContext Fill(IDataContext context)
         {
             for (int i = 0; i < FILLING_DEPTH; i++)
             {
@@ -33,6 +33,7 @@ namespace Generation
                 context.States.Add(tempState);
                 context.Events.Add(new BorrowEvent(tempState, tempUser, DateTime.Now));
             }
+            return context;
         }
     }
 }

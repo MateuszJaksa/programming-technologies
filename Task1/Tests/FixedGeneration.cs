@@ -1,13 +1,13 @@
 ﻿using System;
 using Data;
 
-namespace Generation
+namespace Tests
 {
     public class FixedGeneration : IGeneration
     {
         public FixedGeneration() { }
 
-        public void Fill(IDataContext context)
+        public static IDataContext Fill(IDataContext context)
         {
             User tempUser0 = new User("Tadeusz Chrostowski");
             User tempUser1 = new User("Janusz Domaniewski");
@@ -48,6 +48,8 @@ namespace Generation
             context.Events.Add(tempEvent2);
             context.Events.Add(tempEvent3);
             context.Events.Add(tempEvent4);
+
+            return context;
         }
     }
 }

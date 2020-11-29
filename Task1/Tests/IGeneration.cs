@@ -1,9 +1,9 @@
 ﻿using Data;
 
-namespace Generation
+namespace Tests
 {
     public interface IGeneration
     {
-        void Fill(IDataContext context);
+       
     }
 }

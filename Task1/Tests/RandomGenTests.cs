@@ -1,5 +1,4 @@
 ﻿using Data;
-using Generation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
@@ -12,8 +11,7 @@ namespace Tests
         [TestInitialize]
         public void Initialize()
         {
-            repository = new DataRepository(new RandomGeneration());
-            repository.Fill();
+            repository = new DataRepository(RandomGeneration.Fill(new DataContext()));
         }
 
 

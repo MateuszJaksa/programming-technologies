@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Generation;
 
 namespace Data
 {
     public class DataRepository : IDataRepository
     {
-        private readonly IDataContext _context = new DataContext();
-        private readonly IGeneration _generation;
+        private readonly IDataContext _context;
 
-        public DataRepository(IGeneration generation)
+        public DataRepository(IDataContext context)
         {
-            _generation = generation;
-        }
-
-        public void Fill()
-        {
-            _generation.Fill(_context);
+            _context = context;
         }
 
         public void AddCatalog(string title, string author)
