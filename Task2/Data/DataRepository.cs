@@ -4,36 +4,45 @@ using System.Linq;
 
 namespace Data
 {
-    public class DataRepository : IDataRepository
+    public class DataRepository
     {
-        private readonly IDataContext _context;
+        private LinqToSqlDataContext dataContext = new LinqToSqlDataContext();
 
-        public DataRepository(IDataContext context)
+        public DataRepository()
         {
-            _context = context;
+            
         }
 
         public void AddCatalog(string title, string author)
-        {
-            if (GetCatalog(title, author) == null)
+        {   if (GetCatalog(title, author) == null)
             {
-                _context.Catalogs.Add(new Catalog(title, author));
+                Catalog newCatalog = new Catalog
+                {
+                    Title = title,
+                    Author = author
+                };
+                dataContext.Catalog.InsertOnSubmit(newCatalog);
+                dataContext.SubmitChanges();
             }
         }
 
-        public void RemoveCatalog(ICatalog catalog)
+        public void RemoveCatalog(Catalog catalog)
         {
-            _context.Catalogs.Remove(catalog);
+            if (catalog != null)
+            {
+                dataContext.Catalog.DeleteOnSubmit(catalog);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllCatalogs()
         {
-            _context.Catalogs.Clear();
+            dataContext.ExecuteCommand(@"DELETE FROM Catalog;");
         }
 
-        public ICatalog GetCatalog(string title, string author)
+        public Catalog GetCatalog(string title, string author)
         {
-            foreach (ICatalog catalog in _context.Catalogs.ToList())
+            foreach (Catalog catalog in dataContext.Catalog.ToList())
             {
                 if (catalog.Title == title && catalog.Author == author)
                 {
@@ -42,45 +51,81 @@ namespace Data
             }
             return null;
         }
-        public List<ICatalog> GetAllCatalogs()
+        public List<Catalog> GetAllCatalogs()
         {
             if (GetCatalogsNumber() != 0)
             {
-                return new List<ICatalog>(_context.Catalogs);
+                return new List<Catalog>(dataContext.Catalog);
             }
             return null;
         }
 
         public int GetCatalogsNumber()
         {
-            return _context.Catalogs.Count();
+            return dataContext.Catalog.Count();
         }
 
-        public void AddBorrowEvent(IState state, IUser user, DateTime time)
+        public void AddBorrowEvent(State state, Person user, DateTime time)
         {
-            _context.Events.Add(new BorrowEvent(state, user, time));
+            LibraryEvent borrowEvent = new LibraryEvent
+            {
+                Time = time,
+                StateId = state.ID,
+                UserId = user.ID,
+                isBorrowingEvent = true
+            };
+            if ((bool)!state.IsBorrowed)
+            {
+                state.IsBorrowed = true;
+            }
+            else
+            {
+                throw new Exception("A borrowed book can not be borrowed");
+            }
+            dataContext.LibraryEvent.InsertOnSubmit(borrowEvent);
+            dataContext.SubmitChanges();
         }
 
-        public void AddReturnEvent(IState state, IUser user, DateTime time)
+        public void AddReturnEvent(State state, Person user, DateTime time)
         {
-            _context.Events.Add(new ReturnEvent(state, user, time));
+            LibraryEvent returnEvent = new LibraryEvent
+            {
+                Time = time,
+                StateId = state.ID,
+                UserId = user.ID,
+                isBorrowingEvent = false
+            };
+            if ((bool)state.IsBorrowed)
+            {
+                state.IsBorrowed = false;
+            }
+            else
+            {
+                throw new Exception("A not borrowed book can not be returned");
+            }
+            dataContext.LibraryEvent.InsertOnSubmit(returnEvent);
+            dataContext.SubmitChanges();
         }
 
-        public void RemoveEvent(AbstractEvent removedEvent)
+        public void RemoveEvent(LibraryEvent removedEvent)
         {
-            _context.Events.Remove(removedEvent);
+            if (removedEvent != null)
+            {
+                dataContext.LibraryEvent.DeleteOnSubmit(removedEvent);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllEvents()
         {
-            _context.Events.Clear();
+            dataContext.ExecuteCommand(@"DELETE FROM LibraryEvent;");
         }
 
-        public AbstractEvent GetEvent(DateTime time, string eventUsername)
+        public LibraryEvent GetEvent(DateTime time, string eventUsername)
         {
-            foreach (AbstractEvent currentEvent in _context.Events.ToList())
+            foreach (LibraryEvent currentEvent in dataContext.LibraryEvent.ToList())
             {
-                if (currentEvent.Time == time && currentEvent.User.Username ==  eventUsername)
+                if (currentEvent.Time == time && currentEvent.Person.Name ==  eventUsername)
                 {
                     return currentEvent;
                 }
@@ -88,41 +133,49 @@ namespace Data
             return null;
         }
 
-        public List<AbstractEvent> GetAllEvents()
+        public List<LibraryEvent> GetAllEvents()
         {
             if (GetEventsNumber() != 0)
             {
-                return new List<AbstractEvent>(_context.Events);
+                return new List<LibraryEvent>(dataContext.LibraryEvent);
             }
             return null;
         }
 
         public int GetEventsNumber()
         {
-            return _context.Events.Count();
+            return dataContext.LibraryEvent.Count();
         }
 
-        public void AddState(ICatalog catalog, int id)
+        public int AddState(Catalog catalog)
         {
-            if (GetState(id) == null)
+            State newState = new State
             {
-                _context.States.Add(new State(catalog, id));
-            }
+                IsBorrowed = false,
+                CatalogId = catalog.ID
+            };
+            dataContext.State.InsertOnSubmit(newState);
+            dataContext.SubmitChanges();
+            return newState.ID;
         }
 
-        public void RemoveState(IState state)
+        public void RemoveState(State state)
         {
-            _context.States.Remove(state);
+            if (state != null)
+            {
+                dataContext.State.DeleteOnSubmit(state);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllStates()
         {
-            _context.States.Clear();
+            dataContext.ExecuteCommand(@"DELETE FROM State;");
         }
 
-        public IState GetState(int id)
+        public State GetState(int id)
         {
-            foreach (IState state in _context.States.ToList())
+            foreach (State state in dataContext.State.ToList())
             {
                 if (state.ID == id)
                 {
@@ -132,43 +185,52 @@ namespace Data
             return null;
         }
 
-        public List<IState> GetAllStates()
+        public List<State> GetAllStates()
         {
             if (GetStatesNumber() != 0)
             {
-                return new List<IState>(_context.States);
+                return new List<State>(dataContext.State);
             }
             return null;
         }
 
         public int GetStatesNumber()
         {
-            return _context.States.Count();
+            return dataContext.State.Count();
         }
 
         public void AddUser(string username)
         {
             if (GetUser(username) == null)
             {
-                _context.Users.Add(new User(username));
+                Person newUser = new Person
+                {
+                    Name = username
+                };
+                dataContext.Person.InsertOnSubmit(newUser);
+                dataContext.SubmitChanges();
             }
         }
 
-        public void RemoveUser(IUser user)
+        public void RemoveUser(Person user)
         {
-            _context.Users.Remove(user);
+            if (user != null)
+            {
+                dataContext.Person.DeleteOnSubmit(user);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllUsers()
         {
-            _context.Users.Clear();
+            dataContext.ExecuteCommand(@"DELETE FROM Person;");
         }
 
-        public IUser GetUser(string username)
+        public Person GetUser(string username)
         {
-            foreach (IUser user in _context.Users.ToList())
+            foreach (Person user in dataContext.Person.ToList())
             {
-                if (user.Username == username)
+                if (user.Name == username)
                 {
                     return user;
                 }
@@ -176,18 +238,18 @@ namespace Data
             return null;
         }
 
-        public List<IUser> GetAllUsers()
+        public List<Person> GetAllUsers()
         {
             if (GetUsersNumber() != 0)
             {
-                return new List<IUser>(_context.Users);
+                return new List<Person>(dataContext.Person);
             }
             return null;
         }
 
         public int GetUsersNumber()
         {
-            return _context.Users.Count();
+            return dataContext.Person.Count();
         }
     }
 }
