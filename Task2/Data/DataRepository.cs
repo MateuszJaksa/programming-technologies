@@ -6,7 +6,7 @@ namespace Data
 {
     public class DataRepository
     {
-        private LinqToSqlDataContext dataContext = new LinqToSqlDataContext();
+        private readonly LinqToSqlDataContext dataContext = new LinqToSqlDataContext();
 
         public DataRepository()
         {

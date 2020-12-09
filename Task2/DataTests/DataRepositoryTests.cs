@@ -215,7 +215,7 @@ namespace Tests
             repository.AddCatalog("Dune", "Frank Herbert");
             repository.AddCatalog("Krol", "Szczepan Twardoch");
             int id1 = repository.AddState(repository.GetCatalog("Dune", "Frank Herbert"));
-            int id2 = repository.AddState(repository.GetCatalog("Krol", "Szczepan Twardoch"));
+            repository.AddState(repository.GetCatalog("Krol", "Szczepan Twardoch"));
             State existState = repository.GetState(id1);
             State nonExistState = repository.GetState(-1);
             Assert.IsNotNull(existState);
