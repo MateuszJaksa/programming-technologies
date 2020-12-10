@@ -10,16 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Presentation.View
 {
-    
-    public partial class MainWindow : Window
+    public partial class StateView : UserControl
     {
-        public MainWindow()
+        public StateView()
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
     }
 }

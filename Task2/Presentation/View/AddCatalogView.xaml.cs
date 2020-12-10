@@ -14,12 +14,16 @@ using System.Windows.Shapes;
 
 namespace Presentation.View
 {
-    
-    public partial class MainWindow : Window
+    public partial class AddCatalogView : Window
     {
-        public MainWindow()
+        public AddCatalogView()
         {
-            //InitializeComponent();
+            InitializeComponent();
+        }
+
+        private void SaveCatalogMethod(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
         }
     }
 }

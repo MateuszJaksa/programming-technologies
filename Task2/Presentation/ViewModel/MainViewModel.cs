@@ -8,29 +8,35 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
-using Presentation.Model;
+using Services;
 
 namespace Presentation.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private Service service;
         private ObservableCollection<StateModel> states;
-        private StateModel selectedState;
+        private CatalogModel selectedCatalog;
+        private CatalogModel savedCatalog;
 
         public MainViewModel()
         {
-            BorrowBookCommand = new RelayCommand(BorrowBookMethod);
-            ReturnBookCommand = new RelayCommand(ReturnBookMethod);
-            AddBookCommand = new RelayCommand(AddBookMethod);
-            DeleteBookCommand = new RelayCommand(DeleteBookMethod);
+            service = new Service();
+            AddCatalogCommand = new RelayCommand(AddCatalogMethod);
+            RemoveCatalogCommand = new RelayCommand(RemoveCatalogMethod);
+            AddStateCommand = new RelayCommand(AddStateMethod);
+            RemoveStateCommand = new RelayCommand(RemoveStateMethod);
             GuiUpdateCommand = new RelayCommand(UpdateGUIMethod);
+            SaveCatalogCommand = new RelayCommand(SaveCatalogMethod);
         }
 
-        public ICommand BorrowBookCommand { get; }
-        public ICommand ReturnBookCommand { get; }
-        public ICommand AddBookCommand { get; }
-        public ICommand DeleteBookCommand { get; }
+        public ICommand AddCatalogCommand { get; }
+        public ICommand RemoveCatalogCommand { get; }
+        public ICommand AddStateCommand { get; }
+        public ICommand RemoveStateCommand { get; }
         public ICommand GuiUpdateCommand { get; }
+
+        public ICommand SaveCatalogCommand { get; }
 
         public ObservableCollection<StateModel> StatesList
         {
@@ -40,44 +46,59 @@ namespace Presentation.ViewModel
             }
         }
 
-        public StateModel SelectedState
+        public CatalogModel SelectedCatalog
         {
             get
             {
-                return selectedState;
+                return selectedCatalog;
             }
             set
             {
-                selectedState = value;
-                RaisePropertyChanged("SelectedState");
+                selectedCatalog = value;
             }
         }
 
-        public void ReturnBookMethod()
+        public CatalogModel SavedCatalog
+        {
+            get
+            {
+                return savedCatalog;
+            }
+            set
+            {
+                savedCatalog = value;
+            }
+        }
+
+        public void RemoveCatalogMethod()
         {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Book returned."));
         }
 
-        public void BorrowBookMethod()
+        public void AddCatalogMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Book borrowed."));
+            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Book borrowed."));
         }
 
-        public void AddBookMethod()
+        public void AddStateMethod()
         {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Book added."));
         }
 
-        public void DeleteBookMethod()
+        public void RemoveStateMethod()
         {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Book deleted."));
         }
 
         public void UpdateGUIMethod()
         {
-            states = StateModel.GetStates();
-            this.RaisePropertyChanged(() => this.StatesList);
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("GUI updated."));
+        }
+
+        public void SaveCatalogMethod()
+        {
+            //Console.WriteLine(SavedCatalog.Title + " XD " + SavedCatalog.Author);
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Catalog saved."));
         }
     }
 }
