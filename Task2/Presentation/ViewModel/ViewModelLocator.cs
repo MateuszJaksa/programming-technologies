@@ -13,15 +13,24 @@ namespace Presentation.ViewModel
     {
         public ViewModelLocator()
         {
-            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<CatalogViewModel>();
+            SimpleIoc.Default.Register<StateViewModel>();
             Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
         }
 
-        public MainViewModel MainViewModel
+        public CatalogViewModel CatalogViewModel
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<MainViewModel>();
+                return SimpleIoc.Default.GetInstance<CatalogViewModel>();
+            }
+        }
+
+        public StateViewModel StateViewModel
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<StateViewModel>();
             }
         }
 

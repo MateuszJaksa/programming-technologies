@@ -22,7 +22,7 @@ namespace Data
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="TASK2DB")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="LibraryDatabase")]
 	public partial class LinqToSqlDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -30,22 +30,22 @@ namespace Data
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertPerson(Person instance);
-    partial void UpdatePerson(Person instance);
-    partial void DeletePerson(Person instance);
-    partial void InsertCatalog(Catalog instance);
-    partial void UpdateCatalog(Catalog instance);
-    partial void DeleteCatalog(Catalog instance);
-    partial void InsertLibraryEvent(LibraryEvent instance);
-    partial void UpdateLibraryEvent(LibraryEvent instance);
-    partial void DeleteLibraryEvent(LibraryEvent instance);
-    partial void InsertState(State instance);
-    partial void UpdateState(State instance);
-    partial void DeleteState(State instance);
+    partial void InsertCatalogs(Catalogs instance);
+    partial void UpdateCatalogs(Catalogs instance);
+    partial void DeleteCatalogs(Catalogs instance);
+    partial void InsertLibraryEvents(LibraryEvents instance);
+    partial void UpdateLibraryEvents(LibraryEvents instance);
+    partial void DeleteLibraryEvents(LibraryEvents instance);
+    partial void InsertStates(States instance);
+    partial void UpdateStates(States instance);
+    partial void DeleteStates(States instance);
+    partial void InsertUsers(Users instance);
+    partial void UpdateUsers(Users instance);
+    partial void DeleteUsers(Users instance);
     #endregion
 		
 		public LinqToSqlDataContext() : 
-				base(global::Data.Properties.Settings.Default.TASK2DBConnectionString, mappingSource)
+				base(global::Data.Properties.Settings.Default.LibraryDatabaseConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -74,155 +74,41 @@ namespace Data
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Person> Person
+		public System.Data.Linq.Table<Catalogs> Catalogs
 		{
 			get
 			{
-				return this.GetTable<Person>();
+				return this.GetTable<Catalogs>();
 			}
 		}
 		
-		public System.Data.Linq.Table<Catalog> Catalog
+		public System.Data.Linq.Table<LibraryEvents> LibraryEvents
 		{
 			get
 			{
-				return this.GetTable<Catalog>();
+				return this.GetTable<LibraryEvents>();
 			}
 		}
 		
-		public System.Data.Linq.Table<LibraryEvent> LibraryEvent
+		public System.Data.Linq.Table<States> States
 		{
 			get
 			{
-				return this.GetTable<LibraryEvent>();
+				return this.GetTable<States>();
 			}
 		}
 		
-		public System.Data.Linq.Table<State> State
+		public System.Data.Linq.Table<Users> Users
 		{
 			get
 			{
-				return this.GetTable<State>();
+				return this.GetTable<Users>();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Person")]
-	public partial class Person : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private EntitySet<LibraryEvent> _LibraryEvent;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public Person()
-		{
-			this._LibraryEvent = new EntitySet<LibraryEvent>(new Action<LibraryEvent>(this.attach_LibraryEvent), new Action<LibraryEvent>(this.detach_LibraryEvent));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Person_LibraryEvent", Storage="_LibraryEvent", ThisKey="ID", OtherKey="UserId")]
-		public EntitySet<LibraryEvent> LibraryEvent
-		{
-			get
-			{
-				return this._LibraryEvent;
-			}
-			set
-			{
-				this._LibraryEvent.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_LibraryEvent(LibraryEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.Person = this;
-		}
-		
-		private void detach_LibraryEvent(LibraryEvent entity)
-		{
-			this.SendPropertyChanging();
-			entity.Person = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Catalog")]
-	public partial class Catalog : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Catalogs")]
+	public partial class Catalogs : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -233,7 +119,7 @@ namespace Data
 		
 		private string _Author;
 		
-		private EntitySet<State> _State;
+		private EntitySet<States> _States;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -247,9 +133,9 @@ namespace Data
     partial void OnAuthorChanged();
     #endregion
 		
-		public Catalog()
+		public Catalogs()
 		{
-			this._State = new EntitySet<State>(new Action<State>(this.attach_State), new Action<State>(this.detach_State));
+			this._States = new EntitySet<States>(new Action<States>(this.attach_States), new Action<States>(this.detach_States));
 			OnCreated();
 		}
 		
@@ -313,16 +199,16 @@ namespace Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Catalog_State", Storage="_State", ThisKey="ID", OtherKey="CatalogId")]
-		public EntitySet<State> State
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Catalogs_States", Storage="_States", ThisKey="ID", OtherKey="CatalogId")]
+		public EntitySet<States> States
 		{
 			get
 			{
-				return this._State;
+				return this._States;
 			}
 			set
 			{
-				this._State.Assign(value);
+				this._States.Assign(value);
 			}
 		}
 		
@@ -346,21 +232,21 @@ namespace Data
 			}
 		}
 		
-		private void attach_State(State entity)
+		private void attach_States(States entity)
 		{
 			this.SendPropertyChanging();
-			entity.Catalog = this;
+			entity.Catalogs = this;
 		}
 		
-		private void detach_State(State entity)
+		private void detach_States(States entity)
 		{
 			this.SendPropertyChanging();
-			entity.Catalog = null;
+			entity.Catalogs = null;
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LibraryEvent")]
-	public partial class LibraryEvent : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.LibraryEvents")]
+	public partial class LibraryEvents : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -375,9 +261,9 @@ namespace Data
 		
 		private System.Nullable<bool> _isBorrowingEvent;
 		
-		private EntityRef<Person> _Person;
+		private EntityRef<States> _States;
 		
-		private EntityRef<State> _State;
+		private EntityRef<Users> _Users;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -395,10 +281,10 @@ namespace Data
     partial void OnisBorrowingEventChanged();
     #endregion
 		
-		public LibraryEvent()
+		public LibraryEvents()
 		{
-			this._Person = default(EntityRef<Person>);
-			this._State = default(EntityRef<State>);
+			this._States = default(EntityRef<States>);
+			this._Users = default(EntityRef<Users>);
 			OnCreated();
 		}
 		
@@ -453,7 +339,7 @@ namespace Data
 			{
 				if ((this._StateId != value))
 				{
-					if (this._State.HasLoadedOrAssignedValue)
+					if (this._States.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -477,7 +363,7 @@ namespace Data
 			{
 				if ((this._UserId != value))
 				{
-					if (this._Person.HasLoadedOrAssignedValue)
+					if (this._Users.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -510,70 +396,70 @@ namespace Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Person_LibraryEvent", Storage="_Person", ThisKey="UserId", OtherKey="ID", IsForeignKey=true)]
-		public Person Person
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="States_LibraryEvents", Storage="_States", ThisKey="StateId", OtherKey="ID", IsForeignKey=true)]
+		public States States
 		{
 			get
 			{
-				return this._Person.Entity;
+				return this._States.Entity;
 			}
 			set
 			{
-				Person previousValue = this._Person.Entity;
+				States previousValue = this._States.Entity;
 				if (((previousValue != value) 
-							|| (this._Person.HasLoadedOrAssignedValue == false)))
+							|| (this._States.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Person.Entity = null;
-						previousValue.LibraryEvent.Remove(this);
+						this._States.Entity = null;
+						previousValue.LibraryEvents.Remove(this);
 					}
-					this._Person.Entity = value;
+					this._States.Entity = value;
 					if ((value != null))
 					{
-						value.LibraryEvent.Add(this);
-						this._UserId = value.ID;
-					}
-					else
-					{
-						this._UserId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Person");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_LibraryEvent", Storage="_State", ThisKey="StateId", OtherKey="ID", IsForeignKey=true)]
-		public State State
-		{
-			get
-			{
-				return this._State.Entity;
-			}
-			set
-			{
-				State previousValue = this._State.Entity;
-				if (((previousValue != value) 
-							|| (this._State.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._State.Entity = null;
-						previousValue.LibraryEvent.Remove(this);
-					}
-					this._State.Entity = value;
-					if ((value != null))
-					{
-						value.LibraryEvent.Add(this);
+						value.LibraryEvents.Add(this);
 						this._StateId = value.ID;
 					}
 					else
 					{
 						this._StateId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("State");
+					this.SendPropertyChanged("States");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_LibraryEvents", Storage="_Users", ThisKey="UserId", OtherKey="ID", IsForeignKey=true)]
+		public Users Users
+		{
+			get
+			{
+				return this._Users.Entity;
+			}
+			set
+			{
+				Users previousValue = this._Users.Entity;
+				if (((previousValue != value) 
+							|| (this._Users.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Users.Entity = null;
+						previousValue.LibraryEvents.Remove(this);
+					}
+					this._Users.Entity = value;
+					if ((value != null))
+					{
+						value.LibraryEvents.Add(this);
+						this._UserId = value.ID;
+					}
+					else
+					{
+						this._UserId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Users");
 				}
 			}
 		}
@@ -599,8 +485,8 @@ namespace Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.State")]
-	public partial class State : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.States")]
+	public partial class States : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -611,9 +497,9 @@ namespace Data
 		
 		private System.Nullable<int> _CatalogId;
 		
-		private EntitySet<LibraryEvent> _LibraryEvent;
+		private EntitySet<LibraryEvents> _LibraryEvents;
 		
-		private EntityRef<Catalog> _Catalog;
+		private EntityRef<Catalogs> _Catalogs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -627,10 +513,10 @@ namespace Data
     partial void OnCatalogIdChanged();
     #endregion
 		
-		public State()
+		public States()
 		{
-			this._LibraryEvent = new EntitySet<LibraryEvent>(new Action<LibraryEvent>(this.attach_LibraryEvent), new Action<LibraryEvent>(this.detach_LibraryEvent));
-			this._Catalog = default(EntityRef<Catalog>);
+			this._LibraryEvents = new EntitySet<LibraryEvents>(new Action<LibraryEvents>(this.attach_LibraryEvents), new Action<LibraryEvents>(this.detach_LibraryEvents));
+			this._Catalogs = default(EntityRef<Catalogs>);
 			OnCreated();
 		}
 		
@@ -685,7 +571,7 @@ namespace Data
 			{
 				if ((this._CatalogId != value))
 				{
-					if (this._Catalog.HasLoadedOrAssignedValue)
+					if (this._Catalogs.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -698,49 +584,49 @@ namespace Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_LibraryEvent", Storage="_LibraryEvent", ThisKey="ID", OtherKey="StateId")]
-		public EntitySet<LibraryEvent> LibraryEvent
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="States_LibraryEvents", Storage="_LibraryEvents", ThisKey="ID", OtherKey="StateId")]
+		public EntitySet<LibraryEvents> LibraryEvents
 		{
 			get
 			{
-				return this._LibraryEvent;
+				return this._LibraryEvents;
 			}
 			set
 			{
-				this._LibraryEvent.Assign(value);
+				this._LibraryEvents.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Catalog_State", Storage="_Catalog", ThisKey="CatalogId", OtherKey="ID", IsForeignKey=true)]
-		public Catalog Catalog
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Catalogs_States", Storage="_Catalogs", ThisKey="CatalogId", OtherKey="ID", IsForeignKey=true)]
+		public Catalogs Catalogs
 		{
 			get
 			{
-				return this._Catalog.Entity;
+				return this._Catalogs.Entity;
 			}
 			set
 			{
-				Catalog previousValue = this._Catalog.Entity;
+				Catalogs previousValue = this._Catalogs.Entity;
 				if (((previousValue != value) 
-							|| (this._Catalog.HasLoadedOrAssignedValue == false)))
+							|| (this._Catalogs.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Catalog.Entity = null;
-						previousValue.State.Remove(this);
+						this._Catalogs.Entity = null;
+						previousValue.States.Remove(this);
 					}
-					this._Catalog.Entity = value;
+					this._Catalogs.Entity = value;
 					if ((value != null))
 					{
-						value.State.Add(this);
+						value.States.Add(this);
 						this._CatalogId = value.ID;
 					}
 					else
 					{
 						this._CatalogId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Catalog");
+					this.SendPropertyChanged("Catalogs");
 				}
 			}
 		}
@@ -765,16 +651,130 @@ namespace Data
 			}
 		}
 		
-		private void attach_LibraryEvent(LibraryEvent entity)
+		private void attach_LibraryEvents(LibraryEvents entity)
 		{
 			this.SendPropertyChanging();
-			entity.State = this;
+			entity.States = this;
 		}
 		
-		private void detach_LibraryEvent(LibraryEvent entity)
+		private void detach_LibraryEvents(LibraryEvents entity)
 		{
 			this.SendPropertyChanging();
-			entity.State = null;
+			entity.States = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	public partial class Users : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private EntitySet<LibraryEvents> _LibraryEvents;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Users()
+		{
+			this._LibraryEvents = new EntitySet<LibraryEvents>(new Action<LibraryEvents>(this.attach_LibraryEvents), new Action<LibraryEvents>(this.detach_LibraryEvents));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Users_LibraryEvents", Storage="_LibraryEvents", ThisKey="ID", OtherKey="UserId")]
+		public EntitySet<LibraryEvents> LibraryEvents
+		{
+			get
+			{
+				return this._LibraryEvents;
+			}
+			set
+			{
+				this._LibraryEvents.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_LibraryEvents(LibraryEvents entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = this;
+		}
+		
+		private void detach_LibraryEvents(LibraryEvents entity)
+		{
+			this.SendPropertyChanging();
+			entity.Users = null;
 		}
 	}
 }

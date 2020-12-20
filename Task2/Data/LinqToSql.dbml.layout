@@ -2,49 +2,49 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LinqToSql">
   <DataContextMoniker Name="/LinqToSqlDataContext" />
   <nestedChildShapes>
-    <classShape Id="dfbb9dda-0dbe-44e1-a358-ec2dbffd1d88" absoluteBounds="3.5, 4.25, 2, 1.1939925130208327">
-      <DataClassMoniker Name="/LinqToSqlDataContext/Person" />
+    <classShape Id="ef377693-6d35-4fae-964d-c1182659c1c0" absoluteBounds="0.75, 1.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqToSqlDataContext/Catalogs" />
       <nestedChildShapes>
-        <elementListCompartment Id="71f9142b-8de8-4852-bdd9-f751475d5fe8" absoluteBounds="3.515, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="fc78197b-6c0a-4764-9a7e-117cec9871f3" absoluteBounds="0.765, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f7772262-245c-4c43-8c89-0d0216898098" absoluteBounds="0.75, 1.125, 2, 1.3862939453125">
-      <DataClassMoniker Name="/LinqToSqlDataContext/Catalog" />
+    <classShape Id="f0489cac-e426-4387-b4d7-9056fea3ab4c" absoluteBounds="6.25, 0.875, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/LinqToSqlDataContext/LibraryEvents" />
       <nestedChildShapes>
-        <elementListCompartment Id="68f53dd6-e18e-4446-8138-e82bc9918c88" absoluteBounds="0.765, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="70782a93-15e4-4454-ad94-72f57008db8c" absoluteBounds="6.265, 1.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="2fb2ee70-5a01-4a8a-8741-615ef5b2ace9" absoluteBounds="6.25, 0.875, 2, 1.7708968098958331">
-      <DataClassMoniker Name="/LinqToSqlDataContext/LibraryEvent" />
+    <classShape Id="c8f65c6c-ae3d-4d61-9cc7-2a149761fa12" absoluteBounds="3.5, 1.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/LinqToSqlDataContext/States" />
       <nestedChildShapes>
-        <elementListCompartment Id="e7508b4f-6987-4631-823e-bf96f7e89037" absoluteBounds="6.265, 1.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0e646ac5-8b10-43c6-8e60-f82ec2795952" absoluteBounds="3.515, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="fdb68775-0ea4-44c9-8467-440893669311" absoluteBounds="3.5, 1.125, 2, 1.3862939453125">
-      <DataClassMoniker Name="/LinqToSqlDataContext/State" />
+    <classShape Id="8d6f4472-fa0e-4d1e-afd0-d30aa7484012" absoluteBounds="3.5, 4.25, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/LinqToSqlDataContext/Users" />
       <nestedChildShapes>
-        <elementListCompartment Id="50d1d18e-938a-420a-a55c-0c3b587074fa" absoluteBounds="3.515, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="6809deb4-5866-4f21-a0cc-bcd2f5f6a080" absoluteBounds="3.515, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 4.84699625651042); (7.25 : 4.84699625651042); (7.25 : 2.64589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/LinqToSqlDataContext/Person/Person_LibraryEvent" />
-      <nodes>
-        <classShapeMoniker Id="dfbb9dda-0dbe-44e1-a358-ec2dbffd1d88" />
-        <classShapeMoniker Id="2fb2ee70-5a01-4a8a-8741-615ef5b2ace9" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(5.5 : 1.81814697265625); (6.25 : 1.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/LinqToSqlDataContext/State/State_LibraryEvent" />
+      <AssociationMoniker Name="/LinqToSqlDataContext/States/States_LibraryEvents" />
       <nodes>
-        <classShapeMoniker Id="fdb68775-0ea4-44c9-8467-440893669311" />
-        <classShapeMoniker Id="2fb2ee70-5a01-4a8a-8741-615ef5b2ace9" />
+        <classShapeMoniker Id="c8f65c6c-ae3d-4d61-9cc7-2a149761fa12" />
+        <classShapeMoniker Id="f0489cac-e426-4387-b4d7-9056fea3ab4c" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 1.81814697265625); (3.5 : 1.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/LinqToSqlDataContext/Catalog/Catalog_State" />
+      <AssociationMoniker Name="/LinqToSqlDataContext/Catalogs/Catalogs_States" />
       <nodes>
-        <classShapeMoniker Id="f7772262-245c-4c43-8c89-0d0216898098" />
-        <classShapeMoniker Id="fdb68775-0ea4-44c9-8467-440893669311" />
+        <classShapeMoniker Id="ef377693-6d35-4fae-964d-c1182659c1c0" />
+        <classShapeMoniker Id="c8f65c6c-ae3d-4d61-9cc7-2a149761fa12" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.84699625651042); (7.25 : 4.84699625651042); (7.25 : 2.64589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LinqToSqlDataContext/Users/Users_LibraryEvents" />
+      <nodes>
+        <classShapeMoniker Id="8d6f4472-fa0e-4d1e-afd0-d30aa7484012" />
+        <classShapeMoniker Id="f0489cac-e426-4387-b4d7-9056fea3ab4c" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

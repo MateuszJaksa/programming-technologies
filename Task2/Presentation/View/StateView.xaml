@@ -15,18 +15,11 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <StackPanel DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
-        <Button Content="Add a State" Width="200" Height="50" HorizontalAlignment="Right" Margin="10 10 10 10">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+    <StackPanel DataContext="{Binding StateViewModel, Source={StaticResource Locator}}">
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Add a State" x:Name="AddStateBtn" Command="{Binding AddStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Refresh States" x:Name="RefreshStateBtn" Command="{Binding RefreshStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
+        </StackPanel>
         <ListView ItemsSource="{Binding States}">
             <ListView.View>
                 <GridView>

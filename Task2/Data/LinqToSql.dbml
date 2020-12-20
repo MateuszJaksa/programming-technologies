@@ -1,38 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TASK2DB" Class="LinqToSqlDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-DVAHGR8;Initial Catalog=TASK2DB;Integrated Security=True;Pooling=False" SettingsObjectName="Data.Properties.Settings" SettingsPropertyName="TASK2DBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Person" Member="Person">
-    <Type Name="Person">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Person_LibraryEvent" Member="LibraryEvent" ThisKey="ID" OtherKey="UserId" Type="LibraryEvent" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Catalog" Member="Catalog">
-    <Type Name="Catalog">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LibraryDatabase" Class="LinqToSqlDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\LibraryDatabase.mdf;Integrated Security=True" SettingsObjectName="Data.Properties.Settings" SettingsPropertyName="LibraryDatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Catalogs" Member="Catalogs">
+    <Type Name="Catalogs">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Title" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Author" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Catalog_State" Member="State" ThisKey="ID" OtherKey="CatalogId" Type="State" />
+      <Association Name="Catalogs_States" Member="States" ThisKey="ID" OtherKey="CatalogId" Type="States" />
     </Type>
   </Table>
-  <Table Name="dbo.LibraryEvent" Member="LibraryEvent">
-    <Type Name="LibraryEvent">
+  <Table Name="dbo.LibraryEvents" Member="LibraryEvents">
+    <Type Name="LibraryEvents">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="StateId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="isBorrowingEvent" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="Person_LibraryEvent" Member="Person" ThisKey="UserId" OtherKey="ID" Type="Person" IsForeignKey="true" />
-      <Association Name="State_LibraryEvent" Member="State" ThisKey="StateId" OtherKey="ID" Type="State" IsForeignKey="true" />
+      <Association Name="States_LibraryEvents" Member="States" ThisKey="StateId" OtherKey="ID" Type="States" IsForeignKey="true" />
+      <Association Name="Users_LibraryEvents" Member="Users" ThisKey="UserId" OtherKey="ID" Type="Users" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.State" Member="State">
-    <Type Name="State">
+  <Table Name="dbo.States" Member="States">
+    <Type Name="States">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IsBorrowed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="CatalogId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="State_LibraryEvent" Member="LibraryEvent" ThisKey="ID" OtherKey="StateId" Type="LibraryEvent" />
-      <Association Name="Catalog_State" Member="Catalog" ThisKey="CatalogId" OtherKey="ID" Type="Catalog" IsForeignKey="true" />
+      <Association Name="States_LibraryEvents" Member="LibraryEvents" ThisKey="ID" OtherKey="StateId" Type="LibraryEvents" />
+      <Association Name="Catalogs_States" Member="Catalogs" ThisKey="CatalogId" OtherKey="ID" Type="Catalogs" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Users_LibraryEvents" Member="LibraryEvents" ThisKey="ID" OtherKey="UserId" Type="LibraryEvents" />
     </Type>
   </Table>
 </Database>
