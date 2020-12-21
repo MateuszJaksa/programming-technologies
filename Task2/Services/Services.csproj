@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="System.Data.Linq">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.Linq.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.Data.Linq.dll</HintPath>
     </Reference>
   </ItemGroup>
 
