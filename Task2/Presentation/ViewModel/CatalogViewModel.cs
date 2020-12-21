@@ -44,6 +44,8 @@ namespace Presentation.ViewModel
         public ICommand RemoveCatalogCommand { get; private set; }
         public ICommand RefreshCatalogCommand { get; private set; }
         public ICommand EditCatalogCommand { get; private set; }
+        public Lazy<IWindow> AddCatalogWindow { get; set; }
+        public Lazy<IWindow> EditCatalogWindow { get; set; }
 
         public void RemoveCatalogMethod()
         {
@@ -52,7 +54,8 @@ namespace Presentation.ViewModel
 
         public void AddCatalogMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Catalog added."));
+            IWindow addCatalogWindow = AddCatalogWindow.Value;
+            addCatalogWindow.Show();
         }
 
         public void RefreshCatalogMethod()

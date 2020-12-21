@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Presentation.ViewModel;
 
 namespace Presentation.View
 {
-    public partial class CatalogView : UserControl
+    /// <summary>
+    /// Interaction logic for AddStateView.xaml
+    /// </summary>
+    public partial class AddStateView : Window
     {
-        public CatalogView()
+        public AddStateView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-            CatalogViewModel viewModel = (CatalogViewModel)DataContext;
-            //viewModel.AddCatalogWindow = new Lazy<IWindow>(() => new AddCatalogView());
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Services;
@@ -42,7 +40,8 @@ namespace Presentation.Model
         public static ObservableCollection<CatalogModel> GetCatalogs()
         {
             ObservableCollection<CatalogModel> models = new ObservableCollection<CatalogModel>();
-            List<int> catalogIDs = repository.GetAllCatalogIds();
+            List<int> catalogIDs = new List<int>();
+            catalogIDs = repository.GetAllCatalogIds();
             foreach(int id in catalogIDs)
             {
                 models.Add(new CatalogModel(id, repository.GetCatalogTitle(id), repository.GetCatalogAuthor(id)));

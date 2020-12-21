@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using Services;
@@ -42,7 +40,8 @@ namespace Presentation.Model
         public static ObservableCollection<StateModel> GetStates()
         {
             ObservableCollection<StateModel> models = new ObservableCollection<StateModel>();
-            List<int> stateIDs = repository.GetAllStateIds();
+            List<int> stateIDs = new List<int>();
+            stateIDs = repository.GetAllStateIds();
             foreach (int id in stateIDs)
             {
                 models.Add(new StateModel(id, repository.GetStateIsBorrowed(id), repository.GetStateCatalogId(id)));

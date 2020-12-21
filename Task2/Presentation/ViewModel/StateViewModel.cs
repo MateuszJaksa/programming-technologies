@@ -44,6 +44,8 @@ namespace Presentation.ViewModel
         public ICommand RemoveStateCommand { get; private set; }
         public ICommand RefreshStateCommand { get; private set; }
         public ICommand EditStateCommand { get; private set; }
+        public Lazy<IWindow> AddWindow { get; set; }
+        public Lazy<IWindow> EditWindow { get; set; }
 
         public void RemoveStateMethod()
         {

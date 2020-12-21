@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Presentation.ViewModel;
 
 namespace Presentation.View
 {
-    public partial class CatalogView : UserControl
+    /// <summary>
+    /// Interaction logic for EditCatalogView.xaml
+    /// </summary>
+    public partial class EditCatalogView : Window, IWindow
     {
-        public CatalogView()
+        public EditCatalogView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
-            CatalogViewModel viewModel = (CatalogViewModel)DataContext;
-            //viewModel.AddCatalogWindow = new Lazy<IWindow>(() => new AddCatalogView());
         }
     }
 }

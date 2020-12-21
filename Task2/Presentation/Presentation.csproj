@@ -72,15 +72,32 @@
     </ApplicationDefinition>
     <Compile Include="Model\CatalogModel.cs" />
     <Compile Include="Model\StateModel.cs" />
+    <Compile Include="ViewModel\AddCatalogViewModel.cs" />
+    <Compile Include="ViewModel\AddStateViewModel.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
+    <Compile Include="ViewModel\EditCatalogViewModel.cs" />
+    <Compile Include="ViewModel\EditStateViewModel.cs" />
+    <Compile Include="ViewModel\IWindow.cs" />
     <Compile Include="ViewModel\StateViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\AddCatalogView.xaml.cs">
+      <DependentUpon>AddCatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddStateView.xaml.cs">
+      <DependentUpon>AddStateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditCatalogView.xaml.cs">
+      <DependentUpon>EditCatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditStateView.xaml.cs">
+      <DependentUpon>EditStateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -117,7 +134,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\AddCatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddStateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditCatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditStateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
