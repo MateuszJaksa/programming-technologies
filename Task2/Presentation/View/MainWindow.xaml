@@ -23,7 +23,7 @@
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
         <ContentControl Content="{Binding}" ContentTemplate="{StaticResource CatalogList}" Grid.Row="0"/>
-        <ContentControl Content="{Binding SelectedCatalog}" ContentTemplate="{StaticResource StateList}" Grid.Row="1"/>
+        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource StateList}" Grid.Row="1"/>
     </Grid>
 
 </Window>

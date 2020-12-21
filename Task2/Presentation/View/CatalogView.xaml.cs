@@ -21,11 +21,5 @@ namespace Presentation.View
         {
             InitializeComponent();
         }
-
-        private void OpenNewCatalogView(object sender, RoutedEventArgs e)
-        {
-            AddCatalogView addCatalogView = new AddCatalogView();
-            addCatalogView.Show();
-        }
     }
 }

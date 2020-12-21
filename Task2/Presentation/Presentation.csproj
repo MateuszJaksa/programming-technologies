@@ -73,13 +73,11 @@
     <Compile Include="Model\CatalogModel.cs" />
     <Compile Include="Model\StateModel.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
+    <Compile Include="ViewModel\StateViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="View\AddCatalogView.xaml.cs">
-      <DependentUpon>AddCatalogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
@@ -119,10 +117,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AddCatalogView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\CatalogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +129,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{1a957fa2-0fd7-40bc-beb4-65e1fb75ddad}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

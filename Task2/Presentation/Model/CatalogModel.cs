@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Services;
 
 namespace Presentation.Model
 {
@@ -13,6 +14,14 @@ namespace Presentation.Model
         private int id;
         private string title;
         private string author;
+        private readonly static LibraryRepository repository = new LibraryRepository();
+
+        public CatalogModel(int id, string title, string author)
+        {
+            this.id = id;
+            this.title = title;
+            this.author = author;
+        }
 
         public int Id
         {
@@ -32,18 +41,13 @@ namespace Presentation.Model
 
         public static ObservableCollection<CatalogModel> GetCatalogs()
         {
-            ObservableCollection<CatalogModel> catalogs = new ObservableCollection<CatalogModel>();
-            for (int i = 0; i < 3; i++)
+            ObservableCollection<CatalogModel> models = new ObservableCollection<CatalogModel>();
+            List<int> catalogIDs = repository.GetAllCatalogIds();
+            foreach(int id in catalogIDs)
             {
-                catalogs.Add(new CatalogModel
-                {
-                    Id = i + 1,
-                    Title = "Title" + i.ToString(),
-                    Author = "XD"
-                });
-
+                models.Add(new CatalogModel(id, repository.GetCatalogTitle(id), repository.GetCatalogAuthor(id)));
             }
-            return catalogs;
+            return models;
         }
     }
 }

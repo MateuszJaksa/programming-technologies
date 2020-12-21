@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Services;
 
 namespace Presentation.Model
 {
@@ -13,6 +14,14 @@ namespace Presentation.Model
         private int id;
         private bool isBorrowed;
         private int catalogId;
+        private readonly static LibraryRepository repository = new LibraryRepository();
+
+        public StateModel(int id, bool isBorrowed, int catalogId)
+        {
+            this.id = id;
+            this.isBorrowed = isBorrowed;
+            this.catalogId = catalogId;
+        }
 
         public int Id
         {
@@ -32,18 +41,13 @@ namespace Presentation.Model
 
         public static ObservableCollection<StateModel> GetStates()
         {
-            ObservableCollection<StateModel> states = new ObservableCollection<StateModel>();
-            for (int i = 0; i < 3; i++)
+            ObservableCollection<StateModel> models = new ObservableCollection<StateModel>();
+            List<int> stateIDs = repository.GetAllStateIds();
+            foreach (int id in stateIDs)
             {
-                states.Add(new StateModel
-                {
-                    Id = i + 1,
-                    IsBorrowed = true,
-                    CatalogId = i
-                });
-
+                models.Add(new StateModel(id, repository.GetStateIsBorrowed(id), repository.GetStateCatalogId(id)));
             }
-            return states;
+            return models;
 
         }
     }

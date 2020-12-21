@@ -20,11 +20,11 @@
             <Button Content="Add a State" x:Name="AddStateBtn" Command="{Binding AddStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
             <Button Content="Refresh States" x:Name="RefreshStateBtn" Command="{Binding RefreshStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
         </StackPanel>
-        <ListView ItemsSource="{Binding States}">
+        <ListView ItemsSource="{Binding StatesList}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}" Width="200"/>
-                    <GridViewColumn Header="Is it borrowed?" DisplayMemberBinding="{Binding Path=IsBorrowed}" Width="200"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="200"/>
+                    <GridViewColumn Header="Is it borrowed?" DisplayMemberBinding="{Binding IsBorrowed}" Width="200"/>
                     <GridViewColumn CellTemplate="{StaticResource RowButtons}"/>
                 </GridView>
             </ListView.View>

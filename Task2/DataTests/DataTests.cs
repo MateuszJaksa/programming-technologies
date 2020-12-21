@@ -11,7 +11,7 @@ namespace DataTests
     [TestClass]
     public class DataTests
     {
-        private string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename= |DataDirectory|\\LibraryDatabase.mdf;Integrated Security=True";
+        private const string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename= |DataDirectory|\\LibraryDatabase.mdf;Integrated Security=True";
       
         [TestMethod]
         public void AddToAndGetFromDatabaseTest()

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
 
-namespace Data
+namespace Services
 {
     public class LibraryRepository
     {
@@ -13,26 +14,23 @@ namespace Data
             
         }
 
-        public void AddCatalog(string title, string author)
-        {   if (GetCatalog(title, author) == null)
+        public int AddCatalog(string title, string author)
+        {
+            Catalogs newCatalog = new Catalogs
             {
-                Catalogs newCatalog = new Catalogs
-                {
-                    Title = title,
-                    Author = author
-                };
-                dataContext.Catalogs.InsertOnSubmit(newCatalog);
-                dataContext.SubmitChanges();
-            }
+                Title = title,
+                Author = author
+            };
+            dataContext.Catalogs.InsertOnSubmit(newCatalog);
+            dataContext.SubmitChanges();
+            return newCatalog.ID;
         }
 
-        public void RemoveCatalog(Catalogs catalog)
+        public void RemoveCatalog(int id)
         {
-            if (catalog != null)
-            {
-                dataContext.Catalogs.DeleteOnSubmit(catalog);
-                dataContext.SubmitChanges();
-            }
+            Catalogs removedCatalog = dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id);
+            dataContext.Catalogs.DeleteOnSubmit(removedCatalog);
+            dataContext.SubmitChanges();
         }
 
         public void RemoveAllCatalogs()
@@ -40,132 +38,43 @@ namespace Data
             dataContext.ExecuteCommand(@"DELETE FROM Catalogs;");
         }
 
-        public Catalogs GetCatalog(string title, string author)
+        public string GetCatalogTitle(int id)
         {
-            foreach (Catalogs catalog in dataContext.Catalogs.ToList())
-            {
-                if (catalog.Title == title && catalog.Author == author)
-                {
-                    return catalog;
-                }
-            }
-            return null;
-        }
-        public List<Catalogs> GetAllCatalogs()
-        {
-            if (GetCatalogsNumber() != 0)
-            {
-                return new List<Catalogs>(dataContext.Catalogs);
-            }
-            return null;
+            return dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id).Title;
         }
 
-        public int GetCatalogsNumber()
+        public string GetCatalogAuthor(int id)
         {
-            return dataContext.Catalogs.Count();
+            return dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id).Author;
         }
 
-        public void AddBorrowEvent(States state, Users user, DateTime time)
+        public List<int> GetAllCatalogIds()
         {
-            LibraryEvents borrowEvent = new LibraryEvents
+            List<int> returnedList = new List<int>();
+            foreach (Catalogs catalogs in dataContext.Catalogs.ToList())
             {
-                Time = time,
-                StateId = state.ID,
-                UserId = user.ID,
-                isBorrowingEvent = true
-            };
-            if ((bool)!state.IsBorrowed)
-            {
-                state.IsBorrowed = true;
+                returnedList.Add(catalogs.ID);
             }
-            else
-            {
-                throw new Exception("A borrowed book can not be borrowed");
-            }
-            dataContext.LibraryEvents.InsertOnSubmit(borrowEvent);
-            dataContext.SubmitChanges();
+            return returnedList;
         }
 
-        public void AddReturnEvent(States state, Users user, DateTime time)
-        {
-            LibraryEvents returnEvent = new LibraryEvents
-            {
-                Time = time,
-                StateId = state.ID,
-                UserId = user.ID,
-                isBorrowingEvent = false
-            };
-            if ((bool)state.IsBorrowed)
-            {
-                state.IsBorrowed = false;
-            }
-            else
-            {
-                throw new Exception("A not borrowed book can not be returned");
-            }
-            dataContext.LibraryEvents.InsertOnSubmit(returnEvent);
-            dataContext.SubmitChanges();
-        }
-
-        public void RemoveEvent(LibraryEvents removedEvent)
-        {
-            if (removedEvent != null)
-            {
-                dataContext.LibraryEvents.DeleteOnSubmit(removedEvent);
-                dataContext.SubmitChanges();
-            }
-        }
-
-        public void RemoveAllEvents()
-        {
-            dataContext.ExecuteCommand(@"DELETE FROM LibraryEvents;");
-        }
-
-        public LibraryEvents GetEvent(DateTime time, string eventUsername)
-        {
-            foreach (LibraryEvents currentEvent in dataContext.LibraryEvents.ToList())
-            {
-                if (currentEvent.Time == time && currentEvent.Users.Name ==  eventUsername)
-                {
-                    return currentEvent;
-                }
-            }
-            return null;
-        }
-
-        public List<LibraryEvents> GetAllEvents()
-        {
-            if (GetEventsNumber() != 0)
-            {
-                return new List<LibraryEvents>(dataContext.LibraryEvents);
-            }
-            return null;
-        }
-
-        public int GetEventsNumber()
-        {
-            return dataContext.LibraryEvents.Count();
-        }
-
-        public int AddState(Catalogs catalog)
+        public int AddState(int catalogId, bool isBorrowed)
         {
             States newState = new States
             {
-                IsBorrowed = false,
-                CatalogId = catalog.ID
+                IsBorrowed = isBorrowed,
+                CatalogId = catalogId
             };
             dataContext.States.InsertOnSubmit(newState);
             dataContext.SubmitChanges();
             return newState.ID;
         }
 
-        public void RemoveState(States state)
+        public void RemoveState(int id)
         {
-            if (state != null)
-            {
-                dataContext.States.DeleteOnSubmit(state);
-                dataContext.SubmitChanges();
-            }
+            States removedState = dataContext.States.FirstOrDefault(state => state.ID == id);
+            dataContext.States.DeleteOnSubmit(removedState);
+            dataContext.SubmitChanges();
         }
 
         public void RemoveAllStates()
@@ -173,83 +82,24 @@ namespace Data
             dataContext.ExecuteCommand(@"DELETE FROM States;");
         }
 
-        public States GetState(int id)
+        public bool GetStateIsBorrowed(int id)
         {
+            return (bool)dataContext.States.FirstOrDefault(state => state.ID == id).IsBorrowed;
+        }
+
+        public int GetStateCatalogId(int id)
+        {
+            return (int)dataContext.States.FirstOrDefault(state => state.ID == id).CatalogId;
+        }
+
+        public List<int> GetAllStateIds()
+        {
+            List<int> returnedList = new List<int>();
             foreach (States state in dataContext.States.ToList())
             {
-                if (state.ID == id)
-                {
-                    return state;
-                }
+                returnedList.Add(state.ID);
             }
-            return null;
-        }
-
-        public List<States> GetAllStates()
-        {
-            if (GetStatesNumber() != 0)
-            {
-                return new List<States>(dataContext.States);
-            }
-            return null;
-        }
-
-        public int GetStatesNumber()
-        {
-            return dataContext.States.Count();
-        }
-
-        public void AddUser(string username)
-        {
-            if (GetUser(username) == null)
-            {
-                Users newUser = new Users
-                {
-                    Name = username
-                };
-                dataContext.Users.InsertOnSubmit(newUser);
-                dataContext.SubmitChanges();
-            }
-        }
-
-        public void RemoveUser(Users user)
-        {
-            if (user != null)
-            {
-                dataContext.Users.DeleteOnSubmit(user);
-                dataContext.SubmitChanges();
-            }
-        }
-
-        public void RemoveAllUsers()
-        {
-            dataContext.ExecuteCommand(@"DELETE FROM Users;");
-        }
-
-        public Users GetUser(string username)
-        {
-            foreach (Users user in dataContext.Users.ToList())
-            {
-                if (user.Name == username)
-                {
-                    return user;
-                }
-            }
-            return null;
-        }
-
-        public List<Users> GetAllUsers()
-        {
-            if (GetUsersNumber() != 0)
-            {
-                return new List<Users>(dataContext.Users);
-            }
-            return null;
-        }
-
-        public int GetUsersNumber()
-        {
-            return dataContext.Users.Count();
+            return returnedList;
         }
     }
 }
