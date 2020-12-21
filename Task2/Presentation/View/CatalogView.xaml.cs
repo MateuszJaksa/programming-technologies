@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.Messaging;
 using Presentation.ViewModel;
 
 namespace Presentation.View
@@ -21,13 +22,21 @@ namespace Presentation.View
         public CatalogView()
         {
             InitializeComponent();
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
         }
 
-        protected override void OnInitialized(EventArgs e)
+        private void NotificationMessageReceived(NotificationMessage msg)
         {
-            base.OnInitialized(e);
-            CatalogViewModel viewModel = (CatalogViewModel)DataContext;
-            //viewModel.AddCatalogWindow = new Lazy<IWindow>(() => new AddCatalogView());
+            AddCatalogView addView = new AddCatalogView();
+            if (msg.Notification == "AddCatalog")
+            {
+                addView.Show();
+            }
+
+            if (msg.Notification == "CloseAddCatalog")
+            {
+                addView.Hide();
+            }
         }
     }
 }

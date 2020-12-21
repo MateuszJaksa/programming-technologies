@@ -1,12 +1,12 @@
-﻿<Window x:Class="Presentation.View.EditStateView"
+﻿<Window x:Class="Presentation.View.AddStateView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.View"
         mc:Ignorable="d"
-        Title="EditStateView" Height="450" Width="800">
-    <Grid DataContext="{Binding EditStateViewModel, Source={StaticResource Locator}}">
+        Title="AddStateWindow" Height="450" Width="800">
+    <Grid DataContext="{Binding AddStateViewModel, Source={StaticResource Locator}}">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}">
@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="1" Content="Editing a state" HorizontalAlignment="Center" />
+            <Label Grid.Row="0" Grid.Column="1" Content="Adding a state" HorizontalAlignment="Center" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="Is it borrowed?" />
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SavedState.IsBorrowed}" />

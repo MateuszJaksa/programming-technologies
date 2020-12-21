@@ -16,10 +16,7 @@ namespace Presentation.ViewModel
             SimpleIoc.Default.Register<CatalogViewModel>();
             SimpleIoc.Default.Register<StateViewModel>();
             SimpleIoc.Default.Register<AddCatalogViewModel>();
-            SimpleIoc.Default.Register<EditCatalogViewModel>();
             SimpleIoc.Default.Register<AddStateViewModel>();
-            SimpleIoc.Default.Register<EditStateViewModel>();
-            Messenger.Default.Register<NotificationMessage>(this, NotifyUserMethod);
         }
 
         public CatalogViewModel CatalogViewModel
@@ -46,14 +43,6 @@ namespace Presentation.ViewModel
             }
         }
 
-        public EditCatalogViewModel EditCatalogViewModel
-        {
-            get
-            {
-                return SimpleIoc.Default.GetInstance<EditCatalogViewModel>();
-            }
-        }
-
         public AddStateViewModel AddStateViewModel
         {
             get
@@ -61,19 +50,5 @@ namespace Presentation.ViewModel
                 return SimpleIoc.Default.GetInstance<AddStateViewModel>();
             }
         }
-
-        public EditStateViewModel EditStateViewModel
-        {
-            get
-            {
-                return SimpleIoc.Default.GetInstance<EditStateViewModel>();
-            }
-        }
-
-        private void NotifyUserMethod(NotificationMessage message)
-        {
-            System.Windows.MessageBox.Show(message.Notification);
-        }
-
     }
 }

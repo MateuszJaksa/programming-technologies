@@ -7,27 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <DataTemplate x:Key="RowButtons">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Edit" Command="{Binding EditCatalogMethod}"/>
-                <Button Content="Delete"  Command="{Binding RemoveCatalogCommand}"/>
-            </StackPanel>
-        </DataTemplate>
-    </UserControl.Resources>
-
     <StackPanel DataContext="{Binding CatalogViewModel, Source={StaticResource Locator}}">
         <StackPanel Orientation="Horizontal">
-            <Button Content="Add a Catalog" x:Name="AddCatalogBtn" Command="{Binding AddCatalogCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
-            <Button Content="Refresh Catalogs" x:Name="RefreshCatalogBtn" Command="{Binding RefreshCatalogCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Add a Catalog" Command="{Binding AddCatalogCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Delete a Catalog" Command="{Binding RemoveCatalogCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Refresh Catalogs" Command="{Binding RefreshCatalogCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
         </StackPanel>
-        <ListView ItemsSource="{Binding CatalogsList}" SelectedItem="{Binding SelectedCatalog}">
+        <ListView ItemsSource="{Binding CatalogsList}" SelectedItem="{Binding SelectedCatalog, Mode=TwoWay}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="100"/>
-                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="200"/>
-                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}" Width="200"/>
-                    <GridViewColumn CellTemplate="{StaticResource RowButtons}"/>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="350"/>
+                    <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author}" Width="300"/>
                 </GridView>
             </ListView.View>
         </ListView>

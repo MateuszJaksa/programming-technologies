@@ -11,14 +11,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Presentation.ViewModel;
 
 namespace Presentation.View
 {
     /// <summary>
     /// Interaction logic for AddCatalogView.xaml
     /// </summary>
-    public partial class AddCatalogView : Window, IWindow
+    public partial class AddCatalogView : Window
     {
         public AddCatalogView()
         {

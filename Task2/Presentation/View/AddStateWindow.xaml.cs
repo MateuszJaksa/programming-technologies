@@ -11,16 +11,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Presentation.ViewModel;
 
 namespace Presentation.View
 {
     /// <summary>
-    /// Interaction logic for EditCatalogView.xaml
+    /// Interaction logic for AddStateWindow.xaml
     /// </summary>
-    public partial class EditCatalogView : Window, IWindow
+    public partial class AddStateView : Window
     {
-        public EditCatalogView()
+        public AddStateView()
         {
             InitializeComponent();
         }

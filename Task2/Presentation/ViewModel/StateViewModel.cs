@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using Presentation.Model;
+using Services;
 
 namespace Presentation.ViewModel
 {
@@ -17,12 +18,11 @@ namespace Presentation.ViewModel
         private StateModel selectedState;
         private ObservableCollection<StateModel> models;
 
-        public StateViewModel()
+        public StateViewModel() : base()
         {
             AddStateCommand = new RelayCommand(AddStateMethod);
             RemoveStateCommand = new RelayCommand(RemoveStateMethod);
             RefreshStateCommand = new RelayCommand(RefreshStateMethod);
-            EditStateCommand = new RelayCommand(EditStateMethod);
         }
 
         public StateModel SelectedState
@@ -43,30 +43,25 @@ namespace Presentation.ViewModel
         public ICommand AddStateCommand { get; private set; }
         public ICommand RemoveStateCommand { get; private set; }
         public ICommand RefreshStateCommand { get; private set; }
-        public ICommand EditStateCommand { get; private set; }
-        public Lazy<IWindow> AddWindow { get; set; }
-        public Lazy<IWindow> EditWindow { get; set; }
 
         public void RemoveStateMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("State removed."));
+            if (SelectedState != null)
+            {
+                LibraryRepository repository = new LibraryRepository();
+                repository.RemoveState(SelectedState.Id);
+            }
         }
 
         public void AddStateMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("State added."));
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("AddState"));
         }
 
         public void RefreshStateMethod()
         {
             models = StateModel.GetStates();
             this.RaisePropertyChanged(() => this.StatesList);
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("States refreshed."));
-        }
-
-        public void EditStateMethod()
-        {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("State edited."));
         }
     }
 }

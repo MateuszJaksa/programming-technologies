@@ -6,26 +6,19 @@
              xmlns:local="clr-namespace:Presentation.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <DataTemplate x:Key="RowButtons">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Edit"/>
-                <Button Content="Delete"/>
-            </StackPanel>
-        </DataTemplate>
-    </UserControl.Resources>
 
     <StackPanel DataContext="{Binding StateViewModel, Source={StaticResource Locator}}">
         <StackPanel Orientation="Horizontal">
-            <Button Content="Add a State" x:Name="AddStateBtn" Command="{Binding AddStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
-            <Button Content="Refresh States" x:Name="RefreshStateBtn" Command="{Binding RefreshStateCommand}" Width="200" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Add a State" Command="{Binding AddStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Delete a State" Command="{Binding RemoveStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Refresh States" Command="{Binding RefreshStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
         </StackPanel>
         <ListView ItemsSource="{Binding StatesList}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="200"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
                     <GridViewColumn Header="Is it borrowed?" DisplayMemberBinding="{Binding IsBorrowed}" Width="200"/>
-                    <GridViewColumn CellTemplate="{StaticResource RowButtons}"/>
+                    <GridViewColumn Header="Catalog Id" DisplayMemberBinding="{Binding CatalogId}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

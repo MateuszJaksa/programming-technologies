@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using Presentation.Model;
+using Services;
 
 namespace Presentation.ViewModel
 {
@@ -17,12 +18,11 @@ namespace Presentation.ViewModel
         private CatalogModel selectedCatalog;
         private ObservableCollection<CatalogModel> models;
 
-        public CatalogViewModel()
+        public CatalogViewModel() : base()
         {
             AddCatalogCommand = new RelayCommand(AddCatalogMethod);
             RemoveCatalogCommand = new RelayCommand(RemoveCatalogMethod);
             RefreshCatalogCommand = new RelayCommand(RefreshCatalogMethod);
-            EditCatalogCommand = new RelayCommand(EditCatalogMethod);
         }
 
         public CatalogModel SelectedCatalog
@@ -43,31 +43,25 @@ namespace Presentation.ViewModel
         public ICommand AddCatalogCommand { get; private set; }
         public ICommand RemoveCatalogCommand { get; private set; }
         public ICommand RefreshCatalogCommand { get; private set; }
-        public ICommand EditCatalogCommand { get; private set; }
-        public Lazy<IWindow> AddCatalogWindow { get; set; }
-        public Lazy<IWindow> EditCatalogWindow { get; set; }
 
         public void RemoveCatalogMethod()
         {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Catalog removed."));
+            if (SelectedCatalog != null)
+            {
+                LibraryRepository repository = new LibraryRepository();
+                repository.RemoveCatalog(SelectedCatalog.Id);
+            }
         }
 
         public void AddCatalogMethod()
         {
-            IWindow addCatalogWindow = AddCatalogWindow.Value;
-            addCatalogWindow.Show();
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("AddCatalog"));
         }
 
         public void RefreshCatalogMethod()
         {
             models = CatalogModel.GetCatalogs();
             this.RaisePropertyChanged(() => this.CatalogsList);
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Catalogs refreshed."));
-        }
-
-        public void EditCatalogMethod()
-        {
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Catalog edited."));
         }
     }
 }

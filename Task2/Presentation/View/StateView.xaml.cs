@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Presentation.View
 {
@@ -20,6 +21,23 @@ namespace Presentation.View
         public StateView()
         {
             InitializeComponent();
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
+        }
+
+        private void NotificationMessageReceived(NotificationMessage msg)
+        {
+            AddStateView view = new AddStateView();
+
+            if (msg.Notification == "AddState")
+            {
+                
+                view.Show();
+            }
+
+            if (msg.Notification == "CloseAddState")
+            {
+                view.Hide();
+            }
         }
     }
 }
