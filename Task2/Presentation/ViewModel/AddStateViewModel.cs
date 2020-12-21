@@ -54,8 +54,8 @@ namespace Presentation.ViewModel
                 List<int> availableIds = repository.GetAllCatalogIds();
                 switch (columnName)
                 {
-                    case "IsBorrowed": if (string.IsNullOrEmpty(isBorrowed)) result = "IsBorrowed cannot be empty!"; if (isBorrowed != null && !bool.Parse(isBorrowed)) result = "That is not true value"; break;
-                    case "CatalogId": if (string.IsNullOrEmpty(catalogId)) result = "CatalogId cannot be empty!";break;
+                    case "IsBorrowed": if (string.IsNullOrEmpty(isBorrowed)) result = "IsBorrowed cannot be empty!"; if (isBorrowed != null && !bool.TryParse(isBorrowed, out bool parsedBool)) result = "That is not true value"; break;
+                    case "CatalogId": if (string.IsNullOrEmpty(catalogId)) result = "CatalogId cannot be empty!"; break;
                 };
                 return result;
             }
