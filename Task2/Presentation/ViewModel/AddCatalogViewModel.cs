@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Services;
 
 namespace Presentation.ViewModel
 {
-    public class AddCatalogViewModel : ViewModelBase
+    public class AddCatalogViewModel : ViewModelBase, IDataErrorInfo
     {
         private string title;
         private string author;
@@ -29,6 +30,8 @@ namespace Presentation.ViewModel
 
         public ICommand SaveCatalogCommand { get; private set; }
 
+        public string Error => throw new Exception();
+
         public AddCatalogViewModel() : base()
         {
             SaveCatalogCommand = new RelayCommand(SaveCatalogMethod);
@@ -40,5 +43,21 @@ namespace Presentation.ViewModel
             repository.AddCatalog(Title, Author);
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("CloseAddCatalog"));
         }
+
+        string IDataErrorInfo.this[string columnName]
+        {
+            get
+            {
+                string result = string.Empty;
+                switch (columnName)
+                {
+                    case "Title": if (string.IsNullOrEmpty(title)) result = "Title cannot be empty!"; if (title.Length > 64) result = "Title cannot be that long"; break;
+                    case "Author": if (string.IsNullOrEmpty(author)) result = "Author cannot be empty!"; if (author.Length > 64) result = "Author cannot be that long"; break;
+                };
+                return result;
+            }
+        }
+
+
     }
 }

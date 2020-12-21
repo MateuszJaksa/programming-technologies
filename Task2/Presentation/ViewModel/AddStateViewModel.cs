@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Services;
 
 namespace Presentation.ViewModel
 {
-    public class AddStateViewModel : ViewModelBase
+    public class AddStateViewModel : ViewModelBase, IDataErrorInfo
     {
         private bool isBorrowed;
         private int catalogId;
@@ -29,6 +30,10 @@ namespace Presentation.ViewModel
 
         public ICommand SaveStateCommand { get; private set; }
 
+        public string Error => throw new Exception();
+
+        public string this[string columnName] => throw new NotImplementedException();
+
         public AddStateViewModel() : base()
         {
             SaveStateCommand = new RelayCommand(SaveStateMethod);
@@ -40,5 +45,6 @@ namespace Presentation.ViewModel
             repository.AddState(CatalogId, IsBorrowed);
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("CloseAddState"));
         }
+
     }
 }
