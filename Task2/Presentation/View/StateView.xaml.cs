@@ -18,6 +18,8 @@ namespace Presentation.View
 {
     public partial class StateView : UserControl
     {
+        private AddStateView view = new AddStateView();
+
         public StateView()
         {
             InitializeComponent();
@@ -26,11 +28,9 @@ namespace Presentation.View
 
         private void NotificationMessageReceived(NotificationMessage msg)
         {
-            AddStateView view = new AddStateView();
-
             if (msg.Notification == "AddState")
             {
-                
+                view = new AddStateView();
                 view.Show();
             }
 

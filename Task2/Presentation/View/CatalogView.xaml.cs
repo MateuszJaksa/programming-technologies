@@ -19,6 +19,8 @@ namespace Presentation.View
 {
     public partial class CatalogView : UserControl
     {
+        private AddCatalogView addView = new AddCatalogView();
+
         public CatalogView()
         {
             InitializeComponent();
@@ -27,9 +29,9 @@ namespace Presentation.View
 
         private void NotificationMessageReceived(NotificationMessage msg)
         {
-            AddCatalogView addView = new AddCatalogView();
             if (msg.Notification == "AddCatalog")
             {
+                addView = new AddCatalogView();
                 addView.Show();
             }
 
