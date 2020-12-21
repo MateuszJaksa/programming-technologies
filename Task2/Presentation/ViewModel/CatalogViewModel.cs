@@ -23,6 +23,8 @@ namespace Presentation.ViewModel
             AddCatalogCommand = new RelayCommand(AddCatalogMethod);
             RemoveCatalogCommand = new RelayCommand(RemoveCatalogMethod);
             RefreshCatalogCommand = new RelayCommand(RefreshCatalogMethod);
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshCatalog"));
         }
 
         public CatalogModel SelectedCatalog
@@ -50,6 +52,7 @@ namespace Presentation.ViewModel
             {
                 LibraryRepository repository = new LibraryRepository();
                 Task.Run(() => repository.RemoveCatalog(SelectedCatalog.Id));
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshCatalog"));
             }
         }
 
@@ -62,6 +65,14 @@ namespace Presentation.ViewModel
         {
             models = CatalogModel.GetCatalogs();
             this.RaisePropertyChanged(() => this.CatalogsList);
+        }
+
+        private void NotificationMessageReceived(NotificationMessage msg)
+        {
+            if (msg.Notification == "RefreshCatalog")
+            {
+                RefreshCatalogMethod();
+            }
         }
     }
 }

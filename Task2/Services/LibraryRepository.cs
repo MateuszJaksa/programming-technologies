@@ -28,9 +28,17 @@ namespace Services
 
         public void RemoveCatalog(int id)
         {
-            Catalogs removedCatalog = dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id);
-            dataContext.Catalogs.DeleteOnSubmit(removedCatalog);
-            dataContext.SubmitChanges();
+            bool canBeRemoved = true;
+            foreach (States states in dataContext.States.ToList())
+            {
+                if (states.CatalogId == id) { canBeRemoved = false; }
+            }
+            if (canBeRemoved)
+            {
+                Catalogs removedCatalog = dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id);
+                dataContext.Catalogs.DeleteOnSubmit(removedCatalog);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllCatalogs()

@@ -23,6 +23,8 @@ namespace Presentation.ViewModel
             AddStateCommand = new RelayCommand(AddStateMethod);
             RemoveStateCommand = new RelayCommand(RemoveStateMethod);
             RefreshStateCommand = new RelayCommand(RefreshStateMethod);
+            Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshState"));
         }
 
         public StateModel SelectedState
@@ -50,6 +52,7 @@ namespace Presentation.ViewModel
             {
                 LibraryRepository repository = new LibraryRepository();
                 Task.Run(() => repository.RemoveState(SelectedState.Id));
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshState"));
             }
         }
 
@@ -62,6 +65,14 @@ namespace Presentation.ViewModel
         {
             models = StateModel.GetStates();
             this.RaisePropertyChanged(() => this.StatesList);
+        }
+
+        private void NotificationMessageReceived(NotificationMessage msg)
+        {
+            if (msg.Notification == "RefreshState")
+            {
+                RefreshStateMethod();
+            }
         }
     }
 }

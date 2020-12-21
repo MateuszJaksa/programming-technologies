@@ -42,6 +42,7 @@ namespace Presentation.ViewModel
             LibraryRepository repository = new LibraryRepository();
             Task.Run(() => repository.AddCatalog(Title, Author));
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("CloseAddCatalog"));
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshCatalog"));
         }
 
         string IDataErrorInfo.this[string columnName]
