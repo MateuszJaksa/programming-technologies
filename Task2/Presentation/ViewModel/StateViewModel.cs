@@ -49,7 +49,7 @@ namespace Presentation.ViewModel
             if (SelectedState != null)
             {
                 LibraryRepository repository = new LibraryRepository();
-                repository.RemoveState(SelectedState.Id);
+                Task.Run(() => repository.RemoveState(SelectedState.Id));
             }
         }
 

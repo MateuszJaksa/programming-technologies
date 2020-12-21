@@ -40,7 +40,7 @@ namespace Presentation.ViewModel
         public void SaveCatalogMethod()
         {
             LibraryRepository repository = new LibraryRepository();
-            repository.AddCatalog(Title, Author);
+            Task.Run(() => repository.AddCatalog(Title, Author));
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("CloseAddCatalog"));
         }
 

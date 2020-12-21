@@ -14,25 +14,23 @@ namespace Presentation.ViewModel
 {
     public class AddStateViewModel : ViewModelBase, IDataErrorInfo
     {
-        private bool isBorrowed;
-        private int catalogId;
+        private string isBorrowed;
+        private string catalogId;
 
-        public bool IsBorrowed
+        public string IsBorrowed
         {
             get { return isBorrowed; }
-            set { Set<bool>(() => this.IsBorrowed, ref isBorrowed, value); }
+            set { Set<string>(() => this.IsBorrowed, ref isBorrowed, value); }
         }
-        public int CatalogId
+        public string CatalogId
         {
             get { return catalogId; }
-            set { Set<int>(() => this.CatalogId, ref catalogId, value); }
+            set { Set<string>(() => this.CatalogId, ref catalogId, value); }
         }
 
         public ICommand SaveStateCommand { get; private set; }
 
         public string Error => throw new Exception();
-
-        public string this[string columnName] => throw new NotImplementedException();
 
         public AddStateViewModel() : base()
         {
@@ -42,9 +40,25 @@ namespace Presentation.ViewModel
         public void SaveStateMethod()
         {
             LibraryRepository repository = new LibraryRepository();
-            repository.AddState(CatalogId, IsBorrowed);
+            Task.Run(() => repository.AddState(int.Parse(CatalogId), bool.Parse(IsBorrowed)));
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("CloseAddState"));
         }
 
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = string.Empty;
+                LibraryRepository repository = new LibraryRepository();
+                List<int> availableIds = new List<int>();
+                Task.Run(() => availableIds = repository.GetAllCatalogIds());
+                switch (columnName)
+                {
+                    case "Title": if (string.IsNullOrEmpty(isBorrowed)) result = "IsBorrowed cannot be empty!"; if (!bool.Parse(isBorrowed)) result = "That is not true value"; break;
+                    case "Author": if (string.IsNullOrEmpty(catalogId)) result = "CatalogId cannot be empty!"; if (!availableIds.Contains(int.Parse(catalogId))) result = "That is not available id"; break;
+                };
+                return result;
+            }
+        }
     }
 }

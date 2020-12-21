@@ -31,10 +31,10 @@
             <Label Grid.Row="0" Grid.Column="1" Content="Adding a state" HorizontalAlignment="Center" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="Is it borrowed?" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SavedState.IsBorrowed}" />
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IsBorrowed}" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="Catalog ID" />
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SavedState.CatalogId}" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CatalogId}" />
 
             <Button Grid.Row="3" Grid.Column="1" Content="Save a state"  Command="{Binding SaveStateCommand}"/>
         </Grid>

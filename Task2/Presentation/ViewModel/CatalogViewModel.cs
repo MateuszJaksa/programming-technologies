@@ -49,7 +49,7 @@ namespace Presentation.ViewModel
             if (SelectedCatalog != null)
             {
                 LibraryRepository repository = new LibraryRepository();
-                repository.RemoveCatalog(SelectedCatalog.Id);
+                Task.Run(() => repository.RemoveCatalog(SelectedCatalog.Id));
             }
         }
 
