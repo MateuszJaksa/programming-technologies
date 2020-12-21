@@ -51,8 +51,8 @@ namespace Presentation.ViewModel
                 string result = string.Empty;
                 switch (columnName)
                 {
-                    case "Title": if (string.IsNullOrEmpty(title)) result = "Title cannot be empty!"; if (title.Length > 64) result = "Title cannot be that long"; break;
-                    case "Author": if (string.IsNullOrEmpty(author)) result = "Author cannot be empty!"; if (author.Length > 64) result = "Author cannot be that long"; break;
+                    case "Title": if (string.IsNullOrEmpty(title)) result = "Title cannot be empty!"; if (title != null && title.Length > 64) result = "Title cannot be that long"; break;
+                    case "Author": if (string.IsNullOrEmpty(author)) result = "Author cannot be empty!"; if (author != null && author.Length > 64) result = "Author cannot be that long"; break;
                 };
                 return result;
             }
