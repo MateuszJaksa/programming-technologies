@@ -18,7 +18,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid DataContext="{Binding AddCatalogViewModel, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding EditCatalogViewModel, Source={StaticResource Locator}}">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}">
@@ -34,6 +34,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -42,13 +43,18 @@
 
             <Label Grid.Row="0" Grid.Column="1" Content="Editing a catalog" HorizontalAlignment="Center" />
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Title" />
-            <TextBox Grid.Row="1" x:Name="Title" Grid.Column="1" Text="{Binding Title, ValidatesOnDataErrors=True}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Id" />
 
-            <Label Grid.Row="2" Grid.Column="0" Content="Author" />
-            <TextBox Grid.Row="2" x:Name="Author" Grid.Column="1" Text="{Binding Author, ValidatesOnDataErrors=True}" />
+            <TextBox Grid.Row="1" x:Name="Id" Grid.Column="1" Text="{Binding Id, ValidatesOnDataErrors=True}" />
+            
+            <Label Grid.Row="2" Grid.Column="0" Content="Title" />
 
-            <Button Grid.Row="3" Grid.Column="1" Content="Save a catalog"  Command="{Binding EditCatalogCommand}">
+            <TextBox Grid.Row="2" x:Name="Title" Grid.Column="1" Text="{Binding Title, ValidatesOnDataErrors=True}" />
+
+            <Label Grid.Row="3" Grid.Column="0" Content="Author" />
+            <TextBox Grid.Row="3" x:Name="Author" Grid.Column="1" Text="{Binding Author, ValidatesOnDataErrors=True}" />
+
+            <Button Grid.Row="4" Grid.Column="1" Content="Save a catalog"  Command="{Binding EditCatalogCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="IsEnabled" Value="False"/>

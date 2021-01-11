@@ -11,7 +11,7 @@
         <StackPanel Orientation="Horizontal">
             <Button Content="Add a State" Command="{Binding AddStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
             <Button Content="Delete a State" Command="{Binding RemoveStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
-            <Button Content="Refresh States" Command="{Binding RefreshStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
+            <Button Content="Edit a State" Command="{Binding EditStateCommand}" Width="150" Height="50" Margin="10 10 10 10"/>
         </StackPanel>
         <ListView ItemsSource="{Binding StatesList}" SelectedItem="{Binding SelectedState, Mode=TwoWay}">
             <ListView.View>

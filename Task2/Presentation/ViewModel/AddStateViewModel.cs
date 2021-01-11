@@ -10,7 +10,7 @@ using Services;
 
 namespace Presentation.ViewModel
 {
-    public class AddEditStateViewModel : ViewModelBase, IDataErrorInfo
+    public class AddStateViewModel : ViewModelBase, IDataErrorInfo
     {
         private readonly LibraryRepository repository = new LibraryRepository();
         private string isBorrowed;
@@ -31,7 +31,7 @@ namespace Presentation.ViewModel
 
         public string Error => throw new Exception();
 
-        public AddEditStateViewModel() : base()
+        public AddStateViewModel() : base()
         {
             SaveStateCommand = new RelayCommand(SaveStateMethod);
         }

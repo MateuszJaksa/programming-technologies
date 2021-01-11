@@ -68,6 +68,7 @@ namespace Presentation.ViewModel
 
         public void RefreshCatalogMethod()
         {
+            LibraryRepository repository = new LibraryRepository();
             models = CatalogModel.GetCatalogs();
             this.RaisePropertyChanged(() => this.CatalogsList);
         }

@@ -72,8 +72,10 @@
     </ApplicationDefinition>
     <Compile Include="Model\CatalogModel.cs" />
     <Compile Include="Model\StateModel.cs" />
-    <Compile Include="ViewModel\AddEditCatalogViewModel.cs" />
-    <Compile Include="ViewModel\AddEditStateViewModel.cs" />
+    <Compile Include="ViewModel\EditCatalogViewModel.cs" />
+    <Compile Include="ViewModel\AddCatalogViewModel.cs" />
+    <Compile Include="ViewModel\EditStateViewModel.cs" />
+    <Compile Include="ViewModel\AddStateViewModel.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
     <Compile Include="ViewModel\StateViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

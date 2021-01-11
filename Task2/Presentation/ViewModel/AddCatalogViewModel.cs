@@ -9,7 +9,7 @@ using Services;
 
 namespace Presentation.ViewModel
 {
-    public class AddEditCatalogViewModel : ViewModelBase, IDataErrorInfo
+    public class AddCatalogViewModel : ViewModelBase, IDataErrorInfo
     {
         private string title;
         private string author;
@@ -29,7 +29,7 @@ namespace Presentation.ViewModel
 
         public string Error => throw new Exception();
 
-        public AddEditCatalogViewModel() : base()
+        public AddCatalogViewModel() : base()
         {
             SaveCatalogCommand = new RelayCommand(SaveCatalogMethod);
         }

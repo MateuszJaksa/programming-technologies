@@ -13,6 +13,7 @@ namespace Presentation.Model
         private string title;
         private string author;
         private readonly static LibraryRepository repository = new LibraryRepository();
+        static ObservableCollection<CatalogModel> models;
 
         public CatalogModel(int id, string title, string author)
         {
@@ -38,11 +39,11 @@ namespace Presentation.Model
         }
 
         public static ObservableCollection<CatalogModel> GetCatalogs()
-        {
-            ObservableCollection<CatalogModel> models = new ObservableCollection<CatalogModel>();
+        {   
             List<int> catalogIDs = new List<int>();
             catalogIDs = repository.GetAllCatalogIds();
-            foreach(int id in catalogIDs)
+            models = new ObservableCollection<CatalogModel>();
+            foreach (int id in catalogIDs)
             {
                 models.Add(new CatalogModel(id, repository.GetCatalogTitle(id), repository.GetCatalogAuthor(id)));
             }

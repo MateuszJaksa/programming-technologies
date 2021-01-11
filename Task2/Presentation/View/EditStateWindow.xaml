@@ -18,7 +18,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid DataContext="{Binding AddStateViewModel, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding EditStateViewModel, Source={StaticResource Locator}}">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}">
