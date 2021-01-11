@@ -26,6 +26,14 @@ namespace Services
             return newCatalog.ID;
         }
 
+        public void UpdateCatalog(int id, string title, string author)
+        {
+            Catalogs updatedCatalog = dataContext.Catalogs.FirstOrDefault(catalog => catalog.ID == id);
+            updatedCatalog.Title = title;
+            updatedCatalog.Author = author;
+            dataContext.SubmitChanges();
+        }
+
         public void RemoveCatalog(int id)
         {
             bool canBeRemoved = true;
@@ -76,6 +84,14 @@ namespace Services
             dataContext.States.InsertOnSubmit(newState);
             dataContext.SubmitChanges();
             return newState.ID;
+        }
+
+        public void UpdateState(int id, int catalogId, bool isBorrowed)
+        {
+            States updatedState = dataContext.States.FirstOrDefault(state => state.ID == id);
+            updatedState.CatalogId = catalogId;
+            updatedState.IsBorrowed = isBorrowed;
+            dataContext.SubmitChanges();
         }
 
         public void RemoveState(int id)

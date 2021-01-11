@@ -72,8 +72,8 @@
     </ApplicationDefinition>
     <Compile Include="Model\CatalogModel.cs" />
     <Compile Include="Model\StateModel.cs" />
-    <Compile Include="ViewModel\AddCatalogViewModel.cs" />
-    <Compile Include="ViewModel\AddStateViewModel.cs" />
+    <Compile Include="ViewModel\AddEditCatalogViewModel.cs" />
+    <Compile Include="ViewModel\AddEditStateViewModel.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
     <Compile Include="ViewModel\StateViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -89,6 +89,12 @@
     </Compile>
     <Compile Include="View\CatalogView.xaml.cs">
       <DependentUpon>CatalogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditCatalogWindow.xaml.cs">
+      <DependentUpon>EditCatalogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditStateWindow.xaml.cs">
+      <DependentUpon>EditStateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -134,6 +140,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditCatalogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditStateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

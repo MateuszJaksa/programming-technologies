@@ -8,7 +8,7 @@
         Title="AddCatalogView" Height="450" Width="800">
 
     <Window.Resources>
-        <Style x:Key="textError" TargetType="TextBox">
+        <Style x:Key="textError" TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
                     <Setter Property="Background" Value="Red"/>

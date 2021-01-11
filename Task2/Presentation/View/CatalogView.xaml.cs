@@ -20,6 +20,7 @@ namespace Presentation.View
     public partial class CatalogView : UserControl
     {
         private AddCatalogView addView = new AddCatalogView();
+        private EditCatalogView editView = new EditCatalogView();
 
         public CatalogView()
         {
@@ -38,6 +39,17 @@ namespace Presentation.View
             if (msg.Notification == "CloseAddCatalog")
             {
                 addView.Hide();
+            }
+
+            if (msg.Notification == "EditCatalog")
+            {
+                editView = new EditCatalogView();
+                editView.Show();
+            }
+
+            if (msg.Notification == "CloseEditCatalog")
+            {
+                editView.Hide();
             }
         }
     }

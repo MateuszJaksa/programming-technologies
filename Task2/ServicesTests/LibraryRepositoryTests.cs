@@ -28,13 +28,18 @@ namespace Tests
         }
 
         [TestMethod]
-        public void GetCatalogTest()
+        public void GetAndUpdateCatalogTest()
         {
             int int1 = repository.AddCatalog("Dune", "Frank Herbert");
             string title = repository.GetCatalogTitle(int1);
             string author = repository.GetCatalogAuthor(int1);
             Assert.AreEqual(title, "Dune");
             Assert.AreEqual(author, "Frank Herbert");
+            repository.UpdateCatalog(int1, "Krol", "Szczepan Twardoch");
+            title = repository.GetCatalogTitle(int1);
+            author = repository.GetCatalogAuthor(int1);
+            Assert.AreEqual(title, "Krol");
+            Assert.AreEqual(author, "Szczepan Twardoch");
         }
 
         [TestMethod]
@@ -62,14 +67,20 @@ namespace Tests
         }
 
         [TestMethod]
-        public void GetStateTest()
+        public void GetAndUpdateStateTest()
         {
             int int1 = repository.AddCatalog("Dune", "Frank Herbert");
+            int int2 = repository.AddCatalog("Krol", "Szczepan Twardoch");
             int id1 = repository.AddState(int1, false);
             bool isBorrowed = repository.GetStateIsBorrowed(id1);
             int catalogId = repository.GetStateCatalogId(id1);
             Assert.AreEqual(isBorrowed, false);
             Assert.AreEqual(catalogId, int1);
+            repository.UpdateState(id1, int2, true);
+            isBorrowed = repository.GetStateIsBorrowed(id1);
+            catalogId = repository.GetStateCatalogId(id1);
+            Assert.AreEqual(isBorrowed, true);
+            Assert.AreEqual(catalogId, int2);
         }
 
         [TestMethod]

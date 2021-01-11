@@ -18,7 +18,8 @@ namespace Presentation.View
 {
     public partial class StateView : UserControl
     {
-        private AddStateView view = new AddStateView();
+        private AddStateView addView = new AddStateView();
+        private EditStateView editView = new EditStateView();
 
         public StateView()
         {
@@ -30,13 +31,24 @@ namespace Presentation.View
         {
             if (msg.Notification == "AddState")
             {
-                view = new AddStateView();
-                view.Show();
+                addView = new AddStateView();
+                addView.Show();
             }
 
             if (msg.Notification == "CloseAddState")
             {
-                view.Hide();
+                addView.Hide();
+            }
+
+            if (msg.Notification == "EditState")
+            {
+                editView = new EditStateView();
+                editView.Show();
+            }
+
+            if (msg.Notification == "EditAddState")
+            {
+                editView.Hide();
             }
         }
     }

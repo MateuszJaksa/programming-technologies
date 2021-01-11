@@ -22,7 +22,7 @@ namespace Presentation.ViewModel
         {
             AddCatalogCommand = new RelayCommand(AddCatalogMethod);
             RemoveCatalogCommand = new RelayCommand(RemoveCatalogMethod);
-            RefreshCatalogCommand = new RelayCommand(RefreshCatalogMethod);
+            EditCatalogCommand = new RelayCommand(EditCatalogMethod);
             Messenger.Default.Register<NotificationMessage>(this, NotificationMessageReceived);
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("RefreshCatalog"));
         }
@@ -44,7 +44,7 @@ namespace Presentation.ViewModel
 
         public ICommand AddCatalogCommand { get; private set; }
         public ICommand RemoveCatalogCommand { get; private set; }
-        public ICommand RefreshCatalogCommand { get; private set; }
+        public ICommand EditCatalogCommand { get; private set; }
 
         public void RemoveCatalogMethod()
         {
@@ -59,6 +59,11 @@ namespace Presentation.ViewModel
         public void AddCatalogMethod()
         {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("AddCatalog"));
+        }
+
+        public void EditCatalogMethod()
+        {
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("EditCatalog"));
         }
 
         public void RefreshCatalogMethod()

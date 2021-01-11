@@ -15,8 +15,8 @@ namespace Presentation.ViewModel
         {
             SimpleIoc.Default.Register<CatalogViewModel>();
             SimpleIoc.Default.Register<StateViewModel>();
-            SimpleIoc.Default.Register<AddCatalogViewModel>();
-            SimpleIoc.Default.Register<AddStateViewModel>();
+            SimpleIoc.Default.Register<AddEditCatalogViewModel>();
+            SimpleIoc.Default.Register<AddEditStateViewModel>();
         }
 
         public CatalogViewModel CatalogViewModel
@@ -35,19 +35,19 @@ namespace Presentation.ViewModel
             }
         }
 
-        public AddCatalogViewModel AddCatalogViewModel
+        public AddEditCatalogViewModel AddCatalogViewModel
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<AddCatalogViewModel>();
+                return SimpleIoc.Default.GetInstance<AddEditCatalogViewModel>();
             }
         }
 
-        public AddStateViewModel AddStateViewModel
+        public AddEditStateViewModel AddStateViewModel
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<AddStateViewModel>();
+                return SimpleIoc.Default.GetInstance<AddEditStateViewModel>();
             }
         }
     }
