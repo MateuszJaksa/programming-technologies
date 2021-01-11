@@ -96,9 +96,17 @@ namespace Services
 
         public void RemoveState(int id)
         {
-            States removedState = dataContext.States.FirstOrDefault(state => state.ID == id);
-            dataContext.States.DeleteOnSubmit(removedState);
-            dataContext.SubmitChanges();
+            bool canBeRemoved = true;
+            foreach (LibraryEvents events in dataContext.LibraryEvents.ToList())
+            {
+                if (events.StateId == id) { canBeRemoved = false; }
+            }
+            if (canBeRemoved)
+            {
+                States removedState = dataContext.States.FirstOrDefault(state => state.ID == id);
+                dataContext.States.DeleteOnSubmit(removedState);
+                dataContext.SubmitChanges();
+            }
         }
 
         public void RemoveAllStates()
@@ -122,6 +130,125 @@ namespace Services
             foreach (States state in dataContext.States.ToList())
             {
                 returnedList.Add(state.ID);
+            }
+            return returnedList;
+        }
+
+        public int AddEvent(DateTime time, int stateId, int userId, bool isBorrowingEvent)
+        {
+            LibraryEvents newEvent = new LibraryEvents
+            {
+                Time = time,
+                StateId = stateId,
+                UserId = userId,
+                isBorrowingEvent = isBorrowingEvent
+            };
+            dataContext.LibraryEvents.InsertOnSubmit(newEvent);
+            dataContext.SubmitChanges();
+            return newEvent.ID;
+        }
+
+        public void UpdateEvent(int id, DateTime time, int stateId, int userId, bool isBorrowingEvent)
+        {
+            LibraryEvents updatedEvent = dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id);
+            updatedEvent.Time = time;
+            updatedEvent.StateId = stateId;
+            updatedEvent.UserId = userId;
+            updatedEvent.isBorrowingEvent = isBorrowingEvent;
+            dataContext.SubmitChanges();
+        }
+
+        public void RemoveEvent(int id)
+        {
+            LibraryEvents removedEvent = dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id);
+            dataContext.LibraryEvents.DeleteOnSubmit(removedEvent);
+            dataContext.SubmitChanges();
+        }
+
+        public void RemoveAllEvents()
+        {
+            dataContext.ExecuteCommand(@"DELETE FROM LibraryEvents;");
+        }
+
+        public DateTime GetEventTime(int id)
+        {
+            return (DateTime)dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id).Time;
+        }
+
+        public int GetEventStateId(int id)
+        {
+            return (int)dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id).StateId;
+        }
+
+        public int GetEventUserId(int id)
+        {
+            return (int)dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id).UserId;
+        }
+
+        public bool GetEventIsBorrowingEvent(int id)
+        {
+            return (bool)dataContext.LibraryEvents.FirstOrDefault(ev => ev.ID == id).isBorrowingEvent;
+        }
+
+        public List<int> GetAllEventIds()
+        {
+            List<int> returnedList = new List<int>();
+            foreach (LibraryEvents ev in dataContext.LibraryEvents.ToList())
+            {
+                returnedList.Add(ev.ID);
+            }
+            return returnedList;
+        }
+
+        public int AddUser(string name)
+        {
+            Users newUser = new Users
+            {
+                Name = name
+            };
+            dataContext.Users.InsertOnSubmit(newUser);
+            dataContext.SubmitChanges();
+            return newUser.ID;
+        }
+
+        public void UpdateUser(int id, string name)
+        {
+            Users updatedUser = dataContext.Users.FirstOrDefault(user => user.ID == id);
+            updatedUser.Name = name;
+            dataContext.SubmitChanges();
+        }
+
+        public void RemoveUser(int id)
+        {
+            bool canBeRemoved = true;
+            foreach (LibraryEvents events in dataContext.LibraryEvents.ToList())
+            {
+                if (events.UserId == id) { canBeRemoved = false; }
+            }
+            if (canBeRemoved)
+            {
+                Users removedUser = dataContext.Users.FirstOrDefault(user => user.ID == id);
+                dataContext.Users.DeleteOnSubmit(removedUser);
+                dataContext.SubmitChanges();
+            }
+        }
+
+        public void RemoveAllUsers()
+        {
+            dataContext.ExecuteCommand(@"DELETE FROM Users;");
+        }
+
+        public string GetUserName(int id)
+        {
+            return dataContext.Users.FirstOrDefault(user => user.ID == id).Name;
+        }
+
+        public List<int> GetAllUserIds()
+        {
+            List<int> returnedList = new List<int>();
+            foreach (Users user in dataContext.Users.ToList())
+            {
+                returnedList.Add(user.ID);
             }
             return returnedList;
         }
